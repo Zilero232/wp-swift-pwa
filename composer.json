@@ -1,0 +1,16 @@
+{
+	"require-dev": {
+		"wp-coding-standards/wpcs": "^3.1",
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"phpro/grumphp-shim": "^2.10",
+		"phpro/grumphp": "*",
+		"squizlabs/php_codesniffer": "^3.11",
+		"kucrut/vite-for-wp": "^0.9.4"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"phpro/grumphp-shim": true
+		}
+	}
+}

@@ -1,0 +1,26 @@
+grumphp:
+    process_timeout: 120
+    parallel:
+        enabled: false
+
+    ascii: ~
+
+    fixer:
+        enabled: false
+
+    tasks:
+        phpcs:
+            standard: phpcs.xml
+            severity: ~
+            error_severity: ~
+            warning_severity: ~
+            tab_width: ~
+            report: full
+            ignore_patterns: ['vendor/*', 'var/*', 'bin/*']
+            triggered_by: ['php']
+
+
+    testsuites:
+        git_pre_commit:
+            tasks:
+                - phpcs
