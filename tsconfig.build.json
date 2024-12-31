@@ -4,7 +4,8 @@
 		"declaration": true,
 		"noEmit": false,
 		"outDir": "./build",
-		"removeComments": true
+		"removeComments": true,
+		"sourceMap": false
 	},
 	"include": ["./src/**/*.ts"]
 }

@@ -1,7 +1,7 @@
 import type { PWASettings } from 'types';
 import type { StateCreator } from 'zustand';
 
-import { defaultSettings } from 'config/default-settings';
+import { DEFAULT_SETTINGS } from '@/config/default-settings';
 
 export interface SettingsSlice {
 	settings: {
@@ -19,7 +19,7 @@ export interface SettingsSlice {
 
 export const createSettingsSlice: StateCreator<SettingsSlice> = set => ({
 	settings: {
-		data: defaultSettings,
+		data: DEFAULT_SETTINGS,
 		isLoading: false,
 		error: null,
 	},
@@ -48,7 +48,7 @@ export const createSettingsSlice: StateCreator<SettingsSlice> = set => ({
 
 		resetSettings: () => {
 			set(state => ({
-				settings: { ...state.settings, data: defaultSettings },
+				settings: { ...state.settings, data: DEFAULT_SETTINGS },
 			}));
 		},
 	},

@@ -28,7 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-        # Step to install PHP
+      # Step to install PHP
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -36,26 +36,26 @@ jobs:
           tools: ${{ matrix.composer-versions }}
           extensions: xdebug, mbstring, posix
 
-          # Step to check the PHP versions
+      # Step to check the PHP versions
       - name: Check Versions
         run: |
           php -v
           php -m
           composer --version
 
-          # Step to set env vars for latest PHP version
+      # Step to set env vars for latest PHP version
       - name: Set env vars for latest PHP version
         if: matrix.php-versions == '8.4'
         run: |
           export COMPOSER_IGNORE_PLATFORM_REQ=php+
           export BOX_REQUIREMENT_CHECKER=0
 
-          # Step to get composer cache directory
+      # Step to get composer cache directory
       - name: Get composer cache directory
         id: composercache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
-        # Step to cache dependencies
+      # Step to cache dependencies
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
@@ -63,23 +63,23 @@ jobs:
           key: ${{ runner.os }}-composer-${{ matrix.composer-versions }}-${{ matrix.composer-deps }}-${{ hashFiles('**/composer.json') }}
           restore-keys: ${{ runner.os }}-composer-
 
-          # Step to install dependencies (highest)
+      # Step to install dependencies (highest)
       - name: Install dependencies (highest)
         if: matrix.composer-deps == 'highest'
         run: composer update --prefer-dist --no-progress --no-suggest
 
-        # Step to install dependencies (lowest)
+      # Step to install dependencies (lowest)
       - name: Install dependencies (lowest)
         if: matrix.composer-deps == 'lowest'
         run: composer update --prefer-dist --no-progress --no-suggest --prefer-lowest
 
-        # Step to install dependencies (lock)
+      # Step to install dependencies (lock)
       - name: Install dependencies (lock)
         if: matrix.composer-deps == 'lock'
         run: |
           composer install --no-progress --no-suggest
           composer validate
 
-          # Step to run phpcs
+      # Step to run phpcs
       - name: Run phpcs
         run: yarn phpcs:check

@@ -2,12 +2,14 @@
 	"name": "wp-swift-pwa",
 	"type": "module",
 	"version": "1.0.0",
+	"private": true,
+	"packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
 	"description": "The Progressive Web Applications (OWA) constructor with the ability to configure the manifest, service workers and other PWA application parameters.",
 	"author": {
 		"name": "Artemev Alexandr",
 		"url": "https://github.com/Zilero232"
 	},
-	"license": "MIT",
+	"license": "(GPL-2.0-or-later AND Proprietary)",
 	"homepage": "https://github.com/Zilero232/wp-swift-pwa#readme",
 	"repository": {
 		"url": "git+https://github.com/Zilero232/wp-swift-pwa.git"
@@ -63,6 +65,7 @@
 		"@emotion/styled": "^11.14.0",
 		"@mui/icons-material": "^6.2.0",
 		"@mui/material": "^6.2.0",
+		"@mui/x-charts": "^7.23.2",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"zustand": "^5.0.2"
@@ -101,5 +104,11 @@
 		"vite-plugin-external": "^4.3.1",
 		"vite-tsconfig-paths": "^5.1.0",
 		"vitest": "^2.1.4"
+	},
+	"lint-staged": {
+		"*.{ts,tsx,js,jsx,yaml}": [
+			"yarn lint:check",
+			"yarn cspell"
+		]
 	}
 }

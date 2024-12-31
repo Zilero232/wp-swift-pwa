@@ -1,6 +1,8 @@
+import { DisplayModeEnum, OrientationEnum } from '@/types/modules/settings';
+
 import type { PWASettings } from '../types';
 
-export const defaultSettings: PWASettings = {
+export const DEFAULT_SETTINGS: PWASettings = {
 	appName: 'Super Progressive Web Apps',
 	shortName: 'SuperPWA',
 	description: 'Progressive Web Apps Plugin for WordPress',
@@ -10,6 +12,6 @@ export const defaultSettings: PWASettings = {
 	themeColor: '#ffffff',
 	startPage: 'homepage',
 	useAMP: false,
-	orientation: 'portrait',
-	display: 'standalone',
+	orientation: OrientationEnum.Portrait,
+	display: DisplayModeEnum.Standalone,
 };

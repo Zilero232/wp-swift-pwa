@@ -10,7 +10,7 @@ interface ColorPickerProps {
 	onChange: (color: string) => void;
 }
 
-const ColorPicker = ({ label, value, onChange, helperText }: ColorPickerProps) => {
+const ColorPickerField = ({ label, value = 'default', onChange, helperText }: ColorPickerProps) => {
 	const anchorEl = useRef<HTMLElement>(null);
 
 	const [isOpen, setIsOpen] = useState(false);
@@ -33,9 +33,12 @@ const ColorPicker = ({ label, value, onChange, helperText }: ColorPickerProps) =
 						p: 1,
 						border: '1px solid',
 						borderColor: 'divider',
-						borderRadius: 1,
+						borderRadius: 2,
+						transition: 'all 0.3s ease',
+						boxShadow: theme => `0 2px 4px ${theme.palette.action.hover}`,
 						'&:hover': {
 							backgroundColor: 'action.hover',
+							boxShadow: theme => `0 4px 8px ${theme.palette.action.hover}`,
 						},
 					}}
 					onClick={handleClick}
@@ -47,12 +50,15 @@ const ColorPicker = ({ label, value, onChange, helperText }: ColorPickerProps) =
 							backgroundColor: value,
 							border: '2px solid',
 							borderColor: 'divider',
-							borderRadius: 1,
+							borderRadius: '50%',
+							transition: 'transform 0.3s ease',
+							'&:hover': {
+								transform: 'scale(1.1)',
+							},
 						}}
 						elevation={0}
 					/>
-
-					<Typography>{value?.toUpperCase()}</Typography>
+					<Typography sx={{ fontWeight: 500, color: 'text.secondary' }}>{value?.toUpperCase()}</Typography>
 				</Box>
 
 				{isOpen && (
@@ -71,4 +77,4 @@ const ColorPicker = ({ label, value, onChange, helperText }: ColorPickerProps) =
 	);
 };
 
-export default ColorPicker;
+export default ColorPickerField;

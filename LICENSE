@@ -1,21 +1,23 @@
-MIT License
+WordPress Plugin License
 
-Copyright (c) 2024 Alexander
+This plugin is released under a dual license:
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+1. GNU General Public License v2.0 or later (GPL-2.0-or-later)
+   The basic version of this plugin is licensed under GPL v2 or later.
+   See: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+2. Proprietary License
+   Premium features and services are subject to a commercial license.
+   All rights reserved.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+Copyright (c) 2024 Artemev Alexandr
+
+Premium Features:
+- Usage of premium features requires a valid license key
+- Redistribution of premium features is prohibited
+- Modification of premium features source code is prohibited
+- Commercial use of premium features requires a paid license
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.

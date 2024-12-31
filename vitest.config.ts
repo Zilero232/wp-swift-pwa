@@ -2,7 +2,7 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
-	plugins: [tsconfigPaths()],
+	plugins: [tsconfigPaths() as any],
 	test: {
 		environment: 'node',
 		include: ['./**/*.spec.ts'],

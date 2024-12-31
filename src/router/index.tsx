@@ -1,34 +1,61 @@
-import { useEffect, useState } from 'react';
+import { Box, CircularProgress } from '@mui/material';
+import { Suspense, useEffect } from 'react';
 
-import { ROUTES_ENUM } from '@/constants/modules/routes';
+import { MainLayout } from '@/layout/main-layout';
+import {
+	AnalyticsPage,
+	CachePage,
+	DashboardPage,
+	LicensePage,
+	ManifestPage,
+	NotificationsPage,
+	ServiceWorkerPage,
+} from '@/pages/index';
+import { useStore } from '@/store/index';
+import { ROUTES_ENUM } from '@/types/modules/navigations';
 
-import { MainLayout } from '../layout/main-layout';
-import { SettingsPage } from '../pages/settings-page';
-
-// Defining the type for pages.
-export type PageKey = keyof typeof pages;
-
-const pages = {
-	[ROUTES_ENUM.Home]: SettingsPage,
-	[ROUTES_ENUM.Settings]: SettingsPage,
-	[ROUTES_ENUM.Help]: SettingsPage,
-};
+const LoadingFallback = () => (
+	<Box
+		sx={{
+			display: 'flex',
+			justifyContent: 'center',
+			alignItems: 'center',
+			height: '100vh',
+		}}
+	>
+		<CircularProgress />
+	</Box>
+);
+const pages: Record<ROUTES_ENUM, () => JSX.Element> = {
+	[ROUTES_ENUM.Dashboard]: () => <DashboardPage />,
+	[ROUTES_ENUM.Manifest]: () => <ManifestPage />,
+	[ROUTES_ENUM.ServiceWorker]: () => <ServiceWorkerPage />,
+	[ROUTES_ENUM.Cache]: () => <CachePage />,
+	[ROUTES_ENUM.Notifications]: () => <NotificationsPage />,
+	[ROUTES_ENUM.Analytics]: () => <AnalyticsPage />,
+	[ROUTES_ENUM.License]: () => <LicensePage />,
+} as const;
 
 const Router = () => {
-	const [currentPage, setCurrentPage] = useState<PageKey>(ROUTES_ENUM.Home);
+	const {
+		navigation: { currentPage },
+		navigationActions: { setCurrentPage },
+	} = useStore();
 
 	useEffect(() => {
 		const urlParams = new URLSearchParams(window.location.search);
-		const page = (urlParams.get('page') as PageKey) || ROUTES_ENUM.Home;
+		const page = (urlParams.get('page') as ROUTES_ENUM) || ROUTES_ENUM.Dashboard;
 
 		setCurrentPage(page);
 	}, []);
 
-	const PageComponent = pages[currentPage] || SettingsPage;
+	const PageComponent = pages[currentPage] || DashboardPage;
 
 	return (
 		<MainLayout>
-			<PageComponent />
+			<Suspense fallback={<LoadingFallback />}>
+				<PageComponent />
+			</Suspense>
 		</MainLayout>
 	);
 };

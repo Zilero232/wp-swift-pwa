@@ -34,7 +34,7 @@ class Admin_Menu {
             __('Swift PWA', 'wsp'),
             __('Swift PWA', 'wsp'),
             'manage_options',
-            WSP_SLUG,
+            WSP_SLUG . '-settings',
             array($this, 'admin_display_root'),
             'dashicons-performance',
             6
@@ -43,7 +43,7 @@ class Admin_Menu {
         // Loop through the submenus array to create each submenu
         foreach ($this->submenus as $submenu) {
             add_submenu_page(
-                WSP_SLUG,
+                WSP_SLUG . '-settings',
                 $submenu['page_title'],
                 $submenu['page_title'],
                 'manage_options',
@@ -51,9 +51,6 @@ class Admin_Menu {
                 array($this, 'admin_display_root'),
             );
         }
-
-        // Remove 'Perfecto Settings' from the submenus, but keep it as a main menu item
-        remove_submenu_page(WSP_SLUG, WSP_SLUG);
     }
 
     /**

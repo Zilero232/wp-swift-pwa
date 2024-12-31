@@ -57,11 +57,7 @@ yarn-error.log*
 # Local development files
 # ===========================
 .env
-.env.local
-.env.*.local
-.bashrc
-.nx
-.
+.srv
 
 # ===========================
 # Miscellaneous files

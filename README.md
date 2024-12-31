@@ -76,7 +76,7 @@ These folks keep the project moving and are resources for help.
 
 ## 📄 License
 
-License `wp-swift-pwa` is licensed under the [MIT License](LICENSE).
+License `wp-swift-pwa` is licensed under the [GNU General Public License v2 or later](LICENSE).
 
 Be part of the musical process! 🎶
 Add some rhythm and style to your commits with `wp-swift-pwa` and turn your workflow into a masterpiece! 🎸
