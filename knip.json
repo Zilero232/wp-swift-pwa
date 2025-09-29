@@ -1,7 +1,0 @@
-{
-	"$schema": "https://unpkg.com/knip@5/schema.json",
-	"entry": "./src/main.tsx",
-	"project": ["./src/**/*"],
-	"ignore": ["node_modules", "build", "coverage"],
-	"ignoreDependencies": ["ts-node"]
-}

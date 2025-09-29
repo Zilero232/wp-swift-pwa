@@ -1,20 +1,17 @@
-import { v4wp } from '@kucrut/vite-for-wp';
-import react from '@vitejs/plugin-react';
-import path from 'node:path';
-import { defineConfig } from 'vite';
+import { fileURLToPath, URL } from 'node:url'
+
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueDevTools from 'vite-plugin-vue-devtools'
+import tailwindcss from '@tailwindcss/vite'
+import { v4wp } from '@kucrut/vite-for-wp'
 
 // https://vite.dev/config/
 export default defineConfig({
-	plugins: [
-		v4wp({
-			input: 'src/main.tsx',
-			outDir: 'build',
-		}),
-		react(),
-	],
-	resolve: {
-		alias: {
-			'@': path.resolve(__dirname, './src'),
-		},
-	},
-});
+  plugins: [v4wp({ input: 'src/main.ts', outDir: 'build' }), vue(), vueDevTools(), tailwindcss()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+})

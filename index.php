@@ -1,22 +1,31 @@
 <?php
 /**
- * Plugin Name: WP Swift PWA
- * Description: A plugin to create a PWA for WordPress.
- * Version: 1.0
- * Author: Artemev Aleksandr
+ * Plugin Name: [Zilero] Swift PWA
+ * Plugin URI: https://github.com/Zilero232/wp-swift-pwa
+ * Description: Generates the `manifest.json` file, which is used for managing and storing the data related to Swift PWA configurations. It integrates with various data sources and provides an efficient way to manage and update Swift PWA-specific content and settings.
+ * Version: 1.0.0
+ * Author: zilero
+ * Author URI: https://github.com/Zilero232
+ *
+ * @package Zilero\SwiftPWA
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (!defined('ABSPATH')) {
 	exit;
 }
 
-const WSP_SLUG = 'wp-swift-pwa';
-const WSP_NAME = 'WP Swift PWA';
-const WSP_VERSION = '1.0.0';
+// Defined global variables.
+const SWIFT_PWA_PLUGIN_VER = '1.0.0';
+const SWIFT_PWA_SLUG = 'swift-pwa';
+const SWIFT_PWA_PLUGIN_REST_API_BASE = SWIFT_PWA_SLUG . '-api/v1';
 
-define( 'WSP_DIR', plugin_dir_path( __FILE__ ) );
-define( 'WSP_URI', plugin_dir_url( __FILE__ ) );
+// Defined global constants.
+define('SWIFT_PWA_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('SWIFT_PWA_PLUGIN_PATH', plugin_dir_path(__FILE__));
 
-require_once WSP_DIR . 'includes/wp-swift-pwa.php';
 
-require_once WSP_DIR . '/vendor/autoload.php';
+// Require files.
+require_once SWIFT_PWA_PLUGIN_PATH . 'includes/wp-swift-pwa.php';
+
+// // Require composer autoload.
+require_once SWIFT_PWA_PLUGIN_PATH . 'vendor/autoload.php';

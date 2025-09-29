@@ -1,21 +1,14 @@
-import tsconfigPaths from 'vite-tsconfig-paths';
-import { defineConfig } from 'vitest/config';
+import { fileURLToPath } from 'node:url'
+import { mergeConfig, defineConfig, configDefaults } from 'vitest/config'
+import viteConfig from './vite.config'
 
-export default defineConfig({
-	plugins: [tsconfigPaths() as any],
-	test: {
-		environment: 'node',
-		include: ['./**/*.spec.ts'],
-		maxConcurrency: 5,
-		clearMocks: true,
-		silent: false,
-		logHeapUsage: true,
-		mockReset: true,
-		coverage: {
-			provider: 'v8',
-			include: ['./src/**/*'],
-			thresholds: { 100: true },
-			skipFull: true,
-		},
-	},
-});
+export default mergeConfig(
+  viteConfig,
+  defineConfig({
+    test: {
+      environment: 'jsdom',
+      exclude: [...configDefaults.exclude, 'e2e/**'],
+      root: fileURLToPath(new URL('./', import.meta.url)),
+    },
+  }),
+)

@@ -1,36 +1,66 @@
 <?php
 /**
- * Brands filter.
+ * Enqueue assets class.
  *
- * @since 1.0.0
+ * @package SwiftPWA
  */
 
-namespace WP_Swift_PWA\Enqueue;
+namespace SwiftPWA\Enqueue;
 
 use Kucrut\Vite;
 
-class Enqueue {
-    public function __construct() {
-        add_action(
-            'admin_enqueue_scripts',
-            array(
-                $this,
-                'admin_enqueue_scripts',
-            )
-        );
-    }
+class Enqueue
+{
+	/**
+	 * Singleton instance
+	 *
+	 * @var self
+	 */
+	private static $instance;
 
-    public function admin_enqueue_scripts() {
-        Vite\enqueue_asset(
-            WSP_DIR . '/build',
-            'src/main.tsx',
-            [
-                'handle' => 'my-script-handle',
-                'dependencies' => [ 'react', 'react-dom' ],
-                'in-footer' => true,
-            ]
-        );
-    }
+	/**
+	 * Constructor
+	 */
+	private function __construct()
+	{
+		$callback = function ($method_name) {
+			return array($this, $method_name);
+		};
+
+		add_action('admin_enqueue_scripts', $callback('admin_enqueue_scripts'));
+	}
+
+	/**
+	 * Returns the singleton instance of the class.
+	 *
+	 * @return self Singleton instance of the class.
+	 */
+	public static function init(): self
+	{
+		if (self::$instance === null) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
+
+	/**
+	 * Enqueue scripts
+	 *
+	 * @return void
+	 */
+	public function admin_enqueue_scripts()
+	{
+		Vite\enqueue_asset(
+			SWIFT_PWA_PLUGIN_PATH . 'build',
+			'src/main.ts',
+			[
+				'handle' => 'swift-pwa-admin-js',
+				'in-footer' => true,
+			]
+		);
+	}
 }
 
-new Enqueue();
+// Initialize singleton instance.
+Enqueue::init();

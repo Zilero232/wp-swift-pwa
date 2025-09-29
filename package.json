@@ -1,114 +1,55 @@
 {
-	"name": "wp-swift-pwa",
-	"type": "module",
-	"version": "1.0.0",
-	"private": true,
-	"packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
-	"description": "The Progressive Web Applications (OWA) constructor with the ability to configure the manifest, service workers and other PWA application parameters.",
-	"author": {
-		"name": "Artemev Alexandr",
-		"url": "https://github.com/Zilero232"
-	},
-	"license": "(GPL-2.0-or-later AND Proprietary)",
-	"homepage": "https://github.com/Zilero232/wp-swift-pwa#readme",
-	"repository": {
-		"url": "git+https://github.com/Zilero232/wp-swift-pwa.git"
-	},
-	"bugs": {
-		"url": "https://github.com/Zilero232/wp-swift-pwa/issues"
-	},
-	"keywords": [
-		"pwa",
-		"progressive web app",
-		"web app manifest",
-		"service worker",
-		"pwa constructor",
-		"pwa builder",
-		"pwa generator",
-		"manifest generator",
-		"web app generator",
-		"offline first",
-		"installable web app",
-		"app shell",
-		"push notifications",
-		"web app optimization",
-		"mobile web",
-		"responsive design",
-		"web capabilities",
-		"web platform",
-		"typescript",
-		"react",
-		"material-ui",
-		"mui"
-	],
-	"config": {
-		"commitizen": {
-			"path": "commit-jazzer"
-		}
-	},
-	"scripts": {
-		"build": "vite build",
-		"dev": "vite",
-		"lint:check": "yarn eslint",
-		"lint:fix": "yarn eslint --fix",
-		"phpcs:check": "php ./vendor/bin/grumphp run --tasks=phpcs",
-		"phpcs:fix": "php ./vendor/bin/phpcbf --standard=phpcs.xml",
-		"test": "vitest run -c ./vitest.config.ts",
-		"test:watch": "vitest watch -c ./vitest.config.ts",
-		"commit": "yarn git-cz",
-		"knip": "knip -c ./knip.json -t ./tsconfig.json",
-		"cspell": "cspell lint -c ./.cspell.json --gitignore --cache --cache-location ./cache/cspellcache",
-		"prepare": "husky"
-	},
-	"dependencies": {
-		"@emotion/react": "^11.14.0",
-		"@emotion/styled": "^11.14.0",
-		"@mui/icons-material": "^6.2.0",
-		"@mui/material": "^6.2.0",
-		"@mui/x-charts": "^7.23.2",
-		"react": "^18.3.1",
-		"react-dom": "^18.3.1",
-		"zustand": "^5.0.2"
-	},
-	"devDependencies": {
-		"@antfu/eslint-config": "^3.8.0",
-		"@cspell/dict-ru_ru": "^2.2.4",
-		"@eslint/js": "^9.15.0",
-		"@kucrut/vite-for-wp": "^0.9.4",
-		"@types/node": "^22.9.0",
-		"@types/react": "^18.3.12",
-		"@types/react-dom": "^18.3.1",
-		"@vitejs/plugin-react": "^4.3.4",
-		"@vitest/coverage-v8": "^2.1.5",
-		"@vitest/ui": "^2.1.5",
-		"commander": "^12.1.0",
-		"commit-jazzer": "^1.0.5",
-		"cspell": "^8.16.0",
-		"eslint": "^9.13.0",
-		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-format": "^0.1.2",
-		"eslint-plugin-jsx-a11y": "^6.10.2",
-		"eslint-plugin-prettier": "^5.2.1",
-		"eslint-plugin-react": "^7.37.2",
-		"eslint-plugin-react-hooks": "^5.1.0",
-		"eslint-plugin-react-refresh": "^0.4.16",
-		"globals": "^15.12.0",
-		"husky": "^9.1.6",
-		"knip": "^5.36.3",
-		"lint-staged": "^15.2.10",
-		"rollup-plugin-external-globals": "^0.13.0",
-		"tsconfig-paths-webpack-plugin": "^4.1.0",
-		"typescript": "^5.6.3",
-		"typescript-eslint": "^8.15.0",
-		"vite": "^6.0.1",
-		"vite-plugin-external": "^4.3.1",
-		"vite-tsconfig-paths": "^5.1.0",
-		"vitest": "^2.1.4"
-	},
-	"lint-staged": {
-		"*.{ts,tsx,js,jsx,yaml}": [
-			"yarn lint:check",
-			"yarn cspell"
-		]
-	}
+  "name": "wp-swift-pwa",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "test:unit": "vitest",
+    "test:e2e": "playwright test",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "@kucrut/vite-for-wp": "^0.12.0",
+    "@primeuix/themes": "^1.2.5",
+    "@tailwindcss/vite": "^4.1.13",
+    "pinia": "^3.0.3",
+    "primevue": "^4.3.9",
+    "tailwindcss": "^4.1.13",
+    "vue": "^3.5.18",
+    "vue-router": "^4.5.1",
+    "zod": "^4.1.11"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.1",
+    "@tsconfig/node22": "^22.0.2",
+    "@types/jsdom": "^21.1.7",
+    "@types/node": "^22.16.5",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vitest/eslint-plugin": "^1.3.4",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/eslint-config-typescript": "^14.6.0",
+    "@vue/test-utils": "^2.4.6",
+    "@vue/tsconfig": "^0.7.0",
+    "eslint": "^9.31.0",
+    "eslint-plugin-playwright": "^2.2.0",
+    "eslint-plugin-vue": "~10.3.0",
+    "jiti": "^2.4.2",
+    "jsdom": "^26.1.0",
+    "npm-run-all2": "^8.0.4",
+    "prettier": "3.6.2",
+    "typescript": "~5.8.0",
+    "vite": "^7.0.6",
+    "vite-plugin-vue-devtools": "^8.0.0",
+    "vitest": "^3.2.4",
+    "vue-tsc": "^3.0.4"
+  }
 }

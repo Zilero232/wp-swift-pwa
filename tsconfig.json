@@ -1,7 +1,14 @@
 {
-	"extends": "./tsconfig.base.json",
-	"compilerOptions": {
-		"baseUrl": "./src"
-	},
-	"include": ["./src/**/*.ts", "./src/**/*.tsx", "./vite.config.ts", "./vitest.config.ts", "src/main.tsx"]
+  "files": [],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.vitest.json"
+    }
+  ]
 }
