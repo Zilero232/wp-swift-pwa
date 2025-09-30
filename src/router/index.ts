@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router';
 
 const router = createRouter({
   // Use hash history for WordPress admin context to avoid conflicts
@@ -6,10 +6,10 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      component: () => import('@/views/PWASettingsView.vue'),
+      component: () => import('@/layouts/MainLayout.vue'),
       children: [
         {
-          path: '/manifest',
+          path: '',
           name: 'manifest',
           component: () => import('@/views/ManifestView.vue'),
         },
@@ -31,6 +31,6 @@ const router = createRouter({
       ],
     },
   ],
-})
+});
 
-export default router
+export default router;

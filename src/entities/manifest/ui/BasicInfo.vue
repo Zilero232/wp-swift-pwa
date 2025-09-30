@@ -1,5 +1,39 @@
+<script setup lang="ts">
+import InputText from 'primevue/inputtext'
+import Textarea from 'primevue/textarea'
+import FormField from '@/shared/ui/FormField.vue'
+import type { ManifestSettings } from '@/shared/types/manifest'
+
+interface Props {
+  manifest: ManifestSettings
+  errors?: string[]
+}
+
+interface Emits {
+  (e: 'update:field', field: keyof ManifestSettings, value: unknown): void
+}
+
+const props = defineProps<Props>()
+const emit = defineEmits<Emits>()
+
+const updateField = (field: keyof ManifestSettings, value: unknown) => {
+  emit('update:field', field, value)
+}
+
+const getFieldError = (field: string): string | undefined => {
+  if (!props.errors) return undefined
+
+  return props.errors.find(
+    (error) =>
+      error.toLowerCase().includes(field.toLowerCase()) ||
+      (field === 'name' && error.includes('название')) ||
+      (field === 'short_name' && error.includes('короткое')),
+  )
+}
+</script>
+
 <template>
-  <div class="basic-info">
+  <div class="flex flex-col gap-6">
     <FormField
       label="Название приложения"
       help="Полное название вашего PWA приложения"
@@ -39,45 +73,3 @@
     </FormField>
   </div>
 </template>
-
-<script setup lang="ts">
-import InputText from 'primevue/inputtext'
-import Textarea from 'primevue/textarea'
-import FormField from '@/shared/ui/FormField.vue'
-import type { ManifestSettings } from '@/shared/types/manifest'
-
-interface Props {
-  manifest: ManifestSettings
-  errors?: string[]
-}
-
-interface Emits {
-  (e: 'update:field', field: keyof ManifestSettings, value: unknown): void
-}
-
-const props = defineProps<Props>()
-const emit = defineEmits<Emits>()
-
-const updateField = (field: keyof ManifestSettings, value: unknown) => {
-  emit('update:field', field, value)
-}
-
-const getFieldError = (field: string): string | undefined => {
-  if (!props.errors) return undefined
-
-  return props.errors.find(
-    (error) =>
-      error.toLowerCase().includes(field.toLowerCase()) ||
-      (field === 'name' && error.includes('название')) ||
-      (field === 'short_name' && error.includes('короткое')),
-  )
-}
-</script>
-
-<style scoped>
-.basic-info {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-</style>

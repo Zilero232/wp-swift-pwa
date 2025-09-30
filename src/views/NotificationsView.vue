@@ -1,98 +1,92 @@
 <template>
-  <div class="notifications-view">
-    <div class="view-header">
-      <h2>Push-уведомления</h2>
-      <p>Настройка веб-уведомлений и VAPID ключей</p>
+  <div class="p-4 sm:p-8">
+    <div class="mb-8 text-center">
+      <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Push-уведомления</h2>
+      <p class="text-gray-600 text-lg">Настройка веб-уведомлений и VAPID ключей</p>
     </div>
 
-    <div class="view-content">
-      <Card class="notifications-status-card">
+    <div class="flex flex-col gap-8">
+      <Card>
         <template #header>
-          <div class="card-header">
-            <i class="pi pi-bell"></i>
-            <h3>Статус уведомлений</h3>
+          <div class="flex items-center gap-3 p-6 pb-0">
+            <i class="pi pi-bell text-xl text-blue-600"></i>
+            <h3 class="text-xl font-semibold text-gray-800 flex-1">Статус уведомлений</h3>
             <div
-              class="status-indicator"
-              :class="{ 'status-indicator--active': notificationsStore.isEnabled }"
+              class="px-3 py-1 rounded-full text-xs font-semibold uppercase"
+              :class="notificationsStore.isEnabled ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
             >
               {{ notificationsStore.isEnabled ? 'Включены' : 'Отключены' }}
             </div>
           </div>
         </template>
 
-        <NotificationBasicSettings
-          :settings="notificationsStore.settings"
-          @update:field="updateNotificationField"
-        />
+        <template #content>
+          <NotificationBasicSettings :settings="notificationsStore.settings" @update:field="updateNotificationField" />
+        </template>
       </Card>
 
-      <Card v-if="notificationsStore.isEnabled" class="vapid-card">
+      <Card v-if="notificationsStore.isEnabled">
         <template #header>
-          <div class="card-header">
-            <i class="pi pi-key"></i>
-            <h3>VAPID ключи</h3>
-            <Button
-              icon="pi pi-refresh"
-              label="Генерировать новые"
-              size="small"
-              text
-              @click="generateVapidKeys"
-            />
+          <div class="flex items-center gap-3 p-6 pb-0">
+            <i class="pi pi-key text-xl text-blue-600"></i>
+            <h3 class="text-xl font-semibold text-gray-800 flex-1">VAPID ключи</h3>
+            <Button icon="pi pi-refresh" label="Генерировать новые" size="small" text @click="generateVapidKeys" />
           </div>
         </template>
 
-        <VapidSettings
-          :settings="notificationsStore.settings"
-          @update:field="updateNotificationField"
-          @generate="generateVapidKeys"
-        />
+        <template #content>
+          <VapidSettings :settings="notificationsStore.settings" @update:field="updateNotificationField" @generate="generateVapidKeys" />
+        </template>
       </Card>
 
-      <Card v-if="notificationsStore.isEnabled" class="notification-templates-card">
+      <Card v-if="notificationsStore.isEnabled">
         <template #header>
-          <div class="card-header">
-            <i class="pi pi-file-edit"></i>
-            <h3>Шаблоны уведомлений</h3>
+          <div class="flex items-center gap-3 p-6 pb-0">
+            <i class="pi pi-file-edit text-xl text-blue-600"></i>
+            <h3 class="text-xl font-semibold text-gray-800">Шаблоны уведомлений</h3>
           </div>
         </template>
 
-        <NotificationTemplates
-          :templates="notificationsStore.templates"
-          @update:templates="notificationsStore.updateTemplates"
-        />
+        <template #content>
+          <NotificationTemplates :templates="notificationsStore.templates" @update:templates="notificationsStore.updateTemplates" />
+        </template>
       </Card>
 
-      <Card v-if="notificationsStore.isEnabled" class="test-card">
+      <Card v-if="notificationsStore.isEnabled">
         <template #header>
-          <div class="card-header">
-            <i class="pi pi-send"></i>
-            <h3>Тестирование</h3>
+          <div class="flex items-center gap-3 p-6 pb-0">
+            <i class="pi pi-send text-xl text-blue-600"></i>
+            <h3 class="text-xl font-semibold text-gray-800">Тестирование</h3>
           </div>
         </template>
 
-        <NotificationTest @send-test="sendTestNotification" :loading="testLoading" />
+        <template #content>
+          <NotificationTest @send-test="sendTestNotification" :loading="testLoading" />
+        </template>
       </Card>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import Button from 'primevue/button'
-import Card from '@/shared/ui/Card.vue'
-import NotificationBasicSettings from '@/entities/notifications/ui/BasicSettings.vue'
-import VapidSettings from '@/entities/notifications/ui/VapidSettings.vue'
-import NotificationTemplates from '@/entities/notifications/ui/Templates.vue'
-import NotificationTest from '@/entities/notifications/ui/Test.vue'
-import { useNotificationsStore } from '@/entities/notifications/model/store'
-import type { NotificationSettings } from '@/shared/types/notifications'
+import { ref } from 'vue';
+import { Card, Button } from 'primevue';
 
-const notificationsStore = useNotificationsStore()
-const testLoading = ref(false)
+import NotificationBasicSettings from '@/entities/notifications/ui/BasicSettings.vue';
+import VapidSettings from '@/entities/notifications/ui/VapidSettings.vue';
+import NotificationTemplates from '@/entities/notifications/ui/Templates.vue';
+import NotificationTest from '@/entities/notifications/ui/Test.vue';
+
+import { useNotificationsStore } from '@/entities/notifications/model/store';
+
+import type { NotificationSettings } from '@/shared/types/notifications';
+
+const notificationsStore = useNotificationsStore();
+const testLoading = ref(false);
 
 const updateNotificationField = (field: keyof NotificationSettings, value: unknown) => {
-  notificationsStore.updateSettings({ [field]: value })
-}
+  notificationsStore.updateSettings({ [field]: value });
+};
 
 const generateVapidKeys = async () => {
   try {
@@ -102,19 +96,19 @@ const generateVapidKeys = async () => {
       headers: {
         'X-WP-Nonce': window.swiftPWA?.nonce || '',
       },
-    }).then((res) => res.json())
+    }).then((res) => res.json());
 
     notificationsStore.updateSettings({
       vapid_public_key: keys.public_key,
       vapid_private_key: keys.private_key,
-    })
+    });
   } catch (error) {
-    console.error('Error generating VAPID keys:', error)
+    console.error('Error generating VAPID keys:', error);
   }
-}
+};
 
 const sendTestNotification = async (notification: any) => {
-  testLoading.value = true
+  testLoading.value = true;
   try {
     await fetch('/wp-json/swift-pwa-api/v1/notifications/test', {
       method: 'POST',
@@ -123,108 +117,11 @@ const sendTestNotification = async (notification: any) => {
         'X-WP-Nonce': window.swiftPWA?.nonce || '',
       },
       body: JSON.stringify(notification),
-    })
+    });
   } catch (error) {
-    console.error('Error sending test notification:', error)
+    console.error('Error sending test notification:', error);
   } finally {
-    testLoading.value = false
+    testLoading.value = false;
   }
-}
+};
 </script>
-
-<style scoped>
-.notifications-view {
-  padding: 2rem;
-}
-
-.view-header {
-  margin-bottom: 2rem;
-  text-align: center;
-}
-
-.view-header h2 {
-  margin: 0 0 0.5rem 0;
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--text-color);
-}
-
-.view-header p {
-  margin: 0;
-  color: var(--text-color-secondary);
-  font-size: 1.1rem;
-}
-
-.view-content {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.card-header {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1.5rem 1.5rem 0;
-}
-
-.card-header i {
-  font-size: 1.25rem;
-  color: var(--primary-color);
-}
-
-.card-header h3 {
-  margin: 0;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--text-color);
-  flex: 1;
-}
-
-.status-indicator {
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  background: var(--red-100);
-  color: var(--red-700);
-}
-
-.status-indicator--active {
-  background: var(--green-100);
-  color: var(--green-700);
-}
-
-.notifications-status-card,
-.vapid-card,
-.notification-templates-card,
-.test-card {
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--surface-border);
-  transition: box-shadow 0.3s ease;
-}
-
-.notifications-status-card:hover,
-.vapid-card:hover,
-.notification-templates-card:hover,
-.test-card:hover {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
-}
-
-@media (max-width: 768px) {
-  .notifications-view {
-    padding: 1rem;
-  }
-
-  .view-header h2 {
-    font-size: 1.5rem;
-  }
-
-  .view-header p {
-    font-size: 1rem;
-  }
-}
-</style>

@@ -27,7 +27,7 @@ class Plugin
 
 		register_activation_hook(SWIFT_PWA_PLUGIN_PATH, $callback('activation_callback'));
 		register_deactivation_hook(SWIFT_PWA_PLUGIN_PATH, $callback('deactivation_callback'));
-		register_uninstall_hook(SWIFT_PWA_PLUGIN_PATH, $callback('uninstall_callback'));
+		register_uninstall_hook(SWIFT_PWA_PLUGIN_PATH, [self::class, 'uninstall_callback']);
 	}
 
 	/**
@@ -49,7 +49,7 @@ class Plugin
 	 *
 	 * @return void
 	 */
-	public function activation_callback(): void
+	public static function activation_callback(): void
 	{
 		// Code for plugin activation
 	}
@@ -59,7 +59,7 @@ class Plugin
 	 *
 	 * @return void
 	 */
-	public function deactivation_callback(): void
+	public static function deactivation_callback(): void
 	{
 		// Code for plugin deactivation
 	}
@@ -69,7 +69,7 @@ class Plugin
 	 *
 	 * @return void
 	 */
-	public function uninstall_callback(): void
+	public static function uninstall_callback(): void
 	{
 		// Code for plugin uninstall
 	}

@@ -1,46 +1,7 @@
-<template>
-  <div class="manifest-preview">
-    <div class="code-header">
-      <div class="file-info">
-        <i class="pi pi-file-code"></i>
-        <span>manifest.json</span>
-      </div>
-      <div class="validation-status">
-        <Tag
-          :value="validation.valid ? 'Валидный' : 'Ошибки'"
-          :severity="validation.valid ? 'success' : 'danger'"
-        />
-        <span v-if="!validation.valid" class="error-count">
-          {{ validation.errors.length }} ошибок
-        </span>
-      </div>
-    </div>
-
-    <div class="code-container">
-      <pre><code class="json">{{ formattedManifest }}</code></pre>
-    </div>
-
-    <div v-if="!validation.valid || validation.warnings.length > 0" class="validation-messages">
-      <div v-if="validation.errors.length > 0" class="errors">
-        <h4><i class="pi pi-times-circle"></i> Ошибки:</h4>
-        <ul>
-          <li v-for="error in validation.errors" :key="error">{{ error }}</li>
-        </ul>
-      </div>
-
-      <div v-if="validation.warnings.length > 0" class="warnings">
-        <h4><i class="pi pi-exclamation-triangle"></i> Предупреждения:</h4>
-        <ul>
-          <li v-for="warning in validation.warnings" :key="warning">{{ warning }}</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { computed } from 'vue'
-import Tag from 'primevue/tag'
+import { Tag } from 'primevue'
+
 import type { ManifestValidationResult } from '@/entities/manifest/model/validation'
 
 interface Props {
@@ -60,114 +21,58 @@ const formattedManifest = computed(() => {
 })
 </script>
 
-<style scoped>
-.manifest-preview {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+<template>
+  <div class="flex flex-col gap-4">
+    <div
+      class="flex justify-between items-center p-3 bg-gray-50 rounded-t-lg border-b border-gray-200"
+    >
+      <div class="flex items-center gap-2 font-semibold text-gray-700">
+        <i class="pi pi-file-code"></i>
+        <span>manifest.json</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <Tag
+          :value="validation.valid ? 'Валидный' : 'Ошибки'"
+          :severity="validation.valid ? 'success' : 'danger'"
+        />
+        <span v-if="!validation.valid" class="text-sm text-red-600">
+          {{ validation.errors.length }} ошибок
+        </span>
+      </div>
+    </div>
 
-.code-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  background: var(--surface-100);
-  border-radius: 8px 8px 0 0;
-  border-bottom: 1px solid var(--surface-border);
-}
+    <div class="bg-gray-900 rounded-b-lg overflow-auto max-h-96">
+      <pre
+        class="m-0 p-4 overflow-auto"
+      ><code class="text-gray-300 font-mono text-sm leading-relaxed">{{ formattedManifest }}</code></pre>
+    </div>
 
-.file-info {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-weight: 600;
-  color: var(--text-color);
-}
+    <div v-if="!validation.valid || validation.warnings.length > 0" class="flex flex-col gap-4">
+      <div
+        v-if="validation.errors.length > 0"
+        class="p-4 bg-red-50 border border-red-200 rounded-lg"
+      >
+        <h4 class="m-0 mb-2 text-red-700 flex items-center gap-2">
+          <i class="pi pi-times-circle"></i>
+          Ошибки:
+        </h4>
+        <ul class="m-0 pl-6 text-red-600">
+          <li v-for="error in validation.errors" :key="error" class="mb-1">{{ error }}</li>
+        </ul>
+      </div>
 
-.validation-status {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.error-count {
-  font-size: 0.875rem;
-  color: var(--red-600);
-}
-
-.code-container {
-  background: #1e1e1e;
-  border-radius: 0 0 8px 8px;
-  overflow: auto;
-  max-height: 400px;
-}
-
-pre {
-  margin: 0;
-  padding: 1rem;
-  overflow: auto;
-}
-
-code.json {
-  color: #d4d4d4;
-  font-family: 'Fira Code', 'Courier New', monospace;
-  font-size: 0.875rem;
-  line-height: 1.5;
-}
-
-.validation-messages {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.errors,
-.warnings {
-  padding: 1rem;
-  border-radius: 8px;
-}
-
-.errors {
-  background: var(--red-50);
-  border: 1px solid var(--red-200);
-}
-
-.warnings {
-  background: var(--orange-50);
-  border: 1px solid var(--orange-200);
-}
-
-.errors h4 {
-  margin: 0 0 0.5rem 0;
-  color: var(--red-700);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.warnings h4 {
-  margin: 0 0 0.5rem 0;
-  color: var(--orange-700);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-ul {
-  margin: 0;
-  padding-left: 1.5rem;
-}
-
-li {
-  margin-bottom: 0.25rem;
-}
-
-.errors li {
-  color: var(--red-600);
-}
-
-.warnings li {
-  color: var(--orange-600);
-}
-</style>
+      <div
+        v-if="validation.warnings.length > 0"
+        class="p-4 bg-orange-50 border border-orange-200 rounded-lg"
+      >
+        <h4 class="m-0 mb-2 text-orange-700 flex items-center gap-2">
+          <i class="pi pi-exclamation-triangle"></i>
+          Предупреждения:
+        </h4>
+        <ul class="m-0 pl-6 text-orange-600">
+          <li v-for="warning in validation.warnings" :key="warning" class="mb-1">{{ warning }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>

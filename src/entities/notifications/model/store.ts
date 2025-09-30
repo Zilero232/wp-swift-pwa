@@ -1,5 +1,6 @@
-import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
+import { defineStore } from 'pinia'
+
 import type { NotificationSettings, NotificationTemplate } from '@/shared/types/notifications'
 
 const defaultSettings: NotificationSettings = {
@@ -58,11 +59,13 @@ export const useNotificationsStore = defineStore('notifications', () => {
       ...template,
       id: Date.now().toString(),
     }
+
     templates.value.push(newTemplate)
   }
 
   const removeTemplate = (id: string) => {
     const index = templates.value.findIndex((t) => t.id === id)
+
     if (index !== -1) {
       templates.value.splice(index, 1)
     }
@@ -70,6 +73,7 @@ export const useNotificationsStore = defineStore('notifications', () => {
 
   const updateTemplate = (id: string, updates: Partial<NotificationTemplate>) => {
     const index = templates.value.findIndex((t) => t.id === id)
+
     if (index !== -1) {
       templates.value[index] = { ...templates.value[index], ...updates }
     }

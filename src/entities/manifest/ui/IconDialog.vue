@@ -1,66 +1,7 @@
-<template>
-  <Dialog
-    :visible="visible"
-    @update:visible="$emit('update:visible', $event)"
-    :header="editing ? 'Редактировать иконку' : 'Добавить иконку'"
-    modal
-    class="icon-dialog"
-  >
-    <form @submit.prevent="handleSubmit" class="icon-form">
-      <FormField label="URL иконки" :error="errors.src" required>
-        <InputText v-model="form.src" placeholder="https://example.com/icon.png" class="w-full" />
-      </FormField>
-
-      <div class="form-row">
-        <FormField label="Размеры" help="Например: 192x192 или any" :error="errors.sizes" required>
-          <InputText v-model="form.sizes" placeholder="192x192" class="w-full" />
-        </FormField>
-
-        <FormField label="Тип файла" :error="errors.type" required>
-          <Dropdown
-            v-model="form.type"
-            :options="ICON_TYPES"
-            option-label="label"
-            option-value="value"
-            class="w-full"
-          />
-        </FormField>
-      </div>
-
-      <FormField label="Назначение">
-        <Dropdown
-          v-model="form.purpose"
-          :options="ICON_PURPOSES"
-          option-label="label"
-          option-value="value"
-          placeholder="Выберите назначение"
-          class="w-full"
-          show-clear
-        />
-      </FormField>
-
-      <div v-if="form.src && !imageError" class="icon-preview">
-        <img :src="form.src" alt="Preview" @error="imageError = true" />
-      </div>
-    </form>
-
-    <template #footer>
-      <Button label="Отмена" text @click="$emit('cancel')" />
-      <Button
-        :label="editing ? 'Сохранить' : 'Добавить'"
-        @click="handleSubmit"
-        :disabled="!isValid"
-      />
-    </template>
-  </Dialog>
-</template>
-
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue'
-import Dialog from 'primevue/dialog'
-import Button from 'primevue/button'
-import InputText from 'primevue/inputtext'
-import Dropdown from 'primevue/dropdown'
+import { Dialog, Button, InputText, Dropdown } from 'primevue'
+
 import FormField from '@/shared/ui/FormField.vue'
 import { ICON_TYPES, ICON_PURPOSES } from '@/shared/config/constants'
 import type { ManifestIcon } from '@/shared/types/manifest'
@@ -163,29 +104,67 @@ watch(
 watch(() => form.value, validateForm, { deep: true })
 </script>
 
-<style scoped>
-.icon-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+<template>
+  <Dialog
+    :visible="visible"
+    @update:visible="$emit('update:visible', $event)"
+    :header="editing ? 'Редактировать иконку' : 'Добавить иконку'"
+    modal
+    class="w-full max-w-md"
+  >
+    <form @submit.prevent="handleSubmit" class="flex flex-col gap-4">
+      <FormField label="URL иконки" :error="errors.src" required>
+        <InputText v-model="form.src" placeholder="https://example.com/icon.png" class="w-full" />
+      </FormField>
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-}
+      <div class="grid grid-cols-2 gap-4">
+        <FormField label="Размеры" help="Например: 192x192 или any" :error="errors.sizes" required>
+          <InputText v-model="form.sizes" placeholder="192x192" class="w-full" />
+        </FormField>
 
-.icon-preview {
-  text-align: center;
-  padding: 1rem;
-  border: 1px dashed var(--surface-border);
-  border-radius: 8px;
-}
+        <FormField label="Тип файла" :error="errors.type" required>
+          <Dropdown
+            v-model="form.type"
+            :options="ICON_TYPES"
+            option-label="label"
+            option-value="value"
+            class="w-full"
+          />
+        </FormField>
+      </div>
 
-.icon-preview img {
-  max-width: 64px;
-  max-height: 64px;
-  border-radius: 8px;
-}
-</style>
+      <FormField label="Назначение">
+        <Dropdown
+          v-model="form.purpose"
+          :options="ICON_PURPOSES"
+          option-label="label"
+          option-value="value"
+          placeholder="Выберите назначение"
+          class="w-full"
+          show-clear
+        />
+      </FormField>
+
+      <div
+        v-if="form.src && !imageError"
+        class="text-center p-4 border border-dashed border-gray-300 rounded-lg"
+      >
+        <img
+          :src="form.src"
+          alt="Preview"
+          @error="imageError = true"
+          class="max-w-16 max-h-16 rounded-lg mx-auto"
+        />
+      </div>
+    </form>
+
+    <template #footer>
+      <Button label="Отмена" text @click="$emit('cancel')" />
+      <Button
+        :label="editing ? 'Сохранить' : 'Добавить'"
+        @click="handleSubmit"
+        :disabled="!isValid"
+      />
+    </template>
+  </Dialog>
+</template>

@@ -1,21 +1,3 @@
-<template>
-  <div class="browser-compatibility">
-    <div class="pwa-features">
-      <div v-for="feature in features" :key="feature" class="feature-item">
-        <i class="pi pi-check-circle"></i>
-        <span>{{ feature }}</span>
-      </div>
-    </div>
-
-    <div class="browser-info">
-      <p class="info-text">
-        <i class="pi pi-info-circle"></i>
-        PWA функции поддерживаются во всех современных браузерах
-      </p>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 interface Props {
   features: string[]
@@ -24,50 +6,24 @@ interface Props {
 defineProps<Props>()
 </script>
 
-<style scoped>
-.browser-compatibility {
-  padding: 1rem;
-}
+<template>
+  <div class="p-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3 mb-6">
+      <div
+        v-for="feature in features"
+        :key="feature"
+        class="flex items-center gap-3 p-3 bg-green-50 border border-green-200 rounded-lg text-green-700"
+      >
+        <i class="pi pi-check-circle text-green-600"></i>
+        <span>{{ feature }}</span>
+      </div>
+    </div>
 
-.pwa-features {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
-}
-
-.feature-item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  background: var(--green-50);
-  border: 1px solid var(--green-200);
-  border-radius: 6px;
-  color: var(--green-700);
-}
-
-.feature-item i {
-  color: var(--green-600);
-}
-
-.browser-info {
-  text-align: center;
-  padding: 1rem;
-  background: var(--surface-100);
-  border-radius: 6px;
-}
-
-.info-text {
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  color: var(--text-color-secondary);
-}
-
-.info-text i {
-  color: var(--primary-color);
-}
-</style>
+    <div class="text-center p-4 bg-gray-50 rounded-lg">
+      <p class="m-0 flex items-center justify-center gap-2 text-gray-600">
+        <i class="pi pi-info-circle text-blue-600"></i>
+        PWA функции поддерживаются во всех современных браузерах
+      </p>
+    </div>
+  </div>
+</template>

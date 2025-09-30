@@ -1,1 +1,19 @@
 @import './base.css';
+
+#wpcontent {
+  padding-left: 0;
+}
+
+#wpbody-content {
+  padding-bottom: 0;
+}
+
+#wpfooter {
+  display: none;
+}
+
+#swift-pwa-settings-app {
+  min-height: calc(100vh - 32px);
+  display: flex;
+  flex-direction: column;
+}

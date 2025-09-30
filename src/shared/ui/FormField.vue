@@ -1,19 +1,24 @@
 <template>
-  <div class="form-field" :class="{ 'form-field--error': hasError }">
-    <label v-if="label" :for="fieldId" class="form-field__label">
+  <div class="flex flex-col gap-2" :class="{ 'text-red-600': hasError }">
+    <label
+      v-if="label"
+      :for="fieldId"
+      class="text-sm font-medium text-gray-700"
+      :class="{ 'text-red-600': hasError }"
+    >
       {{ label }}
-      <span v-if="required" class="form-field__required">*</span>
+      <span v-if="required" class="text-red-500 ml-1">*</span>
     </label>
 
-    <div class="form-field__input">
+    <div>
       <slot />
     </div>
 
-    <small v-if="help && !hasError" class="form-field__help">
+    <small v-if="help && !hasError" class="text-xs text-gray-500 leading-relaxed">
       {{ help }}
     </small>
 
-    <small v-if="hasError" class="form-field__error">
+    <small v-if="hasError" class="text-xs text-red-500 leading-relaxed">
       {{ error }}
     </small>
   </div>
@@ -36,37 +41,3 @@ const props = withDefaults(defineProps<Props>(), {
 
 const hasError = computed(() => Boolean(props.error))
 </script>
-
-<style scoped>
-.form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.form-field__label {
-  font-weight: 500;
-  color: var(--text-color);
-  font-size: 0.875rem;
-}
-
-.form-field__required {
-  color: var(--red-500);
-}
-
-.form-field__help {
-  color: var(--text-color-secondary);
-  font-size: 0.75rem;
-  line-height: 1.4;
-}
-
-.form-field__error {
-  color: var(--red-500);
-  font-size: 0.75rem;
-  line-height: 1.4;
-}
-
-.form-field--error .form-field__label {
-  color: var(--red-500);
-}
-</style>

@@ -1,25 +1,49 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Button, Tag } from 'primevue'
+
+import type { ManifestIcon } from '@/shared/types/manifest'
+
+interface Props {
+  icon: ManifestIcon
+}
+
+interface Emits {
+  (e: 'edit'): void
+  (e: 'remove'): void
+}
+
+defineProps<Props>()
+defineEmits<Emits>()
+
+const imageError = ref(false)
+</script>
+
 <template>
-  <div class="icon-item">
-    <div class="icon-item__preview">
+  <div class="flex items-center gap-4 p-4 border border-gray-200 rounded-lg bg-white">
+    <div
+      class="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center flex-shrink-0"
+    >
       <img
         v-if="!imageError"
         :src="icon.src"
         :alt="`Icon ${icon.sizes}`"
         @error="imageError = true"
+        class="w-full h-full object-cover"
       />
-      <i v-else class="pi pi-image icon-item__fallback"></i>
+      <i v-else class="pi pi-image text-2xl text-gray-400"></i>
     </div>
 
-    <div class="icon-item__info">
-      <div class="icon-item__details">
-        <span class="icon-item__size">{{ icon.sizes }}</span>
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center gap-2 mb-1">
+        <span class="font-semibold text-gray-800">{{ icon.sizes }}</span>
         <Tag :value="icon.type" severity="secondary" />
         <Tag v-if="icon.purpose" :value="icon.purpose" />
       </div>
-      <div class="icon-item__url">{{ icon.src }}</div>
+      <div class="text-xs text-gray-500 break-all">{{ icon.src }}</div>
     </div>
 
-    <div class="icon-item__actions">
+    <div class="flex gap-1 flex-shrink-0">
       <Button
         icon="pi pi-pencil"
         text
@@ -38,88 +62,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-import { ref } from 'vue'
-import Button from 'primevue/button'
-import Tag from 'primevue/tag'
-import type { ManifestIcon } from '@/shared/types/manifest'
-
-interface Props {
-  icon: ManifestIcon
-}
-
-interface Emits {
-  (e: 'edit'): void
-  (e: 'remove'): void
-}
-
-defineProps<Props>()
-defineEmits<Emits>()
-
-const imageError = ref(false)
-</script>
-
-<style scoped>
-.icon-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  border: 1px solid var(--surface-border);
-  border-radius: 8px;
-  background: var(--surface-0);
-}
-
-.icon-item__preview {
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--surface-100);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.icon-item__preview img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.icon-item__fallback {
-  font-size: 1.5rem;
-  color: var(--text-color-secondary);
-}
-
-.icon-item__info {
-  flex: 1;
-  min-width: 0;
-}
-
-.icon-item__details {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.25rem;
-}
-
-.icon-item__size {
-  font-weight: 600;
-  color: var(--text-color);
-}
-
-.icon-item__url {
-  color: var(--text-color-secondary);
-  font-size: 0.75rem;
-  word-break: break-all;
-}
-
-.icon-item__actions {
-  display: flex;
-  gap: 0.25rem;
-  flex-shrink: 0;
-}
-</style>
