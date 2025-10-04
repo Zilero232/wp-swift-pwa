@@ -25,19 +25,19 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 interface Props {
-  label?: string
-  help?: string
-  error?: string
-  required?: boolean
-  fieldId?: string
+  label?: string;
+  help?: string;
+  error?: string;
+  required?: boolean;
+  fieldId?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   required: false,
-})
+});
 
-const hasError = computed(() => Boolean(props.error))
+const hasError = computed(() => Boolean(props.error));
 </script>

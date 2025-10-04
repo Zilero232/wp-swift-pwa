@@ -1,56 +1,13 @@
-<template>
-  <div class="categories-settings">
-    <FormField label="Категории приложения" help="Категории помогают пользователям найти ваше приложение в магазинах">
-      <MultiSelect
-        :model-value="manifest.categories"
-        @update:model-value="updateField('categories', $event)"
-        :options="APP_CATEGORIES"
-        placeholder="Выберите категории"
-        class="w-full"
-        :max-selected-labels="3"
-        selected-items-label="{0} категорий выбрано"
-        :filter="true"
-        filter-placeholder="Поиск категорий..."
-      />
-    </FormField>
-
-    <div v-if="manifest.categories && manifest.categories.length > 0" class="selected-categories">
-      <h4>Выбранные категории:</h4>
-      <div class="categories-list">
-        <Tag
-          v-for="category in manifest.categories"
-          :key="category"
-          :value="getCategoryLabel(category)"
-          removable
-          @remove="removeCategory(category)"
-        />
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import MultiSelect from 'primevue/multiselect';
 import Tag from 'primevue/tag';
+
 import FormField from '@/shared/ui/FormField.vue';
 import { APP_CATEGORIES } from '@/shared/config/constants';
-import type { ManifestSettings } from '../schemas';
 
-interface Props {
-  manifest: ManifestSettings;
-  errors?: string[];
-}
+import { useManifestStore } from '../model/store';
 
-interface Emits {
-  (e: 'update:field', field: keyof ManifestSettings, value: unknown): void;
-}
-
-const props = defineProps<Props>();
-const emit = defineEmits<Emits>();
-
-const updateField = (field: keyof ManifestSettings, value: unknown) => {
-  emit('update:field', field, value);
-};
+const manifestStore = useManifestStore();
 
 const getCategoryLabel = (category: string): string => {
   // Переводим категории на русский
@@ -76,28 +33,45 @@ const getCategoryLabel = (category: string): string => {
 };
 
 const removeCategory = (category: string) => {
-  const updated = (props.manifest.categories || []).filter((c) => c !== category);
-  emit('update:field', 'categories', updated);
+  const updated = (manifestStore.manifest?.categories || []).filter((c) => c !== category);
+
+  manifestStore.updateManifest({ categories: updated });
 };
 </script>
 
-<style scoped>
-.categories-settings {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
+<template>
+  <div class="categories-settings">
+    <FormField
+      label="Категории приложения"
+      help="Категории помогают пользователям найти ваше приложение в магазинах"
+    >
+      <MultiSelect
+        :model-value="manifestStore.manifest?.categories"
+        @update:model-value="manifestStore.updateManifest({ categories: $event })"
+        :options="APP_CATEGORIES"
+        placeholder="Выберите категории"
+        class="w-full"
+        :max-selected-labels="3"
+        selected-items-label="{0} категорий выбрано"
+        :filter="true"
+        filter-placeholder="Поиск категорий..."
+      />
+    </FormField>
 
-.selected-categories h4 {
-  margin: 0 0 1rem 0;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text-color);
-}
-
-.categories-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-</style>
+    <div
+      v-if="manifestStore.manifest?.categories && manifestStore.manifest?.categories.length > 0"
+      class="selected-categories"
+    >
+      <h4>Выбранные категории:</h4>
+      <div class="categories-list">
+        <Tag
+          v-for="category in manifestStore.manifest?.categories"
+          :key="category"
+          :value="getCategoryLabel(category)"
+          removable
+          @remove="removeCategory(category)"
+        />
+      </div>
+    </div>
+  </div>
+</template>

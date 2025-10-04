@@ -1,28 +1,20 @@
 <script setup lang="ts">
 import { Card } from 'primevue';
 
-import { useManifestStore } from '@/entities/manifest/model/store';
-
 import BasicInfo from '@/entities/manifest/ui/BasicInfo.vue';
 import DisplaySettings from '@/entities/manifest/ui/DisplaySettings.vue';
 import AdvancedSettings from '@/entities/manifest/ui/AdvancedSettings.vue';
 import CategoriesSettings from '@/entities/manifest/ui/CategoriesSettings.vue';
 import RelatedAppsSettings from '@/entities/manifest/ui/RelatedAppsSettings.vue';
+
 import IconManager from '@/entities/manifest/ui/IconManager.vue';
-
-import type { ManifestSettings } from '@/entities/manifest/schemas';
-
-const manifestStore = useManifestStore();
-
-const updateManifestField = (field: keyof ManifestSettings, value: unknown) => {
-  manifestStore.updateManifest({ [field]: value });
-};
 </script>
 
 <template>
   <div class="p-4 sm:p-8">
     <div class="mb-8 text-center">
       <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Настройки Manifest</h2>
+
       <p class="text-gray-600 text-lg">Конфигурация веб-приложения манифеста</p>
     </div>
 
@@ -37,7 +29,7 @@ const updateManifestField = (field: keyof ManifestSettings, value: unknown) => {
           </template>
 
           <template #content>
-            <BasicInfo :manifest="manifestStore.manifest" :errors="manifestStore.validation.errors" @update:field="updateManifestField" />
+            <BasicInfo />
           </template>
         </Card>
 
@@ -50,7 +42,7 @@ const updateManifestField = (field: keyof ManifestSettings, value: unknown) => {
           </template>
 
           <template #content>
-            <DisplaySettings :manifest="manifestStore.manifest" :errors="manifestStore.validation.errors" @update:field="updateManifestField" />
+            <DisplaySettings />
           </template>
         </Card>
       </div>
@@ -65,7 +57,7 @@ const updateManifestField = (field: keyof ManifestSettings, value: unknown) => {
           </template>
 
           <template #content>
-            <AdvancedSettings :manifest="manifestStore.manifest" :errors="manifestStore.validation.errors" @update:field="updateManifestField" />
+            <AdvancedSettings />
           </template>
         </Card>
 
@@ -78,7 +70,7 @@ const updateManifestField = (field: keyof ManifestSettings, value: unknown) => {
           </template>
 
           <template #content>
-            <CategoriesSettings :manifest="manifestStore.manifest" :errors="manifestStore.validation.errors" @update:field="updateManifestField" />
+            <CategoriesSettings />
           </template>
         </Card>
       </div>
@@ -93,7 +85,7 @@ const updateManifestField = (field: keyof ManifestSettings, value: unknown) => {
           </template>
 
           <template #content>
-            <IconManager :icons="manifestStore.manifest.icons" @update:icons="updateManifestField('icons', $event)" />
+            <IconManager />
           </template>
         </Card>
 
@@ -106,7 +98,7 @@ const updateManifestField = (field: keyof ManifestSettings, value: unknown) => {
           </template>
 
           <template #content>
-            <RelatedAppsSettings :manifest="manifestStore.manifest" :errors="manifestStore.validation.errors" @update:field="updateManifestField" />
+            <RelatedAppsSettings />
           </template>
         </Card>
       </div>

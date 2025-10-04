@@ -1,48 +1,20 @@
 <script setup lang="ts">
-import InputText from 'primevue/inputtext'
-import Textarea from 'primevue/textarea'
-import FormField from '@/shared/ui/FormField.vue'
-import type { ManifestSettings } from '@/shared/types/manifest'
+import InputText from 'primevue/inputtext';
+import Textarea from 'primevue/textarea';
 
-interface Props {
-  manifest: ManifestSettings
-  errors?: string[]
-}
+import FormField from '@/shared/ui/FormField.vue';
 
-interface Emits {
-  (e: 'update:field', field: keyof ManifestSettings, value: unknown): void
-}
+import { useManifestStore } from '../model/store';
 
-const props = defineProps<Props>()
-const emit = defineEmits<Emits>()
-
-const updateField = (field: keyof ManifestSettings, value: unknown) => {
-  emit('update:field', field, value)
-}
-
-const getFieldError = (field: string): string | undefined => {
-  if (!props.errors) return undefined
-
-  return props.errors.find(
-    (error) =>
-      error.toLowerCase().includes(field.toLowerCase()) ||
-      (field === 'name' && error.includes('название')) ||
-      (field === 'short_name' && error.includes('короткое')),
-  )
-}
+const manifestStore = useManifestStore();
 </script>
 
 <template>
   <div class="flex flex-col gap-6">
-    <FormField
-      label="Название приложения"
-      help="Полное название вашего PWA приложения"
-      :error="getFieldError('name')"
-      required
-    >
+    <FormField label="Название приложения" help="Полное название вашего PWA приложения" required>
       <InputText
-        :model-value="manifest.name"
-        @update:model-value="updateField('name', $event)"
+        :model-value="manifestStore.manifest?.name"
+        @update:model-value="manifestStore.updateManifest({ name: $event })"
         placeholder="Введите название приложения"
         class="w-full"
       />
@@ -51,12 +23,11 @@ const getFieldError = (field: string): string | undefined => {
     <FormField
       label="Короткое название"
       help="Используется когда недостаточно места для полного названия"
-      :error="getFieldError('short_name')"
       required
     >
       <InputText
-        :model-value="manifest.short_name"
-        @update:model-value="updateField('short_name', $event)"
+        :model-value="manifestStore.manifest?.short_name"
+        @update:model-value="manifestStore.updateManifest({ short_name: $event })"
         placeholder="Короткое название"
         class="w-full"
       />
@@ -64,8 +35,8 @@ const getFieldError = (field: string): string | undefined => {
 
     <FormField label="Описание" help="Краткое описание приложения">
       <Textarea
-        :model-value="manifest.description"
-        @update:model-value="updateField('description', $event)"
+        :model-value="manifestStore.manifest?.description"
+        @update:model-value="manifestStore.updateManifest({ description: $event })"
         placeholder="Описание приложения"
         rows="3"
         class="w-full"

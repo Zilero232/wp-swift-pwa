@@ -1,7 +1,7 @@
 // Plugin Information
-export const PLUGIN_NAME = 'Swift PWA'
-export const PLUGIN_VERSION = '1.0.0'
-export const PLUGIN_SLUG = 'swift-pwa'
+export const PLUGIN_NAME = 'Swift PWA';
+export const PLUGIN_VERSION = '1.0.0';
+export const PLUGIN_SLUG = 'swift-pwa';
 
 // Cache Strategies for Service Worker
 export const CACHE_STRATEGIES = [
@@ -10,7 +10,7 @@ export const CACHE_STRATEGIES = [
   { label: 'Cache Only', value: 'cache_only' },
   { label: 'Network Only', value: 'network_only' },
   { label: 'Stale While Revalidate', value: 'stale_while_revalidate' },
-]
+];
 
 // Icon Types for Manifest Icons
 export const ICON_TYPES = [
@@ -20,14 +20,14 @@ export const ICON_TYPES = [
   { label: 'WebP', value: 'image/webp' },
   { label: 'ICO', value: 'image/x-icon' },
   { label: 'GIF', value: 'image/gif' },
-]
+];
 
 // Icon Purposes for Manifest Icons
 export const ICON_PURPOSES = [
   { label: 'Any', value: 'any' },
   { label: 'Maskable', value: 'maskable' },
   { label: 'Monochrome', value: 'monochrome' },
-]
+];
 
 // Display Modes for PWA Manifest
 export const DISPLAY_OPTIONS = [
@@ -35,7 +35,7 @@ export const DISPLAY_OPTIONS = [
   { label: 'Fullscreen', value: 'fullscreen' },
   { label: 'Minimal UI', value: 'minimal-ui' },
   { label: 'Browser', value: 'browser' },
-]
+];
 
 // Orientation Options for PWA Manifest
 export const ORIENTATION_OPTIONS = [
@@ -47,14 +47,14 @@ export const ORIENTATION_OPTIONS = [
   { label: 'Portrait Secondary', value: 'portrait-secondary' },
   { label: 'Landscape Primary', value: 'landscape-primary' },
   { label: 'Landscape Secondary', value: 'landscape-secondary' },
-]
+];
 
 // Text Direction Options
 export const TEXT_DIRECTION_OPTIONS = [
   { label: 'Left to Right', value: 'ltr' },
   { label: 'Right to Left', value: 'rtl' },
   { label: 'Auto', value: 'auto' },
-]
+];
 
 // Device Configurations for Preview
 export const DEVICE_CONFIGS = [
@@ -98,7 +98,7 @@ export const DEVICE_CONFIGS = [
     userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
     pixelRatio: 1,
   },
-]
+];
 
 // PWA Features for Compatibility Check
 export const PWA_FEATURES = [
@@ -110,7 +110,7 @@ export const PWA_FEATURES = [
   'Responsive Design',
   'HTTPS Required',
   'App Shortcuts',
-]
+];
 
 // Common Icon Sizes
 export const COMMON_ICON_SIZES = [
@@ -122,7 +122,7 @@ export const COMMON_ICON_SIZES = [
   '192x192',
   '384x384',
   '512x512',
-]
+];
 
 // Default Exclude Patterns for Service Worker
 export const DEFAULT_EXCLUDE_PATTERNS = [
@@ -131,7 +131,7 @@ export const DEFAULT_EXCLUDE_PATTERNS = [
   '/wp-json/',
   '*.php',
   '/preview/',
-]
+];
 
 // Network Timeout Options (in milliseconds)
 export const NETWORK_TIMEOUT_OPTIONS = [
@@ -140,7 +140,7 @@ export const NETWORK_TIMEOUT_OPTIONS = [
   { label: '10 seconds', value: 10000 },
   { label: '15 seconds', value: 15000 },
   { label: '30 seconds', value: 30000 },
-]
+];
 
 // Language Options (common languages)
 export const LANGUAGE_OPTIONS = [
@@ -152,7 +152,7 @@ export const LANGUAGE_OPTIONS = [
   { label: '中文', value: 'zh' },
   { label: '日本語', value: 'ja' },
   { label: 'العربية', value: 'ar' },
-]
+];
 
 // App Categories for Manifest
 export const APP_CATEGORIES = [
@@ -183,7 +183,7 @@ export const APP_CATEGORIES = [
   'travel',
   'utilities',
   'weather',
-]
+];
 
 // Related Application Platforms
 export const RELATED_APP_PLATFORMS = [
@@ -192,7 +192,7 @@ export const RELATED_APP_PLATFORMS = [
   { label: 'Microsoft Store', value: 'windows' },
   { label: 'Chrome Web Store', value: 'chrome_web_store' },
   { label: 'Amazon Appstore', value: 'amazon' },
-]
+];
 
 // API Endpoints
 export const API_ENDPOINTS = {
@@ -201,7 +201,7 @@ export const API_ENDPOINTS = {
   TEST_INSTALLATION: '/wp-json/swift-pwa-api/v1/test/installation',
   GENERATE_MANIFEST: '/wp-json/swift-pwa-api/v1/generate/manifest',
   GENERATE_SERVICE_WORKER: '/wp-json/swift-pwa-api/v1/generate/service-worker',
-}
+};
 
 // Validation Rules
 export const VALIDATION_RULES = {
@@ -213,7 +213,7 @@ export const VALIDATION_RULES = {
   COLOR_PATTERN: /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/,
   ICON_MIN_SIZE: 48,
   REQUIRED_ICON_SIZES: ['192x192', '512x512'],
-}
+};
 
 // Default Values
 export const DEFAULT_VALUES = {
@@ -227,4 +227,4 @@ export const DEFAULT_VALUES = {
   DIR: 'ltr',
   CACHE_VERSION: '1.0.0',
   NETWORK_TIMEOUT: 5000,
-}
+};

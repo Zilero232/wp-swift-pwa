@@ -33,14 +33,30 @@ const version = '1.0.0';
       </div>
 
       <div>
-        <Button icon="pi pi-refresh" label="Сбросить" severity="secondary" text @click="$emit('reset')" :disabled="saving" />
+        <Button
+          icon="pi pi-refresh"
+          label="Сбросить"
+          severity="secondary"
+          text
+          @click="$emit('reset')"
+          :disabled="saving"
+        />
 
-        <Button icon="pi pi-save" label="Сохранить" :loading="saving" @click="$emit('save')" :disabled="!hasChanges" />
+        <Button
+          icon="pi pi-save"
+          label="Сохранить"
+          :loading="saving"
+          @click="$emit('save')"
+          :disabled="!hasChanges"
+        />
       </div>
     </div>
 
     <Navigation
-      :validation-status="{ manifest: { valid: true, errors: [], warnings: [] }, serviceWorker: { valid: true, errors: [], warnings: [] } }"
+      :validation-status="{
+        manifest: { valid: true, errors: [], warnings: [] },
+        serviceWorker: { valid: true, errors: [], warnings: [] },
+      }"
     />
 
     <div v-if="hasChanges">

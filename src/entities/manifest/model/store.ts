@@ -1,60 +1,41 @@
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { defineStore } from 'pinia';
 
-import { validateManifest } from '../model/validation';
-import type { ManifestSettings } from '../schemas';
 import { manifestAPI } from '@/services/manifest.service';
 
-const getDefaultManifest = (): ManifestSettings => ({
-  name: '',
-  short_name: '',
-  description: '',
-  start_url: '/',
-  display: 'standalone',
-  orientation: 'portrait',
-  theme_color: '#000000',
-  background_color: '#ffffff',
-  scope: '/',
-  lang: 'en',
-  dir: 'ltr',
-  categories: [],
-  icons: [],
-  screenshots: [],
-  shortcuts: [],
-  related_applications: [],
-  prefer_related_applications: false,
-});
+import type { ManifestSettings } from '../schemas';
+import { validateManifest, type ValidationResult } from './validation';
 
 export const useManifestStore = defineStore('manifest', () => {
-  const manifest = ref<ManifestSettings>(getDefaultManifest());
+  const manifest = ref<ManifestSettings>();
+  const validation = ref<ValidationResult>();
 
-  const validation = computed(() => validateManifest(manifest.value));
-  const isValid = computed(() => validation.value.success);
-  const manifestJson = computed(() => JSON.stringify(manifest.value, null, 2));
+  const validate = () => {
+    validation.value = validateManifest(manifest.value);
+  };
 
   const loadManifest = async () => {
     try {
-      const data = await manifestAPI.getManifest();
+      const { data } = await manifestAPI.getManifest();
 
-      manifest.value = { ...getDefaultManifest(), ...data };
+      manifest.value = data;
     } catch (err) {
       console.error('Failed to load manifest:', err);
     }
   };
 
   const updateManifest = (updates: Partial<ManifestSettings>) => {
-    manifest.value = { ...manifest.value, ...updates };
+    manifest.value = { ...manifest.value, ...updates } as ManifestSettings;
   };
 
   const resetManifest = () => {
-    manifest.value = getDefaultManifest();
+    manifest.value = undefined;
   };
 
   return {
-    isValid,
     manifest,
     validation,
-    manifestJson,
+    validate,
     loadManifest,
     updateManifest,
     resetManifest,

@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import { z } from 'zod';
 
 /**
  * Enum validation schemas
@@ -9,7 +9,7 @@ export const DisplayModeSchema = z.enum(['fullscreen', 'standalone', 'minimal-ui
   error: () => ({
     message: 'Display mode must be one of: fullscreen, standalone, minimal-ui, browser',
   }),
-})
+});
 
 export const OrientationSchema = z.enum(
   [
@@ -25,18 +25,18 @@ export const OrientationSchema = z.enum(
   {
     error: () => ({ message: 'Invalid orientation value' }),
   },
-)
+);
 
 export const TextDirectionSchema = z.enum(['ltr', 'rtl', 'auto'], {
   error: () => ({ message: 'Text direction must be ltr, rtl, or auto' }),
-})
+});
 
 export const IconPurposeSchema = z.enum(['any', 'maskable', 'monochrome'], {
   error: () => ({ message: 'Icon purpose must be any, maskable, or monochrome' }),
-})
+});
 
 // Type exports for convenience
-export type DisplayMode = z.infer<typeof DisplayModeSchema>
-export type Orientation = z.infer<typeof OrientationSchema>
-export type TextDirection = z.infer<typeof TextDirectionSchema>
-export type IconPurpose = z.infer<typeof IconPurposeSchema>
+export type DisplayMode = z.infer<typeof DisplayModeSchema>;
+export type Orientation = z.infer<typeof OrientationSchema>;
+export type TextDirection = z.infer<typeof TextDirectionSchema>;
+export type IconPurpose = z.infer<typeof IconPurposeSchema>;

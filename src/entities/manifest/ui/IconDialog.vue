@@ -1,37 +1,37 @@
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
-import { Dialog, Button, InputText, Dropdown } from 'primevue'
+import { ref, computed, watch } from 'vue';
+import { Dialog, Button, InputText, Dropdown } from 'primevue';
 
-import FormField from '@/shared/ui/FormField.vue'
-import { ICON_TYPES, ICON_PURPOSES } from '@/shared/config/constants'
-import type { ManifestIcon } from '@/shared/types/manifest'
+import FormField from '@/shared/ui/FormField.vue';
+import { ICON_TYPES, ICON_PURPOSES } from '@/shared/config/constants';
+import type { ManifestIcon } from '@/shared/types/manifest';
 
 interface Props {
-  visible: boolean
-  icon?: ManifestIcon | null
-  editing?: boolean
+  visible: boolean;
+  icon?: ManifestIcon | null;
+  editing?: boolean;
 }
 
 interface Emits {
-  (e: 'update:visible', value: boolean): void
-  (e: 'save', icon: ManifestIcon): void
-  (e: 'cancel'): void
+  (e: 'update:visible', value: boolean): void;
+  (e: 'save', icon: ManifestIcon): void;
+  (e: 'cancel'): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   editing: false,
-})
+});
 
-const emit = defineEmits<Emits>()
+const emit = defineEmits<Emits>();
 
 const form = ref<ManifestIcon>({
   src: '',
   sizes: '',
   type: 'image/png',
-})
+});
 
-const errors = ref<Record<string, string>>({})
-const imageError = ref(false)
+const errors = ref<Record<string, string>>({});
+const imageError = ref(false);
 
 const isValid = computed(() => {
   return (
@@ -39,69 +39,69 @@ const isValid = computed(() => {
     form.value.sizes.length > 0 &&
     form.value.type.length > 0 &&
     Object.keys(errors.value).length === 0
-  )
-})
+  );
+});
 
 const validateForm = () => {
-  errors.value = {}
+  errors.value = {};
 
   if (!form.value.src.trim()) {
-    errors.value.src = 'URL иконки обязательно'
+    errors.value.src = 'URL иконки обязательно';
   } else if (!isValidUrl(form.value.src)) {
-    errors.value.src = 'Неверный формат URL'
+    errors.value.src = 'Неверный формат URL';
   }
 
   if (!form.value.sizes.trim()) {
-    errors.value.sizes = 'Размеры обязательны'
+    errors.value.sizes = 'Размеры обязательны';
   } else if (!isValidSizes(form.value.sizes)) {
-    errors.value.sizes = 'Неверный формат размеров'
+    errors.value.sizes = 'Неверный формат размеров';
   }
 
   if (!form.value.type) {
-    errors.value.type = 'Тип файла обязателен'
+    errors.value.type = 'Тип файла обязателен';
   }
-}
+};
 
 const isValidUrl = (url: string): boolean => {
   try {
-    new URL(url)
-    return true
+    new URL(url);
+    return true;
   } catch {
-    return url.startsWith('/')
+    return url.startsWith('/');
   }
-}
+};
 
 const isValidSizes = (sizes: string): boolean => {
-  return /^\d+x\d+$/.test(sizes) || sizes === 'any'
-}
+  return /^\d+x\d+$/.test(sizes) || sizes === 'any';
+};
 
 const handleSubmit = () => {
-  validateForm()
+  validateForm();
 
   if (isValid.value) {
-    emit('save', { ...form.value })
+    emit('save', { ...form.value });
   }
-}
+};
 
 watch(
   () => props.icon,
   (newIcon) => {
     if (newIcon) {
-      form.value = { ...newIcon }
+      form.value = { ...newIcon };
     } else {
       form.value = {
         src: '',
         sizes: '',
         type: 'image/png',
-      }
+      };
     }
-    errors.value = {}
-    imageError.value = false
+    errors.value = {};
+    imageError.value = false;
   },
   { immediate: true },
-)
+);
 
-watch(() => form.value, validateForm, { deep: true })
+watch(() => form.value, validateForm, { deep: true });
 </script>
 
 <template>

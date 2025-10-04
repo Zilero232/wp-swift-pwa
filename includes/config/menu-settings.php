@@ -2,19 +2,11 @@
 
 return array(
     array(
-        'page_title' => __('Manifest', 'wsp'),
+        'page_title' => __('Manifest', SWIFT_PWA_SLUG),
         'menu_slug' => 'manifest',
     ),
     array(
-        'page_title' => __('Service Worker', 'wsp'),
-        'menu_slug' => 'service-worker',
-    ),
-    array(
-        'page_title' => __('Notifications', 'wsp'),
-        'menu_slug' => 'notifications',
-    ),
-    array(
-        'page_title' => __('Preview', 'wsp'),
+        'page_title' => __('Preview', SWIFT_PWA_SLUG),
         'menu_slug' => 'preview',
     ),
 );

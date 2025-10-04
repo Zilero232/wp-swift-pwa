@@ -4,30 +4,30 @@
  */
 
 // Export schemas
-export { ManifestSchema } from './manifest'
+export { ManifestSchema } from './manifest';
 
 export {
   ManifestIconSchema,
   ManifestScreenshotSchema,
   ManifestShortcutSchema,
   RelatedApplicationSchema,
-} from './objects'
+} from './objects';
 
 export {
   DisplayModeSchema,
   OrientationSchema,
   TextDirectionSchema,
   IconPurposeSchema,
-} from './enums'
+} from './enums';
 
-export { HexColor, UrlPath, NonEmptyString, MimeType, Dimensions, LanguageCode } from './base'
+export { HexColor, UrlPath, NonEmptyString, MimeType, Dimensions, LanguageCode } from './base';
 
 // Export types
-export type { ManifestSettings } from './manifest'
+export type { ManifestSettings } from './manifest';
 export type {
   ManifestIcon,
   ManifestScreenshot,
   ManifestShortcut,
   RelatedApplication,
-} from './objects'
-export type { DisplayMode, Orientation, TextDirection, IconPurpose } from './enums'
+} from './objects';
+export type { DisplayMode, Orientation, TextDirection, IconPurpose } from './enums';

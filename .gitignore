@@ -13,6 +13,7 @@ vendor/
 
 # WordPress
 .srv
+certs
 
 # Environment variables
 .env

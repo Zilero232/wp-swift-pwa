@@ -12,7 +12,7 @@ const pwaFeatures = PWA_FEATURES;
 
 const copyManifest = async () => {
   try {
-    await navigator.clipboard.writeText(manifestStore.manifestJson);
+    await navigator.clipboard.writeText(manifestStore.manifest);
     // TODO: Показать уведомление об успешном копировании
   } catch (error) {
     console.error('Error copying manifest:', error);
@@ -20,7 +20,7 @@ const copyManifest = async () => {
 };
 
 const downloadManifest = () => {
-  const blob = new Blob([manifestStore.manifestJson], { type: 'application/json' });
+  const blob = new Blob([manifestStore.manifest], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
@@ -52,7 +52,10 @@ const downloadManifest = () => {
         </template>
 
         <template #content>
-          <ManifestCodePreview :manifest="manifestStore.manifestJson" :validation="manifestStore.validation" />
+          <ManifestCodePreview
+            :manifest="manifestStore.manifest"
+            :validation="manifestStore.validation"
+          />
         </template>
       </Card>
 

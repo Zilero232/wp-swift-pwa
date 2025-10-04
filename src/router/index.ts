@@ -14,16 +14,6 @@ const router = createRouter({
           component: () => import('@/views/ManifestView.vue'),
         },
         {
-          path: '/service-worker',
-          name: 'service-worker',
-          component: () => import('@/views/ServiceWorkerView.vue'),
-        },
-        {
-          path: '/notifications',
-          name: 'notifications',
-          component: () => import('@/views/NotificationsView.vue'),
-        },
-        {
           path: '/preview',
           name: 'preview',
           component: () => import('@/views/PreviewView.vue'),

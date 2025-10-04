@@ -1,12 +1,12 @@
-import { z } from 'zod'
-import { HexColor, UrlPath, NonEmptyString, LanguageCode } from './base'
-import { DisplayModeSchema, OrientationSchema, TextDirectionSchema } from './enums'
+import { z } from 'zod';
+import { HexColor, UrlPath, NonEmptyString, LanguageCode } from './base';
+import { DisplayModeSchema, OrientationSchema, TextDirectionSchema } from './enums';
 import {
   ManifestIconSchema,
   ManifestScreenshotSchema,
   ManifestShortcutSchema,
   RelatedApplicationSchema,
-} from './objects'
+} from './objects';
 
 /**
  * Main PWA Manifest validation schema
@@ -75,7 +75,7 @@ export const ManifestSchema = z
     prefer_related_applications: z.boolean().describe('Prefer related applications over PWA'),
   })
   .strict()
-  .describe('PWA Manifest configuration')
+  .describe('PWA Manifest configuration');
 
 // Type export
-export type ManifestSettings = z.infer<typeof ManifestSchema>
+export type ManifestSettings = z.infer<typeof ManifestSchema>;

@@ -1,6 +1,6 @@
-import { z } from 'zod'
-import { NonEmptyString, MimeType, Dimensions } from './base'
-import { IconPurposeSchema } from './enums'
+import { z } from 'zod';
+import { NonEmptyString, MimeType, Dimensions } from './base';
+import { IconPurposeSchema } from './enums';
 
 /**
  * Complex object validation schemas
@@ -15,7 +15,7 @@ export const ManifestIconSchema = z
     purpose: IconPurposeSchema.optional().describe('Icon usage purpose'),
   })
   .strict()
-  .describe('PWA icon configuration')
+  .describe('PWA icon configuration');
 
 export const ManifestScreenshotSchema = z
   .object({
@@ -25,7 +25,7 @@ export const ManifestScreenshotSchema = z
     label: z.string().optional().describe('Screenshot description'),
   })
   .strict()
-  .describe('PWA screenshot configuration')
+  .describe('PWA screenshot configuration');
 
 export const ManifestShortcutSchema = z
   .object({
@@ -46,7 +46,7 @@ export const ManifestShortcutSchema = z
     icons: z.array(ManifestIconSchema).optional().describe('Shortcut icons'),
   })
   .strict()
-  .describe('PWA shortcut configuration')
+  .describe('PWA shortcut configuration');
 
 export const RelatedApplicationSchema = z
   .object({
@@ -55,10 +55,10 @@ export const RelatedApplicationSchema = z
     id: z.string().optional().describe('Application identifier'),
   })
   .strict()
-  .describe('Related application configuration')
+  .describe('Related application configuration');
 
 // Type exports
-export type ManifestIcon = z.infer<typeof ManifestIconSchema>
-export type ManifestScreenshot = z.infer<typeof ManifestScreenshotSchema>
-export type ManifestShortcut = z.infer<typeof ManifestShortcutSchema>
-export type RelatedApplication = z.infer<typeof RelatedApplicationSchema>
+export type ManifestIcon = z.infer<typeof ManifestIconSchema>;
+export type ManifestScreenshot = z.infer<typeof ManifestScreenshotSchema>;
+export type ManifestShortcut = z.infer<typeof ManifestShortcutSchema>;
+export type RelatedApplication = z.infer<typeof RelatedApplicationSchema>;

@@ -7,15 +7,16 @@
 
 namespace SwiftPWA\Rest;
 
+use WP_REST_Response;
+
 defined('ABSPATH') || exit;
 
 abstract class RestController
 {
-
     /**
      * Plugin namespace.
      */
-    protected $namespace = 'swift-pwa/v1';
+    protected $namespace = SWIFT_PWA_PLUGIN_REST_API_BASE;
 
     /**
      * Check if user has permission.
@@ -33,9 +34,9 @@ abstract class RestController
     /**
      * Format success response.
      */
-    protected function success_response($data = null, string $message = ''): \WP_REST_Response
+    protected function success_response($data = null, string $message = ''): WP_REST_Response
     {
-        return new \WP_REST_Response([
+        return new WP_REST_Response([
             'success' => true,
             'data' => $data,
             'message' => $message
@@ -45,27 +46,11 @@ abstract class RestController
     /**
      * Format error response.
      */
-    protected function error_response(string $message, int $status = 400): \WP_REST_Response
+    protected function error_response(string $message, int $status = 400): WP_REST_Response
     {
-        return new \WP_REST_Response([
+        return new WP_REST_Response([
             'success' => false,
             'message' => $message
         ], $status);
-    }
-
-    /**
-     * Validate required fields.
-     */
-    protected function validate_required_fields(array $data, array $required_fields): array
-    {
-        $errors = [];
-
-        foreach ($required_fields as $field) {
-            if (!isset($data[$field]) || empty($data[$field])) {
-                $errors[] = sprintf('Field "%s" is required', $field);
-            }
-        }
-
-        return $errors;
     }
 }

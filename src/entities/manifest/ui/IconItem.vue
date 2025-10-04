@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-import { Button, Tag } from 'primevue'
+import { ref } from 'vue';
+import { Button, Tag } from 'primevue';
 
-import type { ManifestIcon } from '@/shared/types/manifest'
+import type { ManifestIcon } from '@/shared/types/manifest';
 
 interface Props {
-  icon: ManifestIcon
+  icon: ManifestIcon;
 }
 
 interface Emits {
-  (e: 'edit'): void
-  (e: 'remove'): void
+  (e: 'edit'): void;
+  (e: 'remove'): void;
 }
 
-defineProps<Props>()
-defineEmits<Emits>()
+defineProps<Props>();
+defineEmits<Emits>();
 
-const imageError = ref(false)
+const imageError = ref(false);
 </script>
 
 <template>

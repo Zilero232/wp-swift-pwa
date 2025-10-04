@@ -18,27 +18,27 @@
 </template>
 
 <script setup lang="ts">
-import InputText from 'primevue/inputtext'
+import InputText from 'primevue/inputtext';
 
 interface Props {
-  modelValue: string
-  placeholder?: string
-  disabled?: boolean
+  modelValue: string;
+  placeholder?: string;
+  disabled?: boolean;
 }
 
 interface Emits {
-  (e: 'update:modelValue', value: string): void
+  (e: 'update:modelValue', value: string): void;
 }
 
-defineProps<Props>()
-const emit = defineEmits<Emits>()
+defineProps<Props>();
+const emit = defineEmits<Emits>();
 
 const handleColorInput = (event: Event) => {
-  const value = (event.target as HTMLInputElement).value
-  emit('update:modelValue', value)
-}
+  const value = (event.target as HTMLInputElement).value;
+  emit('update:modelValue', value);
+};
 
 const handleTextInput = (value: string) => {
-  emit('update:modelValue', value)
-}
+  emit('update:modelValue', value);
+};
 </script>

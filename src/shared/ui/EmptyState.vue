@@ -9,12 +9,12 @@
 
 <script setup lang="ts">
 interface Props {
-  icon?: string
-  title?: string
-  description?: string
+  icon?: string;
+  title?: string;
+  description?: string;
 }
 
 withDefaults(defineProps<Props>(), {
   icon: 'pi pi-info-circle',
-})
+});
 </script>
