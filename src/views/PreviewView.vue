@@ -1,32 +1,38 @@
 <script setup lang="ts">
+import { computed } from 'vue';
 import { Card, Button } from 'primevue';
 
 import ManifestCodePreview from '@/entities/preview/ui/ManifestCodePreview.vue';
-import BrowserCompatibility from '@/entities/preview/ui/BrowserCompatibility.vue';
-import { useManifestStore } from '@/entities/manifest/model/store';
-import { PWA_FEATURES } from '@/shared/config/constants';
+import PWAFeatures from '@/entities/preview/ui/PWAFeatures.vue';
 
-const manifestStore = useManifestStore();
+import { useManifestQuery } from '@/entities/manifest/model/useManifestQuery';
 
-const pwaFeatures = PWA_FEATURES;
+import { useDownload } from '@/shared/composable/useDownload';
 
-const copyManifest = async () => {
-  try {
-    await navigator.clipboard.writeText(manifestStore.manifest);
-    // TODO: Показать уведомление об успешном копировании
-  } catch (error) {
-    console.error('Error copying manifest:', error);
-  }
+const { queryManifest } = useManifestQuery();
+
+const { copyToClipboard, downloadJSON } = useDownload();
+
+const manifestJSON = computed(() => {
+  if (!queryManifest.data.value) return '';
+
+  return JSON.stringify(queryManifest.data.value, null, 2);
+});
+
+const copyManifest = () => {
+  copyToClipboard(manifestJSON.value, {
+    successMessage: 'Манифест скопирован в буфер обмена',
+    errorMessage: 'Ошибка копирования манифеста',
+  });
 };
 
 const downloadManifest = () => {
-  const blob = new Blob([manifestStore.manifest], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'manifest.json';
-  a.click();
-  URL.revokeObjectURL(url);
+  if (!queryManifest.data.value) return;
+
+  downloadJSON(queryManifest.data.value, 'manifest.json', {
+    successMessage: 'Манифест успешно загружен',
+    errorMessage: 'Ошибка загрузки манифеста',
+  });
 };
 </script>
 
@@ -34,7 +40,6 @@ const downloadManifest = () => {
   <div class="p-4 sm:p-8">
     <div class="mb-8 text-center">
       <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Предпросмотр PWA</h2>
-
       <p class="text-gray-600 text-lg">Просмотр манифеста и функций вашего PWA приложения</p>
     </div>
 
@@ -43,32 +48,31 @@ const downloadManifest = () => {
         <template #header>
           <div class="flex items-center gap-3 p-6 pb-0 flex-wrap">
             <i class="pi pi-file-code text-xl text-blue-600"></i>
-            <h3 class="text-xl font-semibold text-gray-800 flex-1">Manifest.json</h3>
+            <h3 class="text-xl font-semibold text-gray-800 flex-1">manifest.json</h3>
+
             <div class="flex gap-2 items-center">
-              <Button icon="pi pi-copy" text v-tooltip="'Копировать'" @click="copyManifest" />
-              <Button icon="pi pi-download" text v-tooltip="'Скачать'" @click="downloadManifest" />
+              <Button icon="pi pi-copy" text rounded v-tooltip.top="'Копировать'" @click="copyManifest" :disabled="!manifestJSON" />
+
+              <Button icon="pi pi-download" text rounded v-tooltip.top="'Скачать'" @click="downloadManifest" :disabled="!manifestJSON" />
             </div>
           </div>
         </template>
 
         <template #content>
-          <ManifestCodePreview
-            :manifest="manifestStore.manifest"
-            :validation="manifestStore.validation"
-          />
+          <ManifestCodePreview :manifest-json="manifestJSON" />
         </template>
       </Card>
 
       <Card>
         <template #header>
           <div class="flex items-center gap-3 p-6 pb-0">
-            <i class="pi pi-check-circle text-xl text-blue-600"></i>
-            <h3 class="text-xl font-semibold text-gray-800">PWA функции</h3>
+            <i class="pi pi-check-circle text-xl text-green-600"></i>
+            <h3 class="text-xl font-semibold text-gray-800">Возможности PWA</h3>
           </div>
         </template>
 
         <template #content>
-          <BrowserCompatibility :features="pwaFeatures" />
+          <PWAFeatures />
         </template>
       </Card>
     </div>

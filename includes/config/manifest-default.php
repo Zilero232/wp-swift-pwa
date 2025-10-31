@@ -18,5 +18,6 @@ return array(
 	'icons' => [],
 	'screenshots' => [],
 	'related_applications' => [],
+	'shortcuts' => [],
 	'prefer_related_applications' => false
 );

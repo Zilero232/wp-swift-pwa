@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { Card } from 'primevue';
 
-import BasicInfo from '@/entities/manifest/ui/BasicInfo.vue';
+import BasicInfoSettings from '@/entities/manifest/ui/BasicInfoSettings.vue';
 import DisplaySettings from '@/entities/manifest/ui/DisplaySettings.vue';
 import AdvancedSettings from '@/entities/manifest/ui/AdvancedSettings.vue';
 import CategoriesSettings from '@/entities/manifest/ui/CategoriesSettings.vue';
 import RelatedAppsSettings from '@/entities/manifest/ui/RelatedAppsSettings.vue';
-
-import IconManager from '@/entities/manifest/ui/IconManager.vue';
+import ShortcutsSettings from '@/entities/manifest/ui/ShortcutsSettings.vue';
+import IconsSettings from '@/entities/manifest/ui/IconsSettings.vue';
+import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue';
 </script>
 
 <template>
@@ -29,7 +30,7 @@ import IconManager from '@/entities/manifest/ui/IconManager.vue';
           </template>
 
           <template #content>
-            <BasicInfo />
+            <BasicInfoSettings />
           </template>
         </Card>
 
@@ -79,13 +80,13 @@ import IconManager from '@/entities/manifest/ui/IconManager.vue';
         <Card>
           <template #header>
             <div class="flex items-center gap-3 p-6 pb-0">
-              <i class="pi pi-image text-xl text-blue-600"></i>
-              <h3 class="text-xl font-semibold text-gray-800">Иконки приложения</h3>
+              <i class="pi pi-bolt text-xl text-blue-600"></i>
+              <h3 class="text-xl font-semibold text-gray-800">Шорткаты приложения</h3>
             </div>
           </template>
 
           <template #content>
-            <IconManager />
+            <ShortcutsSettings />
           </template>
         </Card>
 
@@ -99,6 +100,34 @@ import IconManager from '@/entities/manifest/ui/IconManager.vue';
 
           <template #content>
             <RelatedAppsSettings />
+          </template>
+        </Card>
+      </div>
+
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+        <Card>
+          <template #header>
+            <div class="flex items-center gap-3 p-6 pb-0">
+              <i class="pi pi-image text-xl text-blue-600"></i>
+              <h3 class="text-xl font-semibold text-gray-800">Иконки приложения</h3>
+            </div>
+          </template>
+
+          <template #content>
+            <IconsSettings />
+          </template>
+        </Card>
+
+        <Card>
+          <template #header>
+            <div class="flex items-center gap-3 p-6 pb-0">
+              <i class="pi pi-camera text-xl text-blue-600"></i>
+              <h3 class="text-xl font-semibold text-gray-800">Скриншоты</h3>
+            </div>
+          </template>
+
+          <template #content>
+            <ScreenshotsSettings />
           </template>
         </Card>
       </div>

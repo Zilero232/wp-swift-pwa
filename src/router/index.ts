@@ -10,6 +10,11 @@ const router = createRouter({
       children: [
         {
           path: '',
+          name: 'welcome',
+          component: () => import('@/views/WelcomeView.vue'),
+        },
+        {
+          path: '/manifest',
           name: 'manifest',
           component: () => import('@/views/ManifestView.vue'),
         },

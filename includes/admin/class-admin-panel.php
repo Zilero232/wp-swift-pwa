@@ -60,13 +60,13 @@ class Admin_Panel
 	public function admin_menu()
 	{
 		add_menu_page(
-			__('Swift PWA', 'wsp'),
-			__('Swift PWA', 'wsp'),
+			__('Swift PWA', SWIFT_PWA_SLUG),
+			__('Swift PWA', SWIFT_PWA_SLUG),
 			'manage_options',
 			SWIFT_PWA_SLUG . '-settings',
 			array($this, 'settings_page_output'),
 			'dashicons-performance',
-			6
+			100
 		);
 
 		// Loop through the submenus array to create each submenu

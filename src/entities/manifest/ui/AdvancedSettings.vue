@@ -1,60 +1,55 @@
 <script setup lang="ts">
-import InputText from 'primevue/inputtext';
-import Dropdown from 'primevue/dropdown';
+import { computed } from 'vue';
+import PostSelector from '@/features/post-selector/ui/PostSelector.vue';
 
-import FormField from '@/shared/ui/FormField.vue';
+import SelectField from '@/shared/ui/SelectField.vue';
+import InputField from '@/shared/ui/InputField.vue';
 
-import { LANGUAGE_OPTIONS, TEXT_DIRECTION_OPTIONS } from '@/shared/config/constants';
+import { LANGUAGE_OPTIONS, TEXT_DIRECTION_OPTIONS } from '@/shared/config/localization.constants';
 
-import { useManifestStore } from '../model/store';
+import { useManifestQuery } from '../model/useManifestQuery';
 
-const manifestStore = useManifestStore();
+const { queryManifest, updateManifest } = useManifestQuery();
+
+const queryManifestData = computed(() => queryManifest.data.value);
 </script>
 
 <template>
   <div class="flex flex-col gap-6">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <FormField label="Стартовый URL" help="URL, который открывается при запуске приложения">
-        <InputText
-          :model-value="manifestStore.manifest?.start_url || '/'"
-          @update:model-value="manifestStore.updateManifest({ start_url: $event })"
-          placeholder="/"
-          class="w-full"
-        />
-      </FormField>
+      <PostSelector
+        label="Стартовая страница"
+        icon="pi pi-home"
+        placeholder="Выберите стартовую страницу"
+        :model-value="queryManifestData?.start_url"
+        @update:model-value="updateManifest({ start_url: $event })"
+      />
 
-      <FormField label="Область навигации" help="Ограничивает область навигации приложения">
-        <InputText
-          :model-value="manifestStore.manifest?.scope || '/'"
-          @update:model-value="manifestStore.updateManifest({ scope: $event })"
-          placeholder="/"
-          class="w-full"
-        />
-      </FormField>
+      <InputField
+        label="Область навигации"
+        icon="pi pi-map"
+        placeholder="Ограничивает область навигации приложения"
+        :model-value="queryManifestData?.scope || '/'"
+        @update:model-value="updateManifest({ scope: $event })"
+      />
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-      <FormField label="Язык приложения" help="Основной язык интерфейса">
-        <Dropdown
-          :model-value="manifestStore.manifest?.lang"
-          @update:model-value="manifestStore.updateManifest({ lang: $event })"
-          :options="LANGUAGE_OPTIONS"
-          option-label="label"
-          option-value="value"
-          class="w-full"
-        />
-      </FormField>
+      <SelectField
+        label="Язык"
+        icon="pi pi-language"
+        :options="LANGUAGE_OPTIONS"
+        :model-value="queryManifestData?.lang"
+        @update:model-value="updateManifest({ lang: $event })"
+      />
 
-      <FormField label="Направление текста" help="Направление чтения текста">
-        <Dropdown
-          :model-value="manifestStore.manifest?.dir"
-          @update:model-value="manifestStore.updateManifest({ dir: $event })"
-          :options="TEXT_DIRECTION_OPTIONS"
-          option-label="label"
-          option-value="value"
-          class="w-full"
-        />
-      </FormField>
+      <SelectField
+        label="Направление текста"
+        icon="pi pi-text-direction"
+        :options="TEXT_DIRECTION_OPTIONS"
+        :model-value="queryManifestData?.dir"
+        @update:model-value="updateManifest({ dir: $event })"
+      />
     </div>
   </div>
 </template>

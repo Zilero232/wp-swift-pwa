@@ -1,6 +1,6 @@
 import apiClient from '@/shared/api/client';
 
-import type { ManifestSettings } from '@/entities/manifest/schemas';
+import type { ManifestSettings } from '@/shared/types/manifest';
 import type { APIResponse } from '@/shared/types';
 
 class ManifestAPI {
@@ -10,7 +10,7 @@ class ManifestAPI {
     return data;
   }
 
-  async updateManifest(payload: ManifestSettings) {
+  async updateManifest(payload: Partial<ManifestSettings>) {
     const { data } = await apiClient.post<APIResponse<ManifestSettings>>('/manifest', payload);
 
     return data;

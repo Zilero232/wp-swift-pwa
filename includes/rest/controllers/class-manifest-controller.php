@@ -5,7 +5,7 @@
  * @package SwiftPWA
  */
 
-namespace SwiftPWA\Rest\Controllers;
+namespace SwiftPWA\Rest\Manifest;
 
 use WP_REST_Server;
 use WP_REST_Request;

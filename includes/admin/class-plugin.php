@@ -93,8 +93,6 @@ class Plugin
 				['%s', '%s']
 			);
 		}
-
-		error_log('Plugin activated');
 	}
 
 	/**
@@ -104,8 +102,6 @@ class Plugin
 	 */
 	public static function deactivation_callback(): void
 	{
-		error_log('Plugin deactivated');
-
 		// Code for plugin deactivation
 	}
 

@@ -1,75 +1,52 @@
 <script setup lang="ts">
-import { Tag } from 'primevue';
+import { ref, watch } from 'vue';
+import { codeToHtml } from 'shiki';
 
-import { useManifestStore } from '@/entities/manifest/model/store';
+interface Props {
+  manifestJson: string;
+}
 
-const manifestStore = useManifestStore();
+const props = defineProps<Props>();
+
+const highlightedCode = ref('');
+
+const highlight = async (code: string) => {
+  if (!code) {
+    return highlightedCode.value = '';
+  }
+
+  highlightedCode.value = await codeToHtml(code, {
+    lang: 'json',
+    theme: 'one-dark-pro',
+  });
+};
+
+watch(() => props.manifestJson, highlight, { immediate: true });
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <div
-      class="flex justify-between items-center p-3 bg-gray-50 rounded-t-lg border-b border-gray-200"
-    >
-      <div class="flex items-center gap-2 font-semibold text-gray-700">
-        <i class="pi pi-file-code"></i>
-
-        <span>manifest.json</span>
-      </div>
-
-      <div class="flex items-center gap-2">
-        <Tag
-          :value="manifestStore.validation.valid ? 'Валидный' : 'Ошибки'"
-          :severity="manifestStore.validation.valid ? 'success' : 'danger'"
-        />
-
-        <span v-if="!manifestStore.validation.valid" class="text-sm text-red-600">
-          {{ manifestStore.validation.errors.length }} ошибок
-        </span>
-      </div>
+  <div class="flex flex-col">
+    <div v-if="manifestJson" class="bg-gray-900 rounded-lg overflow-hidden">
+      <div v-html="highlightedCode" class="shiki-wrapper"></div>
     </div>
 
-    <div class="bg-gray-900 rounded-b-lg overflow-auto max-h-96">
-      <pre class="m-0 p-4 overflow-auto">
-        <code class="text-gray-300 font-mono text-sm leading-relaxed">{{ manifestStore.manifest }}</code>
-      </pre>
-    </div>
-
-    <div
-      v-if="!manifestStore.validation.valid || manifestStore.validation.warnings.length > 0"
-      class="flex flex-col gap-4"
-    >
-      <div
-        v-if="manifestStore.validation.errors.length > 0"
-        class="p-4 bg-red-50 border border-red-200 rounded-lg"
-      >
-        <h4 class="m-0 mb-2 text-red-700 flex items-center gap-2">
-          <i class="pi pi-times-circle"></i>
-          Ошибки:
-        </h4>
-
-        <ul class="m-0 pl-6 text-red-600">
-          <li v-for="error in manifestStore.validation.errors" :key="error" class="mb-1">
-            {{ error }}
-          </li>
-        </ul>
-      </div>
-
-      <div
-        v-if="manifestStore.validation.warnings.length > 0"
-        class="p-4 bg-orange-50 border border-orange-200 rounded-lg"
-      >
-        <h4 class="m-0 mb-2 text-orange-700 flex items-center gap-2">
-          <i class="pi pi-exclamation-triangle"></i>
-          Предупреждения:
-        </h4>
-
-        <ul class="m-0 pl-6 text-orange-600">
-          <li v-for="warning in manifestStore.validation.warnings" :key="warning" class="mb-1">
-            {{ warning }}
-          </li>
-        </ul>
-      </div>
+    <div v-else class="p-8 text-center text-gray-500">
+      <i class="pi pi-inbox text-4xl mb-4 block text-gray-400"></i>
+      <p class="text-lg">Манифест пуст. Заполните настройки PWA.</p>
     </div>
   </div>
 </template>
+
+<style scoped>
+.shiki-wrapper :deep(pre) {
+  margin: 0;
+  padding: 1rem;
+  overflow: auto;
+  max-height: 600px;
+}
+
+.shiki-wrapper :deep(code) {
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+</style>

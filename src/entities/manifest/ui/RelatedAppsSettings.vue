@@ -1,86 +1,96 @@
 <script setup lang="ts">
-import InputText from 'primevue/inputtext';
-import Button from 'primevue/button';
+import { computed } from 'vue';
+import { Button, Checkbox } from 'primevue';
 
-import FormField from '@/shared/ui/FormField.vue';
+import SelectField from '@/shared/ui/SelectField.vue';
+import InputField from '@/shared/ui/InputField.vue';
 
-import type { RelatedApplication } from '../schemas';
+import { RELATED_APPLICATION_PLATFORM_OPTIONS } from '@/shared/config/display.constants';
 
-import { useManifestStore } from '../model/store';
+import { RelatedApplicationPlatform, type RelatedApplication } from '@/shared/types/manifest';
 
-const manifestStore = useManifestStore();
+import { useManifestQuery } from '../model/useManifestQuery';
+
+const { queryManifest, updateManifest } = useManifestQuery();
+
+const relatedApplications = computed(() => queryManifest.data.value?.related_applications ?? []);
 
 const addApp = () => {
-  const apps = [...(manifestStore.manifest?.related_applications || [])];
+  const apps = [...relatedApplications.value];
 
   apps.push({
-    platform: '',
+    platform: RelatedApplicationPlatform.PLAY,
     url: '',
     id: '',
   });
 
-  manifestStore.updateManifest({ related_applications: apps });
+  updateManifest({ related_applications: apps });
 };
 
 const removeApp = (index: number) => {
-  const apps = [...(manifestStore.manifest?.related_applications || [])];
-  apps.splice(index, 1);
-  manifestStore.updateManifest({ related_applications: apps });
+  const apps = relatedApplications.value.filter((_, i) => i !== index) ?? [];
+
+  updateManifest({ related_applications: apps });
 };
 
 const updateApp = (index: number, field: keyof RelatedApplication, value: string) => {
-  const apps = [...(manifestStore.manifest?.related_applications || [])];
-  apps[index] = { ...apps[index], [field]: value || undefined };
-  manifestStore.updateManifest({ related_applications: apps });
+  const apps = relatedApplications.value.map((app, i) => (i === index ? { ...app, [field]: value || undefined } : app)) ?? [];
+
+  updateManifest({ related_applications: apps });
 };
 </script>
 
 <template>
-  <FormField label="Связанные приложения" help="Нативные приложения, связанные с вашим PWA">
-    <div class="flex flex-col gap-4">
-      <div
-        v-for="(app, index) in manifestStore.manifest?.related_applications"
-        :key="index"
-        class="border border-gray-200 rounded-lg p-4"
-      >
-        <div class="flex flex-col gap-3">
-          <div class="flex items-center gap-2">
-            <InputText
-              :model-value="app.platform"
-              @update:model-value="updateApp(index, 'platform', $event)"
-              placeholder="Платформа (play, itunes, windows)"
-              class="flex-1"
-            />
+  <div class="flex flex-col gap-4">
+    <div v-for="(app, index) in relatedApplications" :key="index" class="border border-gray-200 rounded-lg p-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <SelectField
+          label="Платформа"
+          icon="pi pi-mobile"
+          placeholder="Выберите платформу"
+          :options="RELATED_APPLICATION_PLATFORM_OPTIONS"
+          :model-value="app.platform || ''"
+          @update:model-value="updateApp(index, 'platform', $event)"
+          required
+        />
 
-            <InputText
-              :model-value="app.id || ''"
-              @update:model-value="updateApp(index, 'id', $event)"
-              placeholder="ID приложения"
-              class="flex-1"
-            />
-          </div>
+        <InputField
+          label="ID приложения"
+          icon="pi pi-id-card"
+          placeholder="ID приложения"
+          :model-value="app.id || ''"
+          @update:model-value="updateApp(index, 'id', $event)"
+          required
+        />
 
-          <InputText
+        <div class="md:col-span-2">
+          <InputField
+            label="URL приложения в магазине"
+            icon="pi pi-link"
+            placeholder="URL приложения в магазине"
             :model-value="app.url || ''"
             @update:model-value="updateApp(index, 'url', $event)"
-            placeholder="URL приложения в магазине"
-            class="w-full"
+            required
           />
-        </div>
-
-        <div class="flex justify-end mt-3">
-          <Button icon="pi pi-trash" severity="danger" text @click="removeApp(index)" />
         </div>
       </div>
 
-      <Button
-        label="Добавить приложение"
-        icon="pi pi-plus"
-        outlined
-        @click="addApp"
-        :disabled="(manifestStore.manifest?.related_applications?.length || 0) >= 5"
-        class="w-full"
-      />
+      <div class="flex justify-end mt-3">
+        <Button icon="pi pi-trash" severity="danger" text @click="removeApp(index)" />
+      </div>
     </div>
-  </FormField>
+
+    <Button label="Добавить приложение" icon="pi pi-plus" outlined @click="addApp" :disabled="relatedApplications.length >= 5" class="w-full" />
+
+    <div class="flex items-center gap-2">
+      <Checkbox
+        :model-value="queryManifest.data.value?.prefer_related_applications || false"
+        @update:model-value="updateManifest({ prefer_related_applications: $event })"
+        binary
+        input-id="prefer_related"
+      />
+
+      <label for="prefer_related" class="text-sm text-gray-700"> Предпочитать связанные приложения вместо PWA </label>
+    </div>
+  </div>
 </template>

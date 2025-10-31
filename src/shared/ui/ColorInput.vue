@@ -1,22 +1,3 @@
-<template>
-  <div class="flex gap-2 items-center">
-    <input
-      :value="modelValue"
-      @input="handleColorInput"
-      type="color"
-      class="w-12 h-10 border border-gray-300 rounded-md cursor-pointer bg-transparent p-0 disabled:cursor-not-allowed disabled:opacity-60"
-      :disabled="disabled"
-    />
-    <InputText
-      :model-value="modelValue"
-      @update:model-value="handleTextInput"
-      class="flex-1"
-      :placeholder="placeholder"
-      :disabled="disabled"
-    />
-  </div>
-</template>
-
 <script setup lang="ts">
 import InputText from 'primevue/inputtext';
 
@@ -38,7 +19,20 @@ const handleColorInput = (event: Event) => {
   emit('update:modelValue', value);
 };
 
-const handleTextInput = (value: string) => {
-  emit('update:modelValue', value);
+const handleTextInput = (value: string | undefined) => {
+  emit('update:modelValue', value || '');
 };
 </script>
+
+<template>
+  <div class="flex gap-2 items-center">
+    <input
+      :value="modelValue"
+      @input="handleColorInput"
+      type="color"
+      class="w-12 h-10 border border-gray-300 rounded-md cursor-pointer bg-transparent p-0 disabled:cursor-not-allowed disabled:opacity-60"
+      :disabled="disabled"
+    />
+    <InputText :model-value="modelValue" @update:model-value="handleTextInput" class="flex-1" :placeholder="placeholder" :disabled="disabled" />
+  </div>
+</template>

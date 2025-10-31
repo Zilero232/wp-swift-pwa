@@ -1,30 +1,28 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
+import { RouterView, useRoute } from 'vue-router';
 
-import ProgressSpinner from 'primevue/progressspinner';
+import { ProgressSpinner } from 'primevue';
 
-import { useManifestStore } from '@/entities/manifest/model/store';
+import { useManifestQuery } from '@/entities/manifest/model/useManifestQuery';
 
-import Header from '@/widgets/header/ui/Header.vue';
-import Footer from '@/widgets/footer/ui/Footer.vue';
+import Header from '@/widgets/header/Header.vue';
+import Footer from '@/widgets/footer/Footer.vue';
 
-const saving = ref(false);
+const route = useRoute();
 
-const manifestStore = useManifestStore();
+const { queryManifest } = useManifestQuery();
 
-const handleReset = () => {
-  if (confirm('Вы уверены, что хотите сбросить все настройки?')) {
-    manifestStore.resetManifest();
-  }
-};
+// Hide header on welcome page
+const isShow = computed(() => route.name !== 'welcome');
 
-onMounted(async () => {
-  await manifestStore.loadManifest();
+onMounted(() => {
+  queryManifest.refetch();
 });
 </script>
 
 <template>
-  <Header @reset="handleReset" :saving="saving" />
+  <Header v-if="isShow" />
 
   <main>
     <Suspense>
@@ -38,5 +36,5 @@ onMounted(async () => {
     </Suspense>
   </main>
 
-  <Footer />
+  <Footer v-if="isShow" />
 </template>
