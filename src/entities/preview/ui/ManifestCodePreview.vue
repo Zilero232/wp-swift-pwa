@@ -12,7 +12,7 @@ const highlightedCode = ref('');
 
 const highlight = async (code: string) => {
   if (!code) {
-    return highlightedCode.value = '';
+    return (highlightedCode.value = '');
   }
 
   highlightedCode.value = await codeToHtml(code, {
@@ -25,14 +25,14 @@ watch(() => props.manifestJson, highlight, { immediate: true });
 </script>
 
 <template>
-  <div class="flex flex-col">
-    <div v-if="manifestJson" class="bg-gray-900 rounded-lg overflow-hidden">
+  <div class="tw:flex tw:flex-col">
+    <div v-if="manifestJson" class="tw:bg-gray-900 tw:rounded-lg tw:overflow-hidden">
       <div v-html="highlightedCode" class="shiki-wrapper"></div>
     </div>
 
-    <div v-else class="p-8 text-center text-gray-500">
-      <i class="pi pi-inbox text-4xl mb-4 block text-gray-400"></i>
-      <p class="text-lg">Манифест пуст. Заполните настройки PWA.</p>
+    <div v-else class="p-8 tw:text-center tw:text-gray-500">
+      <i class="pi pi-inbox tw:text-4xl tw:mb-4 tw:block tw:text-gray-400"></i>
+      <p class="tw:text-lg">Манифест пуст. Заполните настройки PWA.</p>
     </div>
   </div>
 </template>

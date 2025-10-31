@@ -78,22 +78,22 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="tw:flex tw:flex-col tw:gap-4">
     <div
       v-for="(icon, index) in icons"
       :key="index"
-      class="relative border border-gray-200 rounded-xl p-5 from-gray-50 to-white hover:shadow-md transition-all"
+      class="tw:relative tw:border tw:border-gray-200 tw:rounded-xl tw:p-5 tw:from-gray-50 tw:to-white tw:hover:shadow-md tw:transition-all"
     >
-      <div class="flex items-center justify-between mb-4">
-        <div class="flex items-center gap-2">
-          <div class="w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-semibold text-sm">
+      <div class="tw:flex tw:items-center tw:justify-between tw:mb-4">
+        <div class="tw:flex tw:items-center tw:gap-2">
+          <div class="tw:w-8 tw:h-8 tw:rounded-full tw:bg-purple-100 tw:text-purple-600 tw:flex tw:items-center tw:justify-center tw:font-semibold tw:text-sm">
             {{ index + 1 }}
           </div>
 
-          <span class="text-sm font-medium text-gray-700">Иконка #{{ index + 1 }}</span>
+          <span class="tw:text-sm tw:font-medium tw:text-gray-700">Иконка #{{ index + 1 }}</span>
         </div>
 
-        <div class="flex gap-2">
+        <div class="tw:flex tw:gap-2">
           <Button
             icon="pi pi-images"
             outlined
@@ -127,7 +127,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-2 tw:gap-4">
         <InputField
           class="md:col-span-2"
           label="URL иконки"
@@ -159,21 +159,21 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
           :model-value="icon.purpose || IconPurpose.ANY"
           :options="ICON_PURPOSE_OPTIONS"
           placeholder="Выберите назначение иконки"
-          class="w-full"
+          class="tw:w-full"
           @update:model-value="updateIcon(index, 'purpose', $event)"
         />
       </div>
     </div>
 
-    <Button label="Добавить иконку" icon="pi pi-plus" outlined class="w-full" size="large" :disabled="icons.length >= 20" @click="addIcon" />
+    <Button label="Добавить иконку" icon="pi pi-plus" outlined class="tw:w-full" size="large" :disabled="icons.length >= 20" @click="addIcon" />
 
-    <div v-if="icons.length >= 20" class="text-sm text-orange-600 text-center">
+    <div v-if="icons.length >= 20" class="text-sm text-orange-600 tw:text-center">
       <i class="pi pi-info-circle mr-1"></i>
 
       Достигнут максимум иконок (20)
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-2 tw:gap-4">
       <InfoBlock title="Рекомендуемые размеры иконок:" severity="info" as-list>
         <li>192x192 - минимальный размер для Android</li>
         <li>512x512 - для splash screen и высокого разрешения</li>

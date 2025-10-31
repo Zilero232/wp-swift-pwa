@@ -37,20 +37,20 @@ const downloadManifest = () => {
 </script>
 
 <template>
-  <div class="p-4 sm:p-8">
-    <div class="mb-8 text-center">
-      <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Предпросмотр PWA</h2>
-      <p class="text-gray-600 text-lg">Просмотр манифеста и функций вашего PWA приложения</p>
+  <div class="tw:p-4 sm:tw:p-8">
+    <div class="tw:mb-8 tw:text-center">
+      <h2 class="tw:text-2xl sm:tw:text-3xl tw:font-bold tw:text-gray-800 tw:mb-2">Предпросмотр PWA</h2>
+      <p class="tw:text-gray-600 tw:text-lg">Просмотр манифеста и функций вашего PWA приложения</p>
     </div>
 
-    <div class="flex flex-col gap-8">
+    <div class="tw:flex tw:flex-col tw:gap-8">
       <Card>
         <template #header>
-          <div class="flex items-center gap-3 p-6 pb-0 flex-wrap">
-            <i class="pi pi-file-code text-xl text-blue-600"></i>
-            <h3 class="text-xl font-semibold text-gray-800 flex-1">manifest.json</h3>
+          <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0 tw:flex-wrap">
+            <i class="pi pi-file-code tw:text-xl tw:text-blue-600"></i>
+            <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800 tw:flex-1">manifest.json</h3>
 
-            <div class="flex gap-2 items-center">
+            <div class="tw:flex tw:gap-2 tw:items-center">
               <Button icon="pi pi-copy" text rounded v-tooltip.top="'Копировать'" @click="copyManifest" :disabled="!manifestJSON" />
 
               <Button icon="pi pi-download" text rounded v-tooltip.top="'Скачать'" @click="downloadManifest" :disabled="!manifestJSON" />
@@ -65,9 +65,9 @@ const downloadManifest = () => {
 
       <Card>
         <template #header>
-          <div class="flex items-center gap-3 p-6 pb-0">
-            <i class="pi pi-check-circle text-xl text-green-600"></i>
-            <h3 class="text-xl font-semibold text-gray-800">Возможности PWA</h3>
+          <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
+            <i class="pi pi-check-circle tw:text-xl tw:text-green-600"></i>
+            <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Возможности PWA</h3>
           </div>
         </template>
 

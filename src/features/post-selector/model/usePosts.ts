@@ -4,8 +4,12 @@ import { useInfiniteQuery } from '@tanstack/vue-query';
 import { postsAPI } from '@/services/posts.service';
 
 export function usePosts(searchQuery: MaybeRefOrGetter<string>) {
+  const queryKey = computed(() => {
+    return [`posts${toValue(searchQuery) ? `-${toValue(searchQuery)}` : ''}`];
+  });
+
   const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } = useInfiniteQuery({
-    queryKey: ['posts', searchQuery],
+    queryKey: queryKey.value,
     queryFn: async ({ pageParam = 1 }) => {
       return await postsAPI.getPosts({
         page: pageParam,

@@ -14,15 +14,15 @@ const queryManifestData = computed(() => queryManifest.data.value);
 </script>
 
 <template>
-  <div class="flex flex-col gap-6">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+  <div class="tw:flex tw:flex-col tw:gap-6">
+    <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-4">
       <Dropdown
         :model-value="queryManifestData?.display"
         @update:model-value="updateManifest({ display: $event })"
         :options="DISPLAY_OPTIONS"
         option-label="label"
         option-value="value"
-        class="w-full"
+        class="tw:w-full"
       />
 
       <Dropdown
@@ -31,11 +31,11 @@ const queryManifestData = computed(() => queryManifest.data.value);
         :options="ORIENTATION_OPTIONS"
         option-label="label"
         option-value="value"
-        class="w-full"
+        class="tw:w-full"
       />
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-4">
       <ColorInput
         :model-value="queryManifestData?.theme_color || ''"
         @update:model-value="updateManifest({ theme_color: $event })"

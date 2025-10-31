@@ -53,6 +53,14 @@ export enum RelatedApplicationPlatform {
 }
 
 /**
+ * Form factors
+ */
+export enum ScreenshotFormFactor {
+  NARROW = 'narrow',
+  WIDE = 'wide',
+}
+
+/**
  * Manifest icon
  */
 export interface ManifestIcon {
@@ -70,6 +78,7 @@ export interface ManifestScreenshot {
   sizes?: string;
   type?: string;
   label?: string;
+  form_factor?: ScreenshotFormFactor;
 }
 
 /**

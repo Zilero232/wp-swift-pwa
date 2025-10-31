@@ -15,8 +15,8 @@ const queryManifestData = computed(() => queryManifest.data.value);
 </script>
 
 <template>
-  <div class="flex flex-col gap-6">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+  <div class="tw:flex tw:flex-col tw:gap-6">
+    <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-4">
       <PostSelector
         label="Стартовая страница"
         icon="pi pi-home"
@@ -34,7 +34,7 @@ const queryManifestData = computed(() => queryManifest.data.value);
       />
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="tw:grid tw:grid-cols-1 lg:tw:grid-cols-2 tw:gap-4">
       <SelectField
         label="Язык"
         icon="pi pi-language"

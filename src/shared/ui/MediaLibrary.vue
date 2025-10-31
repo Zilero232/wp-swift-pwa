@@ -37,13 +37,17 @@ const { debouncedFn: debouncedSearch } = useDebounce((value: string) => {
   debouncedSearchValue.value = value;
 }, 500);
 
+const queryKey = computed(() => {
+  return [`media-library${debouncedSearchValue.value ? `-${debouncedSearchValue.value}` : ''}`];
+});
+
 // Load media library with search
 const {
   data: libraryData,
   isLoading: isLoadingLibrary,
   refetch: loadLibrary,
 } = useQuery({
-  queryKey: ['media', 'library', debouncedSearchValue],
+  queryKey: queryKey.value,
   queryFn: async () => {
     return await mediaAPI.getLibrary({
       search: searchQuery.value,
@@ -56,7 +60,7 @@ const {
 const libraryItems = computed(() => libraryData.value?.items ?? []);
 
 const handleUpload = () => {
-  queryClient.invalidateQueries({ queryKey: ['media', 'library'] });
+  queryClient.invalidateQueries({ queryKey: queryKey.value });
 };
 
 const handleSelectAttachment = (item: MediaAttachment) => {
@@ -92,11 +96,11 @@ watch(searchQuery, (newValue) => {
     :style="{ width: '90vw', maxWidth: '800px' }"
     @update:visible="emit('update:visible', $event)"
   >
-    <div class="flex flex-col gap-4">
+    <div class="tw:flex tw:flex-col tw:gap-4">
       <InputField v-model="searchQuery" label="Поиск изображений" icon="pi pi-search" placeholder="Найти изображение по названию или URL" />
 
-      <div v-if="isLoadingLibrary" class="flex justify-center items-center py-8">
-        <i class="pi pi-spin pi-spinner text-2xl text-gray-400"></i>
+      <div v-if="isLoadingLibrary" class="tw:flex tw:justify-center tw:items-center tw:py-8">
+        <i class="pi pi-spin pi-spinner tw:text-2xl tw:text-gray-400"></i>
       </div>
 
       <EmptyState
@@ -106,29 +110,29 @@ watch(searchQuery, (newValue) => {
         description="Попробуйте изменить поисковый запрос или загрузите новое изображение"
       />
 
-      <div v-else class="grid grid-cols-4 md:grid-cols-6 lg:grid-cols-8 gap-2 max-h-96 overflow-y-auto p-1">
+      <div v-else class="tw:grid tw:grid-cols-4 md:tw:grid-cols-6 lg:tw:grid-cols-8 tw:gap-2 tw:max-h-96 tw:overflow-y-auto tw:p-1">
         <div
           v-for="item in libraryItems"
           :key="item.id"
-          class="cursor-pointer border-2 rounded-lg overflow-hidden transition-all hover:border-blue-500 hover:shadow-md bg-white"
+          class="tw:cursor-pointer tw:border-2 tw:rounded-lg tw:overflow-hidden tw:transition-all tw:hover:border-blue-500 tw:hover:shadow-md tw:bg-white"
           :class="{
-            'border-blue-500 shadow-md': selectedUrl === item.url,
-            'border-gray-200': selectedUrl !== item.url,
+            'tw:border-blue-500 tw:shadow-md': selectedUrl === item.url,
+            'tw:border-gray-200': selectedUrl !== item.url,
           }"
           @click="handleSelectAttachment(item)"
         >
-          <div class="relative aspect-square bg-gray-100">
-            <img :src="item.url" :alt="item.alt || item.title" class="w-full h-full object-cover" />
+          <div class="relative aspect-square tw:bg-gray-100">
+            <img :src="item.url" :alt="item.alt || item.title" class="tw:w-full tw:h-full tw:object-cover" />
           </div>
 
-          <div class="p-2 text-xs truncate text-gray-700" :title="item.title">
+          <div class="tw:p-2 tw:text-xs tw:truncate tw:text-gray-700" :title="item.title">
             {{ item.title }}
           </div>
         </div>
       </div>
 
-      <div class="border-t pt-4">
-        <div class="text-sm text-gray-600 mb-2">Или загрузите новое изображение:</div>
+      <div class="tw:border-t tw:pt-4">
+        <div class="tw:text-sm tw:text-gray-600 tw:mb-2">Или загрузите новое изображение:</div>
 
         <MediaFileUpload choose-label="Загрузить новое изображение" @uploaded="handleUpload" />
       </div>

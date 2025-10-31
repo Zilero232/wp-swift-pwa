@@ -83,9 +83,7 @@ class ManifestController extends RestController
                 'methods' => WP_REST_Server::EDITABLE,
                 'callback' => [$this, 'update_manifest'],
                 'permission_callback' => [$this, 'check_permission'],
-                'args' => array(
-
-                )
+                'args' => array()
             ]
         );
     }
@@ -95,29 +93,25 @@ class ManifestController extends RestController
      */
     public function get_manifest(WP_REST_Request $request): WP_REST_Response
     {
-        global $wpdb;
+        $manifest_content = File_Handler::get_file_content(Plugin_PWA_Constants::FILE_MANIFEST_NAME);
 
-        $table_name = $wpdb->prefix . SWIFT_PWA_SLUG_SETTINGS;
+		// If file doesn't exist or error, return default
+		if (is_wp_error($manifest_content)) {
+			$default_manifest = include SWIFT_PWA_PLUGIN_PATH . 'includes/config/manifest-default.php';
 
-        $manifest = $wpdb->get_var("SELECT manifest FROM `{$table_name}`");
+			return $this->success_response($default_manifest);
+		}
 
-        if (!$manifest) {
-            // If no data in table, return default
-            $default_manifest = include SWIFT_PWA_PLUGIN_PATH . 'includes/config/manifest-default.php';
+		$decoded_manifest = json_decode($manifest_content, true);
 
-            return $this->success_response($default_manifest);
-        }
+		if (json_last_error() !== JSON_ERROR_NONE) {
+			// If JSON is invalid, return default
+			$default_manifest = include SWIFT_PWA_PLUGIN_PATH . 'includes/config/manifest-default.php';
 
-        $decoded_manifest = json_decode($manifest, true);
+			return $this->success_response($default_manifest);
+		}
 
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            // If JSON is invalid, return default
-            $default_manifest = include SWIFT_PWA_PLUGIN_PATH . 'includes/config/manifest-default.php';
-
-            return $this->success_response($default_manifest);
-        }
-
-        return $this->success_response($decoded_manifest);
+		return $this->success_response($decoded_manifest);
     }
 
     /**
@@ -127,19 +121,25 @@ class ManifestController extends RestController
     {
         $data = $request->get_json_params();
 
-        // Update option
-        update_option(
-            SWIFT_PWA_SLUG_SETTINGS,
-            $data
-        );
+		// Validate data (optional but recommended)
+		if (empty($data) || !is_array($data)) {
+			return $this->error_response('Invalid manifest data', 400);
+		}
 
-        // Update file
-        File_Handler::update_file(
-            Plugin_PWA_Constants::FILE_MANIFEST_NAME,
-            json_encode($data, JSON_PRETTY_PRINT)
-        );
+		// Update file
+		$result = File_Handler::update_file(
+			Plugin_PWA_Constants::FILE_MANIFEST_NAME,
+			json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+		);
 
-        return $this->success_response($data, 'Manifest settings updated successfully');
+		if (is_wp_error($result)) {
+			return $this->error_response(
+				$result->get_error_message(),
+				500
+			);
+		}
+
+		return $this->success_response($data, 'Manifest updated successfully');
     }
 }
 

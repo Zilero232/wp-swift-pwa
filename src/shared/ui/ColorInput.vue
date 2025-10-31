@@ -25,14 +25,14 @@ const handleTextInput = (value: string | undefined) => {
 </script>
 
 <template>
-  <div class="flex gap-2 items-center">
+  <div class="tw:flex tw:gap-2 tw:items-center">
     <input
       :value="modelValue"
       @input="handleColorInput"
       type="color"
-      class="w-12 h-10 border border-gray-300 rounded-md cursor-pointer bg-transparent p-0 disabled:cursor-not-allowed disabled:opacity-60"
+      class="tw:w-12 tw:h-10 tw:border tw:border-gray-300 tw:rounded-md tw:cursor-pointer tw:bg-transparent tw:p-0 tw:disabled:cursor-not-allowed tw:disabled:opacity-60"
       :disabled="disabled"
     />
-    <InputText :model-value="modelValue" @update:model-value="handleTextInput" class="flex-1" :placeholder="placeholder" :disabled="disabled" />
+    <InputText :model-value="modelValue" @update:model-value="handleTextInput" class="tw:flex-1" :placeholder="placeholder" :disabled="disabled" />
   </div>
 </template>

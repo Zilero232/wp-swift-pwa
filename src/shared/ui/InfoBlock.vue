@@ -15,29 +15,29 @@ const props = withDefaults(defineProps<Props>(), {
 
 const severityClasses = {
   info: {
-    container: 'bg-blue-50 border-blue-200 text-blue-900',
-    icon: 'text-blue-600',
-    list: 'text-blue-800',
+    container: 'tw:bg-blue-50 tw:border-blue-200 tw:text-blue-900',
+    icon: 'tw:text-blue-600',
+    list: 'tw:text-blue-800',
   },
   success: {
-    container: 'bg-green-50 border-green-200 text-green-900',
-    icon: 'text-green-600',
-    list: 'text-green-800',
+    container: 'tw:bg-green-50 tw:border-green-200 tw:text-green-900',
+    icon: 'tw:text-green-600',
+    list: 'tw:text-green-800',
   },
   warning: {
-    container: 'bg-orange-50 border-orange-200 text-orange-900',
-    icon: 'text-orange-600',
-    list: 'text-orange-800',
+    container: 'tw:bg-orange-50 tw:border-orange-200 tw:text-orange-900',
+    icon: 'tw:text-orange-600',
+    list: 'tw:text-orange-800',
   },
   danger: {
-    container: 'bg-red-50 border-red-200 text-red-900',
-    icon: 'text-red-600',
-    list: 'text-red-800',
+    container: 'tw:bg-red-50 tw:border-red-200 tw:text-red-900',
+    icon: 'tw:text-red-600',
+    list: 'tw:text-red-800',
   },
   help: {
-    container: 'bg-purple-50 border-purple-200 text-purple-900',
-    icon: 'text-purple-600',
-    list: 'text-purple-800',
+    container: 'tw:bg-purple-50 tw:border-purple-200 tw:text-purple-900',
+    icon: 'tw:text-purple-600',
+    list: 'tw:text-purple-800',
   },
 };
 
@@ -45,15 +45,15 @@ const classes = severityClasses[props.severity];
 </script>
 
 <template>
-  <div :class="['border rounded-lg p-4 text-sm', classes.container]">
-    <div class="flex items-center gap-2">
+  <div :class="['tw:border tw:rounded-lg tw:p-4 tw:text-sm', classes.container]">
+    <div class="tw:flex tw:items-center tw:gap-2">
       <i :class="['mt-0.5', icon, classes.icon]"></i>
 
-      <p v-if="title" class="font-semibold mb-1">{{ title }}</p>
+      <p v-if="title" class="tw:font-semibold tw:mb-1">{{ title }}</p>
     </div>
 
-    <div class="flex-1">
-      <ul v-if="asList" :class="['list-disc list-inside space-y-1', classes.list]">
+    <div class="tw:flex-1">
+      <ul v-if="asList" :class="['tw:list-disc tw:list-inside tw:space-y-1', classes.list]">
         <slot></slot>
       </ul>
 

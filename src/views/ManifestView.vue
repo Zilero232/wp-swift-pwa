@@ -12,20 +12,20 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
 </script>
 
 <template>
-  <div class="p-4 sm:p-8">
-    <div class="mb-8 text-center">
-      <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Настройки Manifest</h2>
+  <div class="tw:p-4 sm:tw:p-8">
+    <div class="tw:mb-8 tw:text-center">
+      <h2 class="tw:text-2xl sm:tw:text-3xl tw:font-bold tw:text-gray-800 tw:mb-2">Настройки Manifest</h2>
 
-      <p class="text-gray-600 text-lg">Конфигурация веб-приложения манифеста</p>
+      <p class="tw:text-gray-600 tw:text-lg">Конфигурация веб-приложения манифеста</p>
     </div>
 
-    <div class="flex flex-col gap-8">
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+    <div class="tw:flex tw:flex-col tw:gap-8">
+      <div class="tw:grid tw:grid-cols-1 tw:xl:grid-cols-2 tw:gap-8">
         <Card>
           <template #header>
-            <div class="flex items-center gap-3 p-6 pb-0">
-              <i class="pi pi-info-circle text-xl text-blue-600"></i>
-              <h3 class="text-xl font-semibold text-gray-800">Основная информация</h3>
+            <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
+              <i class="pi pi-info-circle tw:text-xl tw:text-blue-600"></i>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Основная информация</h3>
             </div>
           </template>
 
@@ -36,9 +36,9 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
 
         <Card>
           <template #header>
-            <div class="flex items-center gap-3 p-6 pb-0">
-              <i class="pi pi-desktop text-xl text-blue-600"></i>
-              <h3 class="text-xl font-semibold text-gray-800">Отображение</h3>
+            <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
+              <i class="pi pi-desktop tw:text-xl tw:text-blue-600"></i>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Отображение</h3>
             </div>
           </template>
 
@@ -48,12 +48,12 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
         </Card>
       </div>
 
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+      <div class="tw:grid tw:grid-cols-1 tw:xl:grid-cols-2 tw:gap-8">
         <Card>
           <template #header>
-            <div class="flex items-center gap-3 p-6 pb-0">
-              <i class="pi pi-cog text-xl text-blue-600"></i>
-              <h3 class="text-xl font-semibold text-gray-800">Дополнительные настройки</h3>
+            <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
+              <i class="pi pi-cog tw:text-xl tw:text-blue-600"></i>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Дополнительные настройки</h3>
             </div>
           </template>
 
@@ -64,9 +64,9 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
 
         <Card>
           <template #header>
-            <div class="flex items-center gap-3 p-6 pb-0">
-              <i class="pi pi-tags text-xl text-blue-600"></i>
-              <h3 class="text-xl font-semibold text-gray-800">Категории</h3>
+            <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
+              <i class="pi pi-tags tw:text-xl tw:text-blue-600"></i>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Категории</h3>
             </div>
           </template>
 
@@ -76,12 +76,12 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
         </Card>
       </div>
 
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+      <div class="tw:grid tw:grid-cols-1 tw:xl:grid-cols-2 tw:gap-8">
         <Card>
           <template #header>
-            <div class="flex items-center gap-3 p-6 pb-0">
-              <i class="pi pi-bolt text-xl text-blue-600"></i>
-              <h3 class="text-xl font-semibold text-gray-800">Шорткаты приложения</h3>
+            <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
+              <i class="pi pi-bolt tw:text-xl tw:text-blue-600"></i>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Шорткаты приложения</h3>
             </div>
           </template>
 
@@ -92,9 +92,9 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
 
         <Card>
           <template #header>
-            <div class="flex items-center gap-3 p-6 pb-0">
-              <i class="pi pi-mobile text-xl text-blue-600"></i>
-              <h3 class="text-xl font-semibold text-gray-800">Связанные приложения</h3>
+            <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
+              <i class="pi pi-mobile tw:text-xl tw:text-blue-600"></i>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Связанные приложения</h3>
             </div>
           </template>
 
@@ -104,12 +104,12 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
         </Card>
       </div>
 
-      <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+      <div class="tw:grid tw:grid-cols-1 tw:xl:grid-cols-2 tw:gap-8">
         <Card>
           <template #header>
-            <div class="flex items-center gap-3 p-6 pb-0">
-              <i class="pi pi-image text-xl text-blue-600"></i>
-              <h3 class="text-xl font-semibold text-gray-800">Иконки приложения</h3>
+            <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
+              <i class="pi pi-image tw:text-xl tw:text-blue-600"></i>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Иконки приложения</h3>
             </div>
           </template>
 
@@ -120,9 +120,9 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
 
         <Card>
           <template #header>
-            <div class="flex items-center gap-3 p-6 pb-0">
-              <i class="pi pi-camera text-xl text-blue-600"></i>
-              <h3 class="text-xl font-semibold text-gray-800">Скриншоты</h3>
+            <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
+              <i class="pi pi-camera tw:text-xl tw:text-blue-600"></i>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Скриншоты</h3>
             </div>
           </template>
 

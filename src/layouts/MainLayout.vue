@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue';
+import { computed } from 'vue';
 import { RouterView, useRoute } from 'vue-router';
 
 import { ProgressSpinner } from 'primevue';
@@ -9,23 +9,25 @@ import { useManifestQuery } from '@/entities/manifest/model/useManifestQuery';
 import Header from '@/widgets/header/Header.vue';
 import Footer from '@/widgets/footer/Footer.vue';
 
+import { RouteName } from '@/shared/config/routes.constants';
+
 const route = useRoute();
 
-const { queryManifest } = useManifestQuery();
+const isWelcomePage = computed(() => route.name === RouteName.WELCOME);
+const { queryManifest } = useManifestQuery({ enabled: !isWelcomePage });
 
-// Hide header on welcome page
-const isShow = computed(() => route.name !== 'welcome');
-
-onMounted(() => {
-  queryManifest.refetch();
-});
+const isLoading = computed(() => queryManifest.isPending.value);
 </script>
 
 <template>
-  <Header v-if="isShow" />
+  <Header v-if="!isWelcomePage" />
 
-  <main>
-    <Suspense>
+  <main class='tw:flex-1'>
+    <div v-if="isLoading && !isWelcomePage" class="tw:absolute tw:top-[50%] tw:left-[50%] tw:translate-[-50%]">
+      <ProgressSpinner />
+    </div>
+
+    <Suspense v-else>
       <template #default>
         <RouterView />
       </template>
@@ -36,5 +38,5 @@ onMounted(() => {
     </Suspense>
   </main>
 
-  <Footer v-if="isShow" />
+  <Footer v-if="!isWelcomePage" />
 </template>

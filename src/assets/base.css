@@ -1,5 +1,9 @@
 @import 'primeicons/primeicons.css';
-@import 'tailwindcss';
+@import 'tailwindcss' prefix(tw);
+
+@theme {
+    --breakpoint-sm: 600px;
+ }
 
 * {
   box-sizing: border-box;

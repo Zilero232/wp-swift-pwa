@@ -2,17 +2,8 @@
 import { InputText } from 'primevue';
 
 interface Props {
-  /**
-   * Label text
-   */
   label: string;
-  /**
-   * PrimeIcons icon class
-   */
   icon?: string;
-  /**
-   * Required field indicator
-   */
   required?: boolean;
 }
 
@@ -24,14 +15,14 @@ defineOptions({
 </script>
 
 <template>
-  <div class="w-full">
-    <label class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
-      <i v-if="icon" :class="['text-xs mr-1', icon]"></i>
+  <div class="tw:w-full">
+    <label class="tw:block tw:text-xs tw:font-semibold tw:text-gray-600 tw:mb-1.5 tw:uppercase tw:tracking-wide">
+      <i v-if="icon" :class="['tw:text-xs tw:mr-1', icon]"></i>
       {{ label }}
 
-      <span v-if="required" class="text-red-500 ml-0.5">*</span>
+      <span v-if="required" class="tw:text-red-500 tw:ml-0.5">*</span>
     </label>
 
-    <InputText v-bind="$attrs" class="w-full" />
+    <InputText v-bind="$attrs" class="tw:w-full" />
   </div>
 </template>

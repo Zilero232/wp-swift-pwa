@@ -27,10 +27,10 @@ const removeCategory = (category: string) => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-6">
+  <div class="tw:flex tw:flex-col tw:gap-6">
     <div>
-      <label class="block text-xs font-semibold text-gray-600 mb-2 uppercase tracking-wide">
-        <i class="pi pi-tags text-xs mr-1"></i>
+      <label class="tw:block tw:text-xs tw:font-semibold tw:text-gray-600 tw:mb-2 tw:uppercase tw:tracking-wide">
+        <i class="pi pi-tags tw:text-xs tw:mr-1"></i>
         Выберите категории приложения
       </label>
 
@@ -40,7 +40,7 @@ const removeCategory = (category: string) => {
         option-label="label"
         option-value="value"
         placeholder="Выберите одну или несколько категорий"
-        class="w-full"
+        class="tw:w-full"
         :max-selected-labels="3"
         selected-items-label="{0} категорий выбрано"
         :filter="true"
@@ -49,27 +49,27 @@ const removeCategory = (category: string) => {
         @update:model-value="updateManifest({ categories: $event })"
       />
 
-      <small class="text-gray-500 mt-2 block text-xs"> Максимум 10 категорий. Помогают пользователям найти ваше приложение в магазинах. </small>
+      <small class="tw:text-gray-500 tw:mt-2 tw:block tw:text-xs"> Максимум 10 категорий. Помогают пользователям найти ваше приложение в магазинах. </small>
     </div>
 
-    <div v-if="categories.length > 0" class="from-gray-50 to-white border border-gray-200 rounded-xl px-5 pb-5">
-      <div class="flex items-center gap-2 mb-3">
-        <i class="pi pi-check-circle text-green-600"></i>
+    <div v-if="categories.length > 0" class="tw:from-gray-50 tw:to-white tw:border tw:border-gray-200 tw:rounded-xl tw:px-5 tw:pb-5">
+      <div class="tw:flex tw:items-center tw:gap-2 tw:mb-3">
+        <i class="pi pi-check-circle tw:text-green-600"></i>
 
-        <h4 class="text-sm font-semibold text-gray-700">Выбранные категории ({{ categories.length }}/10)</h4>
+        <h4 class="tw:text-sm tw:font-semibold tw:text-gray-700">Выбранные категории ({{ categories.length }}/10)</h4>
       </div>
 
-      <div class="flex flex-wrap gap-2">
+      <div class="tw:flex tw:flex-wrap tw:gap-2">
         <Tag
           v-for="category in categories"
           :key="category"
           :value="category"
           severity="info"
           rounded
-          class="cursor-pointer hover:opacity-80 transition-opacity"
+          class="tw:cursor-pointer tw:hover:opacity-80 tw:transition-opacity"
         >
           <template #default>
-            <div class="flex items-center gap-2">
+            <div class="tw:flex tw:items-center tw:gap-2">
               <span>{{ category }}</span>
 
               <i class="pi pi-times text-xs" @click="removeCategory(category)"></i>
@@ -79,10 +79,10 @@ const removeCategory = (category: string) => {
       </div>
     </div>
 
-    <div v-else class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
-      <i class="pi pi-info-circle text-blue-600 text-2xl mb-2"></i>
+    <div v-else class="tw:bg-blue-50 tw:border tw:border-blue-200 tw:rounded-lg tw:p-4 tw:text-center">
+      <i class="pi pi-info-circle tw:text-blue-600 tw:text-2xl tw:mb-2"></i>
 
-      <p class="text-sm text-blue-900">Категории не выбраны. Выберите категории, чтобы помочь пользователям найти ваше приложение.</p>
+      <p class="tw:text-sm tw:text-blue-900">Категории не выбраны. Выберите категории, чтобы помочь пользователям найти ваше приложение.</p>
     </div>
 
     <InfoBlock title="Рекомендации по выбору категорий:" severity="help" icon="pi-lightbulb" as-list>

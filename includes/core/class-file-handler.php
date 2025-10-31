@@ -49,6 +49,49 @@ class File_Handler
 	}
 
 	/**
+	 * Create new file.
+	 *
+	 * Creates a new file with content. Returns error if file already exists.
+	 *
+	 * @param string $file_name Name of file to create (e.g., 'manifest.json').
+	 * @param string $content   Content to write to file.
+	 *
+	 * @return bool|WP_Error True on success, WP_Error on failure.
+	 */
+	public static function create_file($file_name, $content): bool|WP_Error
+	{
+		global $wp_filesystem;
+
+		if (!$wp_filesystem) {
+			require_once self::$base_path . 'wp-admin/includes/file.php';
+
+			WP_Filesystem();
+		}
+
+		$file_path = self::get_file_path($file_name);
+
+		// Check if file already exists
+		if ($wp_filesystem->exists($file_path)) {
+			return new WP_Error(
+				'file_already_exists',
+				sprintf('File already exists: %s', $file_name)
+			);
+		}
+
+		// Create file
+		$result = $wp_filesystem->put_contents($file_path, $content);
+
+		if (!$result) {
+			return new WP_Error(
+				'file_creation_failed',
+				sprintf('Failed to create file: %s', $file_name)
+			);
+		}
+
+		return true;
+	}
+
+	/**
 	 * Get file content.
 	 *
 	 * Reads and returns content from the specified file type.
@@ -116,10 +159,11 @@ class File_Handler
 
 		$file_path = self::get_file_path($file_type);
 
-		if (empty($file_path)) {
+		// Check if file exists
+		if (!$wp_filesystem->exists($file_path)) {
 			return new WP_Error(
-				'invalid_file_type',
-				sprintf('Invalid file type: %s', $file_type)
+				'file_not_found',
+				sprintf('File does not exist: %s', $file_name)
 			);
 		}
 
@@ -155,15 +199,9 @@ class File_Handler
 		}
 
 		$file_path = self::get_file_path($file_type);
-
-		if (empty($file_path)) {
-			return new WP_Error(
-				'invalid_file_type',
-				sprintf('Invalid file type: %s', $file_type)
-			);
-		}
-
-		if (!$wp_filesystem->exists($file_path)) {
+		
+		// Check if file exists.
+		if (!self::file_exists($file_type)) {
 			return new WP_Error(
 				'file_not_found',
 				sprintf('File does not exist: %s', $file_path)
@@ -180,6 +218,26 @@ class File_Handler
 		}
 
 		return true;
+	}
+
+	/**
+	 * Check if file exists.
+	 *
+	 * @param string $file_type Type of file to check.
+	 *
+	 * @return bool|WP_Error True if file exists, false otherwise.
+	 */
+	public static function file_exists($file_type): bool|WP_Error
+	{
+		global $wp_filesystem;
+
+		if (!$wp_filesystem) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+
+			WP_Filesystem();
+		}
+
+		return $wp_filesystem->exists(self::get_file_path($file_type));
 	}
 
 	/**

@@ -41,9 +41,9 @@ const updateApp = (index: number, field: keyof RelatedApplication, value: string
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="tw:flex tw:flex-col tw:gap-4">
     <div v-for="(app, index) in relatedApplications" :key="index" class="border border-gray-200 rounded-lg p-4">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-2 tw:gap-4">
         <SelectField
           label="Платформа"
           icon="pi pi-mobile"
@@ -75,14 +75,14 @@ const updateApp = (index: number, field: keyof RelatedApplication, value: string
         </div>
       </div>
 
-      <div class="flex justify-end mt-3">
+      <div class="tw:flex justify-end mt-3">
         <Button icon="pi pi-trash" severity="danger" text @click="removeApp(index)" />
       </div>
     </div>
 
-    <Button label="Добавить приложение" icon="pi pi-plus" outlined @click="addApp" :disabled="relatedApplications.length >= 5" class="w-full" />
+    <Button label="Добавить приложение" icon="pi pi-plus" outlined @click="addApp" :disabled="relatedApplications.length >= 5" class="tw:w-full" />
 
-    <div class="flex items-center gap-2">
+    <div class="tw:flex items-center gap-2">
       <Checkbox
         :model-value="queryManifest.data.value?.prefer_related_applications || false"
         @update:model-value="updateManifest({ prefer_related_applications: $event })"

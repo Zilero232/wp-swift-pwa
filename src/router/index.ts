@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 
+import { RouteName } from '@/shared/config/routes.constants';
+
 const router = createRouter({
   // Use hash history for WordPress admin context to avoid conflicts
   history: createWebHashHistory(),
@@ -10,17 +12,17 @@ const router = createRouter({
       children: [
         {
           path: '',
-          name: 'welcome',
+          name: RouteName.WELCOME,
           component: () => import('@/views/WelcomeView.vue'),
         },
         {
           path: '/manifest',
-          name: 'manifest',
+          name: RouteName.MANIFEST,
           component: () => import('@/views/ManifestView.vue'),
         },
         {
           path: '/preview',
-          name: 'preview',
+          name: RouteName.PREVIEW,
           component: () => import('@/views/PreviewView.vue'),
         },
       ],

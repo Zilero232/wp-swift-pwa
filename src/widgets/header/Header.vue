@@ -35,9 +35,9 @@ const isDisabled = computed(() => {
 </script>
 
 <template>
-  <header class="px-4 sm:px-8 sticky top-[var(--wp-admin--admin-bar--height)] py-2 bg-white border-b z-10">
-    <div class="flex justify-between items-center">
-      <div class="flex items-center gap-4">
+  <header class="tw:px-4 sm:px-8 tw:sticky tw:top-0 tw:sm:top-[var(--wp-admin--admin-bar--height)] tw:py-2 tw:bg-white tw:border-b tw:z-10 tw:gap-4">
+    <div class="tw:flex tw:justify-between tw:items-center tw:flex-col tw:sm:flex-row">
+      <div class="tw:items-center tw:gap-4 tw:hidden tw:sm:flex">
         <h1>Swift PWA</h1>
 
         <span>v{{ version }}</span>

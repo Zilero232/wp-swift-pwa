@@ -41,17 +41,17 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
+  <div class="tw:flex tw:flex-col tw:gap-4">
     <div v-for="(shortcut, index) in queryManifest.data.value?.shortcuts" :key="index" class="border border-gray-200 rounded-lg p-4">
-      <div class="flex flex-col gap-3">
-        <div class="flex items-center gap-2">
+      <div class="tw:flex tw:flex-col gap-3">
+        <div class="tw:flex items-center gap-2">
           <InputField
             label="Название шортката"
             icon="pi pi-text-width"
             placeholder="Название шортката *"
             :model-value="shortcut.name"
             @update:model-value="updateShortcut(index, 'name', $event)"
-            class="flex-1"
+            class="tw:flex-1"
             required
           />
 
@@ -61,7 +61,7 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
             placeholder="Короткое название"
             :model-value="shortcut.short_name || ''"
             @update:model-value="updateShortcut(index, 'short_name', $event)"
-            class="flex-1"
+            class="tw:flex-1"
           />
         </div>
 
@@ -72,7 +72,7 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
           :model-value="shortcut.description || ''"
           @update:model-value="updateShortcut(index, 'description', $event)"
           rows="2"
-          class="w-full"
+          class="tw:w-full"
         />
 
         <PostSelector
@@ -85,11 +85,11 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
         />
       </div>
 
-      <div class="flex justify-end mt-3">
+      <div class="tw:flex justify-end mt-3">
         <Button icon="pi pi-trash" severity="danger" text @click="removeShortcut(index)" />
       </div>
     </div>
 
-    <Button label="Добавить шорткат" icon="pi pi-plus" outlined @click="addShortcut" :disabled="shortcuts.length >= 4" class="w-full" />
+    <Button label="Добавить шорткат" icon="pi pi-plus" outlined @click="addShortcut" :disabled="shortcuts.length >= 4" class="tw:w-full" />
   </div>
 </template>

@@ -1,4 +1,4 @@
-import { DisplayMode, IconPurpose, OrientationMode, RelatedApplicationPlatform } from '@/shared/types/manifest';
+import { DisplayMode, IconPurpose, OrientationMode, RelatedApplicationPlatform, ScreenshotFormFactor } from '@/shared/types/manifest';
 
 /**
  * Icon purpose options for dropdown
@@ -18,6 +18,14 @@ export const RELATED_APPLICATION_PLATFORM_OPTIONS = [
   { label: 'Windows Store', value: RelatedApplicationPlatform.WINDOWS },
   { label: 'Amazon Appstore', value: RelatedApplicationPlatform.AMAZON },
   { label: 'Web App', value: RelatedApplicationPlatform.WEBAPP },
+];
+
+/**
+ * Screenshot form factor options for dropdown
+ */
+export const SCREENSHOT_FORM_FACTOR_OPTIONS = [
+  { label: 'Narrow (Узкий)', value: ScreenshotFormFactor.NARROW },
+  { label: 'Wide (Широкий)', value: ScreenshotFormFactor.WIDE },
 ];
 
 /**

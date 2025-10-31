@@ -130,7 +130,7 @@ class PostsController extends RestController
                 $posts[] = [
                     'id' => $post->ID,
                     'title' => get_the_title($post->ID),
-                    'link' => get_permalink($post->ID),
+                    'link' => wp_make_link_relative(get_permalink($post->ID)),
                     'type' => $post->post_type,
                     'status' => $post->post_status,
                 ];

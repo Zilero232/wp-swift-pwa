@@ -5,13 +5,20 @@ import { manifestAPI } from '@/services/manifest.service';
 import { useToast } from '@/shared/composable/useToast';
 
 import type { ManifestSettings } from '@/shared/types/manifest';
+import { toValue, type MaybeRefOrGetter, computed } from 'vue'
 
 const MANIFEST_KEY = ['manifest'];
 
-export function useManifestQuery() {
+interface Props {
+  enabled?: MaybeRefOrGetter<boolean>;
+}
+
+export const useManifestQuery = ({ enabled = true }: Props = {}) => {
   const { showSuccess, showError } = useToast();
 
   const queryClient = useQueryClient();
+
+  const isEnabled = computed(() => toValue(enabled));
 
   const queryManifest = useQuery({
     queryKey: MANIFEST_KEY,
@@ -26,6 +33,7 @@ export function useManifestQuery() {
 
       return response.data;
     },
+    enabled: isEnabled.value,
   });
 
   const mutationUpdateManifest = useMutation({

@@ -10,7 +10,7 @@ const queryManifestData = computed(() => queryManifest.data.value);
 </script>
 
 <template>
-  <div class="flex flex-col gap-6">
+  <div class="tw:flex tw:flex-col tw:gap-6">
     <InputField
       label="Название приложения"
       icon="pi pi-mobile"

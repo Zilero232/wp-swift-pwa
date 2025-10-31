@@ -15,6 +15,6 @@ defined('ABSPATH') || exit;
 class Plugin_PWA_Constants
 {
 	// Files Name.
-	const FILE_MANIFEST_NAME = 'manifest';
-	const FILE_SERVICE_WORKER_NAME = 'service-worker';
+	const FILE_MANIFEST_NAME = 'manifest.json';
+	const FILE_SERVICE_WORKER_NAME = 'service-worker.js';
 }

@@ -34,7 +34,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="w-full">
+  <div class="tw:w-full">
     <label v-if="label" class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
       <i v-if="icon" :class="['text-xs mr-1', icon]"></i>
 
@@ -51,13 +51,13 @@ onMounted(() => {
       option-label="label"
       option-value="value"
       :filter="true"
-      class="w-full"
+      class="tw:w-full"
       @update:model-value="emit('update:modelValue', $event)"
       @filter="debouncedHandleFilter"
     >
       <template #footer>
         <div v-if="hasMore" class="p-2 border-t">
-          <Button label="Загрузить ещё" icon="pi pi-arrow-down" size="small" text :loading="isLoading" class="w-full" @click="loadMore" />
+          <Button label="Загрузить ещё" icon="pi pi-arrow-down" size="small" text :loading="isLoading" class="tw:w-full" @click="loadMore" />
         </div>
       </template>
     </Select>

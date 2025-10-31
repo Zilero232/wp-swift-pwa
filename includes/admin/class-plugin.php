@@ -5,9 +5,12 @@
  * @package SwiftPWA
  */
 
-namespace SwiftPWA\Core;
+namespace SwiftPWA\Plugin;
 
 defined('ABSPATH') || exit;
+
+use SwiftPWA\FileHandler\File_Handler;
+use SwiftPWA\PWAConstants\Plugin_PWA_Constants;
 
 class Plugin
 {
@@ -53,44 +56,13 @@ class Plugin
 	 */
 	public static function activation_callback(): void
 	{
-		global $wpdb;
-
-		$charset_collate = $wpdb->get_charset_collate();
-		$table_name = $wpdb->prefix . SWIFT_PWA_SLUG_SETTINGS;
-
-		$tables = [
-			$table_name => "CREATE TABLE IF NOT EXISTS `{$table_name}` (
-				id int(11) NOT NULL AUTO_INCREMENT,
-				manifest longtext NOT NULL,
-				service_worker longtext NOT NULL,
-				created_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-				updated_at datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-				PRIMARY KEY (id)
-			) {$charset_collate};",
-		];
-
-		foreach ($tables as $table => $sql) {
-			if ($wpdb->get_var($wpdb->prepare('SHOW TABLES LIKE %s', $table)) !== $table) {
-				require_once ABSPATH . 'wp-admin/includes/upgrade.php';
-
-				dbDelta($sql);
-			}
-		}
-
-		// Check if table has data
-		$count = $wpdb->get_var($wpdb->prepare("SELECT COUNT(*) FROM `{$table_name}`"));
-
-		if ($count == 0) {
-			// Insert default data
+		// Create default manifest.json if it doesn't exist
+		if (!File_Handler::file_exists(Plugin_PWA_Constants::FILE_MANIFEST_NAME)) {
 			$default_manifest = include SWIFT_PWA_PLUGIN_PATH . 'includes/config/manifest-default.php';
-
-			$wpdb->insert(
-				$table_name,
-				[
-					'manifest' => wp_json_encode($default_manifest),
-					'service_worker' => ''
-				],
-				['%s', '%s']
+			
+			File_Handler::create_file(
+				Plugin_PWA_Constants::FILE_MANIFEST_NAME,
+				json_encode($default_manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
 			);
 		}
 	}
@@ -112,12 +84,10 @@ class Plugin
 	 */
 	public static function uninstall_callback(): void
 	{
-		global $wpdb;
-
-		// Drop table
-		$table_name = $wpdb->prefix . SWIFT_PWA_SLUG_SETTINGS;
-
-		$wpdb->query($wpdb->prepare("DROP TABLE IF EXISTS %i", $table_name));
+		// Delete manifest.json file on uninstall
+		if (File_Handler::file_exists(Plugin_PWA_Constants::FILE_MANIFEST_NAME)) {
+			File_Handler::delete_file(Plugin_PWA_Constants::FILE_MANIFEST_NAME);
+		}
 	}
 }
 

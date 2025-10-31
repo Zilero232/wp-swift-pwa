@@ -5,7 +5,7 @@
  * @package SwiftPWA
  */
 
-namespace SwiftPWA\AdminMenu;
+namespace SwiftPWA\AdminPanel;
 
 class Admin_Panel
 {
@@ -107,7 +107,7 @@ class Admin_Panel
 	public function settings_page_output()
 	{
 		?>
-		<div id="swift-pwa-settings-app"></div>
+		<div id="swift-pwa-settings-app" style="display: flex; flex-direction: column; relative"></div>
 		<?php
 	}
 }

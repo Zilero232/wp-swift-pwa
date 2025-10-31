@@ -49,12 +49,12 @@ watch(
 
 <template>
   <Dialog :visible="visible" @update:visible="emit('update:visible', $event)" :header="title" modal :style="{ width: '90vw', maxWidth: '900px' }">
-    <div v-if="!imageLoaded && !imageError" class="flex justify-center items-center p-12">
-      <i class="pi pi-spin pi-spinner text-4xl text-gray-400"></i>
+    <div v-if="!imageLoaded && !imageError" class="tw:flex tw:justify-center tw:items-center tw:p-12">
+      <i class="pi pi-spin pi-spinner tw:text-4xl tw:text-gray-400"></i>
     </div>
 
-    <div v-show="imageLoaded && !imageError" class="flex flex-col gap-4">
-      <div v-if="image.sizes || image.type" class="flex justify-between gap-2">
+    <div v-show="imageLoaded && !imageError" class="tw:flex tw:flex-col tw:gap-4">
+      <div v-if="image.sizes || image.type" class="tw:flex tw:justify-between tw:gap-2">
         <Tag v-if="image.sizes" :value="image.sizes" severity="secondary" />
 
         <Tag v-if="image.type" :value="image.type" severity="secondary" />
@@ -63,21 +63,21 @@ watch(
       <img
         :src="image.src"
         :alt="image.label"
-        class="max-w-full max-h-[70vh] object-contain"
+        class="tw:max-tw:w-full tw:max-h-[70vh] tw:object-contain"
         :class="{ hidden: !imageLoaded || imageError }"
         @error="handleImageError"
         @load="handleImageLoad"
       />
 
-      <div v-if="image.label" class="text-xs text-gray-500 text-center truncate">
+      <div v-if="image.label" class="tw:text-xs tw:text-gray-500 tw:text-center tw:truncate">
         {{ image.label }}
       </div>
     </div>
 
-    <div v-if="imageError" class="flex flex-col items-center justify-center p-12 text-center">
-      <i class="pi pi-exclamation-triangle text-6xl text-red-400 mb-4"></i>
+    <div v-if="imageError" class="tw:flex tw:flex-col tw:items-center tw:justify-center tw:p-12 tw:text-center">
+      <i class="pi pi-exclamation-triangle tw:text-6xl tw:text-red-400 tw:mb-4"></i>
 
-      <p class="text-lg text-gray-600">Не удалось загрузить изображение</p>
+      <p class="tw:text-lg tw:text-center tw:text-gray-600">Не удалось загрузить изображение</p>
     </div>
 
     <template #footer>
