@@ -34,7 +34,7 @@ const queryManifestData = computed(() => queryManifest.data.value);
       />
     </div>
 
-    <div class="tw:grid tw:grid-cols-1 lg:tw:grid-cols-2 tw:gap-4">
+    <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-4">
       <SelectField
         label="Язык"
         icon="pi pi-language"

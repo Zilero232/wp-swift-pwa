@@ -66,6 +66,7 @@ class Enqueue
 			[
 				'apiUrl' => rest_url(SWIFT_PWA_PLUGIN_REST_API_BASE),
 				'nonce' => wp_create_nonce('wp_rest'),
+				'version' => SWIFT_PWA_PLUGIN_VER,
 			]
 		);
 	}

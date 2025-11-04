@@ -5,7 +5,7 @@ import { manifestAPI } from '@/services/manifest.service';
 import { useToast } from '@/shared/composable/useToast';
 
 import type { ManifestSettings } from '@/shared/types/manifest';
-import { toValue, type MaybeRefOrGetter, computed } from 'vue'
+import { toValue, type MaybeRefOrGetter, computed } from 'vue';
 
 const MANIFEST_KEY = ['manifest'];
 
@@ -43,8 +43,6 @@ export const useManifestQuery = ({ enabled = true }: Props = {}) => {
       return response.data;
     },
     onSuccess: () => {
-      queryManifest.refetch();
-
       showSuccess('Manifest updated successfully');
     },
     onError: () => {
@@ -63,4 +61,4 @@ export const useManifestQuery = ({ enabled = true }: Props = {}) => {
   };
 
   return { queryManifest, mutationUpdateManifest, updateManifest };
-}
+};

@@ -3,7 +3,7 @@ import { ref, watch, computed } from 'vue';
 import { Dialog, Button } from 'primevue';
 import { useQuery, useQueryClient } from '@tanstack/vue-query';
 
-import { mediaAPI } from '@/services/media.service';
+import { mediaAPI, type MediaLibraryResponse } from '@/services/media.service';
 import { useToast } from '@/shared/composable/useToast';
 import { useDebounce } from '@/shared/composable/useDebounce';
 
@@ -59,8 +59,13 @@ const {
 
 const libraryItems = computed(() => libraryData.value?.items ?? []);
 
-const handleUpload = () => {
-  queryClient.invalidateQueries({ queryKey: queryKey.value });
+const handleUpload = (data: MediaAttachment) => {
+  queryClient.setQueryData(queryKey.value, (oldData: MediaLibraryResponse) => {
+    return {
+      ...oldData,
+      items: [data, ...oldData.items],
+    };
+  });
 };
 
 const handleSelectAttachment = (item: MediaAttachment) => {
@@ -110,7 +115,7 @@ watch(searchQuery, (newValue) => {
         description="Попробуйте изменить поисковый запрос или загрузите новое изображение"
       />
 
-      <div v-else class="tw:grid tw:grid-cols-4 md:tw:grid-cols-6 lg:tw:grid-cols-8 tw:gap-2 tw:max-h-96 tw:overflow-y-auto tw:p-1">
+      <div v-else class="tw:grid tw:grid-cols-4 tw:md:grid-cols-6 tw:lg:grid-cols-8 tw:gap-2 tw:max-h-96 tw:overflow-y-auto tw:p-1">
         <div
           v-for="item in libraryItems"
           :key="item.id"

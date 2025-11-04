@@ -85,7 +85,9 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
     >
       <div class="tw:flex tw:items-center tw:justify-between tw:mb-4">
         <div class="tw:flex tw:items-center tw:gap-2">
-          <div class="tw:w-8 tw:h-8 tw:rounded-full tw:bg-blue-100 tw:text-blue-600 tw:flex tw:items-center tw:justify-center tw:font-semibold tw:text-sm">
+          <div
+            class="tw:w-8 tw:h-8 tw:rounded-full tw:bg-blue-100 tw:text-blue-600 tw:flex tw:items-center tw:justify-center tw:font-semibold tw:text-sm"
+          >
             {{ index + 1 }}
           </div>
 
@@ -161,7 +163,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
           @update:model-value="updateScreenshot(index, 'type', $event)"
         />
 
-        <div class="md:col-span-2">
+        <div class="tw:md:col-span-2">
           <InputField
             label="Описание"
             icon="pi pi-comment"

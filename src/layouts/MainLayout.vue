@@ -22,7 +22,7 @@ const isLoading = computed(() => queryManifest.isPending.value);
 <template>
   <Header v-if="!isWelcomePage" />
 
-  <main class='tw:flex-1'>
+  <main class="tw:flex-1">
     <div v-if="isLoading && !isWelcomePage" class="tw:absolute tw:top-[50%] tw:left-[50%] tw:translate-[-50%]">
       <ProgressSpinner />
     </div>

@@ -42,9 +42,9 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
 
 <template>
   <div class="tw:flex tw:flex-col tw:gap-4">
-    <div v-for="(shortcut, index) in queryManifest.data.value?.shortcuts" :key="index" class="border border-gray-200 rounded-lg p-4">
-      <div class="tw:flex tw:flex-col gap-3">
-        <div class="tw:flex items-center gap-2">
+    <div v-for="(shortcut, index) in queryManifest.data.value?.shortcuts" :key="index" class="tw:border tw:border-gray-200 tw:rounded-lg tw:p-4">
+      <div class="tw:flex tw:flex-col tw:gap-3">
+        <div class="tw:flex tw:items-center tw:gap-2">
           <InputField
             label="Название шортката"
             icon="pi pi-text-width"
@@ -85,7 +85,7 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
         />
       </div>
 
-      <div class="tw:flex justify-end mt-3">
+      <div class="tw:flex tw:justify-end tw:mt-3">
         <Button icon="pi pi-trash" severity="danger" text @click="removeShortcut(index)" />
       </div>
     </div>

@@ -86,7 +86,9 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
     >
       <div class="tw:flex tw:items-center tw:justify-between tw:mb-4">
         <div class="tw:flex tw:items-center tw:gap-2">
-          <div class="tw:w-8 tw:h-8 tw:rounded-full tw:bg-purple-100 tw:text-purple-600 tw:flex tw:items-center tw:justify-center tw:font-semibold tw:text-sm">
+          <div
+            class="tw:w-8 tw:h-8 tw:rounded-full tw:bg-purple-100 tw:text-purple-600 tw:flex tw:items-center tw:justify-center tw:font-semibold tw:text-sm"
+          >
             {{ index + 1 }}
           </div>
 
@@ -127,7 +129,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
         </div>
       </div>
 
-      <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-2 tw:gap-4">
+      <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-4">
         <InputField
           class="md:col-span-2"
           label="URL иконки"
@@ -173,7 +175,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
       Достигнут максимум иконок (20)
     </div>
 
-    <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-2 tw:gap-4">
+    <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-4">
       <InfoBlock title="Рекомендуемые размеры иконок:" severity="info" as-list>
         <li>192x192 - минимальный размер для Android</li>
         <li>512x512 - для splash screen и высокого разрешения</li>

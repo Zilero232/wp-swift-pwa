@@ -49,7 +49,9 @@ const removeCategory = (category: string) => {
         @update:model-value="updateManifest({ categories: $event })"
       />
 
-      <small class="tw:text-gray-500 tw:mt-2 tw:block tw:text-xs"> Максимум 10 категорий. Помогают пользователям найти ваше приложение в магазинах. </small>
+      <small class="tw:text-gray-500 tw:mt-2 tw:block tw:text-xs">
+        Максимум 10 категорий. Помогают пользователям найти ваше приложение в магазинах.
+      </small>
     </div>
 
     <div v-if="categories.length > 0" class="tw:from-gray-50 tw:to-white tw:border tw:border-gray-200 tw:rounded-xl tw:px-5 tw:pb-5">

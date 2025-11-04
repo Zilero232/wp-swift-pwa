@@ -2,8 +2,8 @@
 @import 'tailwindcss' prefix(tw);
 
 @theme {
-    --breakpoint-sm: 600px;
- }
+  --breakpoint-sm: 600px;
+}
 
 * {
   box-sizing: border-box;
@@ -17,6 +17,11 @@ html {
 
 ul,
 li {
+  margin: 0;
+  padding: 0;
+}
+
+p {
   margin: 0;
   padding: 0;
 }

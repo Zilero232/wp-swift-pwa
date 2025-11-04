@@ -25,6 +25,11 @@ const router = createRouter({
           name: RouteName.PREVIEW,
           component: () => import('@/views/PreviewView.vue'),
         },
+        {
+          path: '/status',
+          name: RouteName.STATUS,
+          component: () => import('@/views/StatusView.vue'),
+        },
       ],
     },
   ],

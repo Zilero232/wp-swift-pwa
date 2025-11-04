@@ -45,9 +45,13 @@ class MediaAPI {
       params,
     });
 
+    console.log(data);
+
     if (!data.success) {
       throw new Error(data.message || 'Failed to load library');
     }
+
+    console.log(data.data);
 
     return data.data;
   }

@@ -1,10 +1,12 @@
-// Get settings from WordPress
 declare global {
+  interface SwiftPwaSettings {
+    apiUrl: string;
+    nonce: string;
+    version: string;
+  }
+
   interface Window {
-    swiftPwaSettings: {
-      apiUrl: string;
-      nonce: string;
-    };
+    swiftPwaSettings: SwiftPwaSettings;
   }
 }
 

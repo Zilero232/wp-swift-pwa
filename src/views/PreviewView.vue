@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Card, Button } from 'primevue';
+import { Card, Button, ProgressSpinner } from 'primevue';
+import { useRouter } from 'vue-router';
 
 import ManifestCodePreview from '@/entities/preview/ui/ManifestCodePreview.vue';
 import PWAFeatures from '@/entities/preview/ui/PWAFeatures.vue';
@@ -9,6 +10,7 @@ import { useManifestQuery } from '@/entities/manifest/model/useManifestQuery';
 
 import { useDownload } from '@/shared/composable/useDownload';
 
+const router = useRouter();
 const { queryManifest } = useManifestQuery();
 
 const { copyToClipboard, downloadJSON } = useDownload();
@@ -18,6 +20,9 @@ const manifestJSON = computed(() => {
 
   return JSON.stringify(queryManifest.data.value, null, 2);
 });
+
+const isLoading = computed(() => queryManifest.isPending.value);
+const isEmpty = computed(() => !queryManifest.data.value || Object.keys(queryManifest.data.value).length === 0);
 
 const copyManifest = () => {
   copyToClipboard(manifestJSON.value, {
@@ -34,6 +39,10 @@ const downloadManifest = () => {
     errorMessage: 'Ошибка загрузки манифеста',
   });
 };
+
+const goToManifest = () => {
+  router.push('/manifest');
+};
 </script>
 
 <template>
@@ -43,7 +52,37 @@ const downloadManifest = () => {
       <p class="tw:text-gray-600 tw:text-lg">Просмотр манифеста и функций вашего PWA приложения</p>
     </div>
 
-    <div class="tw:flex tw:flex-col tw:gap-8">
+    <div v-if="isLoading" class="tw:flex tw:flex-col tw:items-center tw:justify-center tw:py-20 tw:gap-4">
+      <ProgressSpinner />
+
+      <p class="tw:text-gray-600 tw:text-lg">Загрузка манифеста...</p>
+    </div>
+
+    <div v-else-if="isEmpty" class="tw:flex tw:flex-col tw:items-center tw:justify-center tw:py-20">
+      <Card class="tw:max-w-2xl tw:w-full tw:text-center">
+        <template #content>
+          <div class="tw:space-y-6 tw:py-8">
+            <div class="tw:inline-flex tw:items-center tw:justify-center tw:w-20 tw:h-20 tw:bg-gray-100 tw:rounded-full">
+              <i class="pi pi-file-edit tw:text-4xl tw:text-gray-400"></i>
+            </div>
+            <div class="tw:space-y-3">
+              <h3 class="tw:text-2xl tw:font-bold tw:text-gray-900">Манифест не настроен</h3>
+              <p class="tw:text-gray-600 tw:text-lg">Начните с настройки манифеста PWA, чтобы увидеть предпросмотр</p>
+            </div>
+            <Button
+              label="Настроить манифест"
+              icon="pi pi-arrow-right"
+              icon-pos="right"
+              size="large"
+              class="tw:px-8 tw:py-3 tw:font-semibold"
+              @click="goToManifest"
+            />
+          </div>
+        </template>
+      </Card>
+    </div>
+
+    <div v-else class="tw:flex tw:flex-col tw:gap-8">
       <Card>
         <template #header>
           <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0 tw:flex-wrap">

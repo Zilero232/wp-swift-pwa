@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { Select, Button, type SelectFilterEvent } from 'primevue';
 
 import { useDebounce } from '@/shared/composable/useDebounce';
+
 import { usePosts } from '../model/usePosts';
 
 interface Props {
@@ -35,12 +36,12 @@ onMounted(() => {
 
 <template>
   <div class="tw:w-full">
-    <label v-if="label" class="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wide">
-      <i v-if="icon" :class="['text-xs mr-1', icon]"></i>
+    <label v-if="label" class="tw:block tw:text-xs tw:font-semibold tw:text-gray-600 tw:mb-1.5 tw:uppercase tw:tracking-wide">
+      <i v-if="icon" :class="['tw:text-xs tw:mr-1', icon]"></i>
 
       {{ label }}
 
-      <span v-if="required" class="text-red-500 ml-0.5">*</span>
+      <span v-if="required" class="tw:text-red-500 tw:ml-0.5">*</span>
     </label>
 
     <Select
@@ -56,7 +57,7 @@ onMounted(() => {
       @filter="debouncedHandleFilter"
     >
       <template #footer>
-        <div v-if="hasMore" class="p-2 border-t">
+        <div v-if="hasMore" class="tw:p-2 tw:border-t">
           <Button label="Загрузить ещё" icon="pi pi-arrow-down" size="small" text :loading="isLoading" class="tw:w-full" @click="loadMore" />
         </div>
       </template>

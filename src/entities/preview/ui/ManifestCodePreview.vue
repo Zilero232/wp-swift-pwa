@@ -30,7 +30,7 @@ watch(() => props.manifestJson, highlight, { immediate: true });
       <div v-html="highlightedCode" class="shiki-wrapper"></div>
     </div>
 
-    <div v-else class="p-8 tw:text-center tw:text-gray-500">
+    <div v-else class="tw:p-8 tw:text-center tw:text-gray-500">
       <i class="pi pi-inbox tw:text-4xl tw:mb-4 tw:block tw:text-gray-400"></i>
       <p class="tw:text-lg">Манифест пуст. Заполните настройки PWA.</p>
     </div>

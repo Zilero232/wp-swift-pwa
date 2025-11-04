@@ -24,3 +24,4 @@ require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/class-rest-controller.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/controllers/class-media-controller.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/controllers/class-posts-controller.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/controllers/class-manifest-controller.php';
+require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/controllers/class-status-controller.php';

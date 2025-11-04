@@ -6,10 +6,12 @@ import Navigation from './ui/Navigation.vue';
 
 import { useManifestQuery } from '@/entities/manifest/model/useManifestQuery';
 
+const {
+  swiftPwaSettings: { version },
+} = window;
+
 const confirm = useConfirm();
 const { queryManifest, mutationUpdateManifest } = useManifestQuery();
-
-const version = '1.0.0';
 
 const handleResetManifest = () => {
   confirm.require({
