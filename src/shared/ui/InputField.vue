@@ -16,7 +16,9 @@ defineOptions({
 
 <template>
   <div class="tw:w-full">
-    <label class="tw:block tw:text-xs tw:font-semibold tw:text-gray-600 tw:mb-1.5 tw:uppercase tw:tracking-wide">
+    <label
+      class="tw:block tw:text-xs tw:font-semibold tw:text-gray-600 tw:mb-1.5 tw:uppercase tw:tracking-wide"
+    >
       <i v-if="icon" :class="['tw:text-xs tw:mr-1', icon]"></i>
       {{ label }}
 

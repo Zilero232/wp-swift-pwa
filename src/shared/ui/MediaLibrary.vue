@@ -38,7 +38,9 @@ const { debouncedFn: debouncedSearch } = useDebounce((value: string) => {
 }, 500);
 
 const queryKey = computed(() => {
-  return [`media-library${debouncedSearchValue.value ? `-${debouncedSearchValue.value}` : ''}`];
+  return [
+    `media-library${debouncedSearchValue.value ? `-${debouncedSearchValue.value}` : ''}`,
+  ];
 });
 
 // Load media library with search
@@ -102,9 +104,17 @@ watch(searchQuery, (newValue) => {
     @update:visible="emit('update:visible', $event)"
   >
     <div class="tw:flex tw:flex-col tw:gap-4">
-      <InputField v-model="searchQuery" label="Поиск изображений" icon="pi pi-search" placeholder="Найти изображение по названию или URL" />
+      <InputField
+        v-model="searchQuery"
+        label="Поиск изображений"
+        icon="pi pi-search"
+        placeholder="Найти изображение по названию или URL"
+      />
 
-      <div v-if="isLoadingLibrary" class="tw:flex tw:justify-center tw:items-center tw:py-8">
+      <div
+        v-if="isLoadingLibrary"
+        class="tw:flex tw:justify-center tw:items-center tw:py-8"
+      >
         <i class="pi pi-spin pi-spinner tw:text-2xl tw:text-gray-400"></i>
       </div>
 
@@ -115,7 +125,10 @@ watch(searchQuery, (newValue) => {
         description="Попробуйте изменить поисковый запрос или загрузите новое изображение"
       />
 
-      <div v-else class="tw:grid tw:grid-cols-4 tw:md:grid-cols-6 tw:lg:grid-cols-8 tw:gap-2 tw:max-h-96 tw:overflow-y-auto tw:p-1">
+      <div
+        v-else
+        class="tw:grid tw:grid-cols-4 tw:md:grid-cols-6 tw:lg:grid-cols-8 tw:gap-2 tw:max-h-96 tw:overflow-y-auto tw:p-1"
+      >
         <div
           v-for="item in libraryItems"
           :key="item.id"
@@ -127,7 +140,11 @@ watch(searchQuery, (newValue) => {
           @click="handleSelectAttachment(item)"
         >
           <div class="relative aspect-square tw:bg-gray-100">
-            <img :src="item.url" :alt="item.alt || item.title" class="tw:w-full tw:h-full tw:object-cover" />
+            <img
+              :src="item.url"
+              :alt="item.alt || item.title"
+              class="tw:w-full tw:h-full tw:object-cover"
+            />
           </div>
 
           <div class="tw:p-2 tw:text-xs tw:truncate tw:text-gray-700" :title="item.title">
@@ -137,9 +154,14 @@ watch(searchQuery, (newValue) => {
       </div>
 
       <div class="tw:border-t tw:pt-4">
-        <div class="tw:text-sm tw:text-gray-600 tw:mb-2">Или загрузите новое изображение:</div>
+        <div class="tw:text-sm tw:text-gray-600 tw:mb-2">
+          Или загрузите новое изображение:
+        </div>
 
-        <MediaFileUpload choose-label="Загрузить новое изображение" @uploaded="handleUpload" />
+        <MediaFileUpload
+          choose-label="Загрузить новое изображение"
+          @uploaded="handleUpload"
+        />
       </div>
     </div>
 

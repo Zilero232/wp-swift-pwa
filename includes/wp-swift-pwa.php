@@ -16,6 +16,8 @@ require_once SWIFT_PWA_PLUGIN_PATH . 'includes/admin/class-enqueue.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/core/class-pwa-constants.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/core/class-file-handler.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/core/class-manifest-handler.php';
+require_once SWIFT_PWA_PLUGIN_PATH . 'includes/core/class-service-worker-handler.php';
+require_once SWIFT_PWA_PLUGIN_PATH . 'includes/core/class-service-worker-generator.php';
 
 // Require REST base class.
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/class-rest-controller.php';
@@ -24,4 +26,5 @@ require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/class-rest-controller.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/controllers/class-media-controller.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/controllers/class-posts-controller.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/controllers/class-manifest-controller.php';
+require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/controllers/class-service-worker-controller.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/controllers/class-status-controller.php';

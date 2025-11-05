@@ -31,7 +31,9 @@ const goTo = (route: string) => router.push(route);
 </script>
 
 <template>
-  <div class="tw:min-h-screen tw:bg-gradient-to-br tw:from-blue-50 tw:via-white tw:to-purple-50 tw:flex tw:items-center tw:justify-center tw:p-6">
+  <div
+    class="tw:flex-1 tw:bg-gradient-to-br tw:from-blue-50 tw:via-white tw:to-purple-50 tw:flex tw:items-center tw:justify-center tw:p-6"
+  >
     <div class="tw:max-w-6xl tw:w-full tw:space-y-16 tw:py-12">
       <div class="tw:text-center tw:space-y-6 tw:flex tw:flex-col tw:items-center">
         <div
@@ -40,9 +42,15 @@ const goTo = (route: string) => router.push(route);
           <i class="pi pi-bolt tw:text-4xl tw:text-white"></i>
         </div>
 
-        <h1 class="tw:text-5xl tw:md:text-6xl tw:lg:text-7xl tw:font-black tw:text-gray-900 tw:tracking-tight">Swift PWA</h1>
+        <h1
+          class="tw:text-5xl tw:md:text-6xl tw:lg:text-7xl tw:font-black tw:text-gray-900 tw:tracking-tight"
+        >
+          Swift PWA
+        </h1>
 
-        <p class="tw:text-xl tw:md:text-2xl tw:text-gray-600 tw:max-w-2xl">Создайте Progressive Web App для WordPress.</p>
+        <p class="tw:text-xl tw:md:text-2xl tw:text-gray-600 tw:max-w-2xl">
+          Создайте Progressive Web App для WordPress.
+        </p>
 
         <div class="tw:flex tw:flex-wrap tw:gap-4 tw:justify-center tw:pt-4">
           <Button
@@ -78,7 +86,9 @@ const goTo = (route: string) => router.push(route);
               >
                 <i :class="[feature.icon, 'tw:text-3xl tw:text-white']"></i>
               </div>
-              <h3 class="tw:text-lg tw:font-bold tw:text-gray-900">{{ feature.title }}</h3>
+              <h3 class="tw:text-lg tw:font-bold tw:text-gray-900">
+                {{ feature.title }}
+              </h3>
               <p class="tw:text-sm tw:text-gray-600">{{ feature.description }}</p>
             </div>
           </template>
@@ -86,17 +96,23 @@ const goTo = (route: string) => router.push(route);
       </div>
 
       <div class="tw:text-center tw:space-y-4 tw:pt-8">
-        <div class="tw:flex tw:flex-wrap tw:gap-8 tw:justify-center tw:text-sm tw:text-gray-600">
+        <div
+          class="tw:flex tw:flex-wrap tw:gap-8 tw:justify-center tw:text-sm tw:text-gray-600"
+        >
           <div>
             <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">5 мин</div>
             <div>Настройка</div>
           </div>
           <div>
-            <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">Бесплатно</div>
+            <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">
+              Бесплатно
+            </div>
             <div>Навсегда</div>
           </div>
           <div>
-            <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">WordPress</div>
+            <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">
+              WordPress
+            </div>
             <div>Интеграция</div>
           </div>
         </div>

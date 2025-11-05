@@ -1,9 +1,9 @@
-import { globalIgnores } from 'eslint/config'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
-import pluginVue from 'eslint-plugin-vue'
-import pluginVitest from '@vitest/eslint-plugin'
-import pluginPlaywright from 'eslint-plugin-playwright'
-import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
+import { globalIgnores } from 'eslint/config';
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript';
+import pluginVue from 'eslint-plugin-vue';
+import pluginVitest from '@vitest/eslint-plugin';
+import pluginPlaywright from 'eslint-plugin-playwright';
+import skipFormatting from '@vue/eslint-config-prettier/skip-formatting';
 
 // To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
 // import { configureVueProject } from '@vue/eslint-config-typescript'
@@ -35,6 +35,33 @@ export default defineConfigWithVueTs(
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      'object-property-newline': [
+        'error',
+        {
+          allowAllPropertiesOnSameLine: false,
+        },
+      ],
+      'object-curly-newline': [
+        'error',
+        {
+          ObjectExpression: {
+            multiline: true,
+            minProperties: 1,
+          },
+          ObjectPattern: {
+            multiline: true,
+            minProperties: 1,
+          },
+          ImportDeclaration: {
+            multiline: true,
+            minProperties: 1,
+          },
+          ExportDeclaration: {
+            multiline: true,
+            minProperties: 1,
+          },
+        },
+      ],
     },
-  }
-)
+  },
+);

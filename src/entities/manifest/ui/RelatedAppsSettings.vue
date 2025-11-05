@@ -7,13 +7,18 @@ import InputField from '@/shared/ui/InputField.vue';
 
 import { RELATED_APPLICATION_PLATFORM_OPTIONS } from '@/shared/config/display.constants';
 
-import { RelatedApplicationPlatform, type RelatedApplication } from '@/shared/types/manifest';
+import {
+  RelatedApplicationPlatform,
+  type RelatedApplication,
+} from '@/shared/types/manifest';
 
 import { useManifestQuery } from '../model/useManifestQuery';
 
 const { queryManifest, updateManifest } = useManifestQuery();
 
-const relatedApplications = computed(() => queryManifest.data.value?.related_applications ?? []);
+const relatedApplications = computed(
+  () => queryManifest.data.value?.related_applications ?? [],
+);
 
 const addApp = () => {
   const apps = [...relatedApplications.value];
@@ -34,7 +39,10 @@ const removeApp = (index: number) => {
 };
 
 const updateApp = (index: number, field: keyof RelatedApplication, value: string) => {
-  const apps = relatedApplications.value.map((app, i) => (i === index ? { ...app, [field]: value || undefined } : app)) ?? [];
+  const apps =
+    relatedApplications.value.map((app, i) =>
+      i === index ? { ...app, [field]: value || undefined } : app,
+    ) ?? [];
 
   updateManifest({ related_applications: apps });
 };
@@ -42,7 +50,11 @@ const updateApp = (index: number, field: keyof RelatedApplication, value: string
 
 <template>
   <div class="tw:flex tw:flex-col tw:gap-4">
-    <div v-for="(app, index) in relatedApplications" :key="index" class="tw:border tw:border-gray-200 tw:rounded-lg tw:p-4">
+    <div
+      v-for="(app, index) in relatedApplications"
+      :key="index"
+      class="tw:border tw:border-gray-200 tw:rounded-lg tw:p-4"
+    >
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-4">
         <SelectField
           label="Платформа"
@@ -80,7 +92,14 @@ const updateApp = (index: number, field: keyof RelatedApplication, value: string
       </div>
     </div>
 
-    <Button label="Добавить приложение" icon="pi pi-plus" outlined @click="addApp" :disabled="relatedApplications.length >= 5" class="tw:w-full" />
+    <Button
+      label="Добавить приложение"
+      icon="pi pi-plus"
+      outlined
+      @click="addApp"
+      :disabled="relatedApplications.length >= 5"
+      class="tw:w-full"
+    />
 
     <div class="tw:flex tw:items-center tw:gap-2">
       <Checkbox
@@ -90,7 +109,9 @@ const updateApp = (index: number, field: keyof RelatedApplication, value: string
         input-id="prefer_related"
       />
 
-      <label for="prefer_related" class="text-sm text-gray-700"> Предпочитать связанные приложения вместо PWA </label>
+      <label for="prefer_related" class="text-sm text-gray-700">
+        Предпочитать связанные приложения вместо PWA
+      </label>
     </div>
   </div>
 </template>

@@ -29,7 +29,9 @@ const removeCategory = (category: string) => {
 <template>
   <div class="tw:flex tw:flex-col tw:gap-6">
     <div>
-      <label class="tw:block tw:text-xs tw:font-semibold tw:text-gray-600 tw:mb-2 tw:uppercase tw:tracking-wide">
+      <label
+        class="tw:block tw:text-xs tw:font-semibold tw:text-gray-600 tw:mb-2 tw:uppercase tw:tracking-wide"
+      >
         <i class="pi pi-tags tw:text-xs tw:mr-1"></i>
         Выберите категории приложения
       </label>
@@ -54,11 +56,16 @@ const removeCategory = (category: string) => {
       </small>
     </div>
 
-    <div v-if="categories.length > 0" class="tw:from-gray-50 tw:to-white tw:border tw:border-gray-200 tw:rounded-xl tw:px-5 tw:pb-5">
+    <div
+      v-if="categories.length > 0"
+      class="tw:from-gray-50 tw:to-white tw:border tw:border-gray-200 tw:rounded-xl tw:px-5 tw:pb-5"
+    >
       <div class="tw:flex tw:items-center tw:gap-2 tw:mb-3">
         <i class="pi pi-check-circle tw:text-green-600"></i>
 
-        <h4 class="tw:text-sm tw:font-semibold tw:text-gray-700">Выбранные категории ({{ categories.length }}/10)</h4>
+        <h4 class="tw:text-sm tw:font-semibold tw:text-gray-700">
+          Выбранные категории ({{ categories.length }}/10)
+        </h4>
       </div>
 
       <div class="tw:flex tw:flex-wrap tw:gap-2">
@@ -81,15 +88,30 @@ const removeCategory = (category: string) => {
       </div>
     </div>
 
-    <div v-else class="tw:bg-blue-50 tw:border tw:border-blue-200 tw:rounded-lg tw:p-4 tw:text-center">
+    <div
+      v-else
+      class="tw:bg-blue-50 tw:border tw:border-blue-200 tw:rounded-lg tw:p-4 tw:text-center"
+    >
       <i class="pi pi-info-circle tw:text-blue-600 tw:text-2xl tw:mb-2"></i>
 
-      <p class="tw:text-sm tw:text-blue-900">Категории не выбраны. Выберите категории, чтобы помочь пользователям найти ваше приложение.</p>
+      <p class="tw:text-sm tw:text-blue-900">
+        Категории не выбраны. Выберите категории, чтобы помочь пользователям найти ваше
+        приложение.
+      </p>
     </div>
 
-    <InfoBlock title="Рекомендации по выбору категорий:" severity="help" icon="pi-lightbulb" as-list>
-      <li>Выбирайте категории, максимально соответствующие функциональности приложения</li>
-      <li>Не злоупотребляйте количеством — лучше 2-3 точные категории, чем 10 неподходящих</li>
+    <InfoBlock
+      title="Рекомендации по выбору категорий:"
+      severity="help"
+      icon="pi-lightbulb"
+      as-list
+    >
+      <li>
+        Выбирайте категории, максимально соответствующие функциональности приложения
+      </li>
+      <li>
+        Не злоупотребляйте количеством — лучше 2-3 точные категории, чем 10 неподходящих
+      </li>
       <li>Основная категория должна быть на первом месте</li>
     </InfoBlock>
   </div>

@@ -1,119 +1,186 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { Card, Button, ProgressSpinner } from 'primevue';
-import { useRouter } from 'vue-router';
+import {
+  Card,
+  Button,
+  ProgressSpinner,
+  Tabs,
+  TabList,
+  Tab,
+  TabPanels,
+  TabPanel,
+} from 'primevue';
 
 import ManifestCodePreview from '@/entities/preview/ui/ManifestCodePreview.vue';
-import PWAFeatures from '@/entities/preview/ui/PWAFeatures.vue';
+import ServiceWorkerCodePreview from '@/entities/preview/ui/ServiceWorkerCodePreview.vue';
 
 import { useManifestQuery } from '@/entities/manifest/model/useManifestQuery';
 
-import { useDownload } from '@/shared/composable/useDownload';
+import { usePreviewManifest } from '@/entities/preview/model/usePreviewManifest';
+import { usePreviewServiceWorker } from '@/entities/preview/model/usePreviewServiceWorker';
+import { usePreviewTabs } from '@/entities/preview/model/usePreviewTabs';
 
-const router = useRouter();
-const { queryManifest } = useManifestQuery();
+import { FILE_NAMES } from '@/shared/config/files.constants';
 
-const { copyToClipboard, downloadJSON } = useDownload();
+const { loadManifest } = useManifestQuery();
 
-const manifestJSON = computed(() => {
-  if (!queryManifest.data.value) return '';
+const {
+  isLoadingManifest,
+  hasManifestData,
+  manifestJSON,
+  copyManifest,
+  downloadManifest,
+} = usePreviewManifest();
 
-  return JSON.stringify(queryManifest.data.value, null, 2);
+const {
+  isLoadingServiceWorker,
+  hasServiceWorkerData,
+  serviceWorkerCode,
+  copyServiceWorker,
+  downloadServiceWorker,
+  loadServiceWorkerCode,
+} = usePreviewServiceWorker();
+
+const { activeTabValue, setActiveTab } = usePreviewTabs({
+  onManifestTab: () => {
+    loadManifest();
+  },
+  onServiceWorkerTab: () => {
+    loadServiceWorkerCode();
+  },
 });
-
-const isLoading = computed(() => queryManifest.isPending.value);
-const isEmpty = computed(() => !queryManifest.data.value || Object.keys(queryManifest.data.value).length === 0);
-
-const copyManifest = () => {
-  copyToClipboard(manifestJSON.value, {
-    successMessage: 'Манифест скопирован в буфер обмена',
-    errorMessage: 'Ошибка копирования манифеста',
-  });
-};
-
-const downloadManifest = () => {
-  if (!queryManifest.data.value) return;
-
-  downloadJSON(queryManifest.data.value, 'manifest.json', {
-    successMessage: 'Манифест успешно загружен',
-    errorMessage: 'Ошибка загрузки манифеста',
-  });
-};
-
-const goToManifest = () => {
-  router.push('/manifest');
-};
 </script>
 
 <template>
   <div class="tw:p-4 sm:tw:p-8">
     <div class="tw:mb-8 tw:text-center">
-      <h2 class="tw:text-2xl sm:tw:text-3xl tw:font-bold tw:text-gray-800 tw:mb-2">Предпросмотр PWA</h2>
-      <p class="tw:text-gray-600 tw:text-lg">Просмотр манифеста и функций вашего PWA приложения</p>
+      <h2 class="tw:text-2xl sm:tw:text-3xl tw:font-bold tw:text-gray-800 tw:mb-2">
+        Предпросмотр PWA
+      </h2>
+
+      <p class="tw:text-gray-600 tw:text-lg">
+        Просмотр файлов и функций вашего PWA приложения
+      </p>
     </div>
 
-    <div v-if="isLoading" class="tw:flex tw:flex-col tw:items-center tw:justify-center tw:py-20 tw:gap-4">
-      <ProgressSpinner />
+    <Card>
+      <template #header>
+        <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
+          <i class="pi pi-file-code tw:text-xl tw:text-blue-600"></i>
 
-      <p class="tw:text-gray-600 tw:text-lg">Загрузка манифеста...</p>
-    </div>
+          <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800 tw:flex-1">
+            Просмотр файлов
+          </h3>
+        </div>
+      </template>
 
-    <div v-else-if="isEmpty" class="tw:flex tw:flex-col tw:items-center tw:justify-center tw:py-20">
-      <Card class="tw:max-w-2xl tw:w-full tw:text-center">
-        <template #content>
-          <div class="tw:space-y-6 tw:py-8">
-            <div class="tw:inline-flex tw:items-center tw:justify-center tw:w-20 tw:h-20 tw:bg-gray-100 tw:rounded-full">
-              <i class="pi pi-file-edit tw:text-4xl tw:text-gray-400"></i>
-            </div>
-            <div class="tw:space-y-3">
-              <h3 class="tw:text-2xl tw:font-bold tw:text-gray-900">Манифест не настроен</h3>
-              <p class="tw:text-gray-600 tw:text-lg">Начните с настройки манифеста PWA, чтобы увидеть предпросмотр</p>
-            </div>
-            <Button
-              label="Настроить манифест"
-              icon="pi pi-arrow-right"
-              icon-pos="right"
-              size="large"
-              class="tw:px-8 tw:py-3 tw:font-semibold"
-              @click="goToManifest"
-            />
-          </div>
-        </template>
-      </Card>
-    </div>
+      <template #content>
+        <Tabs :value="activeTabValue" class="tw:w-full" @update:value="setActiveTab">
+          <TabList class="tw:mb-4">
+            <Tab :value="FILE_NAMES.MANIFEST">
+              <div class="tw:flex tw:items-center tw:gap-2">
+                <i class="pi pi-file-edit"></i>
 
-    <div v-else class="tw:flex tw:flex-col tw:gap-8">
-      <Card>
-        <template #header>
-          <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0 tw:flex-wrap">
-            <i class="pi pi-file-code tw:text-xl tw:text-blue-600"></i>
-            <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800 tw:flex-1">manifest.json</h3>
+                <span>Manifest файл</span>
+              </div>
+            </Tab>
 
-            <div class="tw:flex tw:gap-2 tw:items-center">
-              <Button icon="pi pi-copy" text rounded v-tooltip.top="'Копировать'" @click="copyManifest" :disabled="!manifestJSON" />
+            <Tab :value="FILE_NAMES.SERVICE_WORKER">
+              <div class="tw:flex tw:items-center tw:gap-2">
+                <i class="pi pi-code"></i>
 
-              <Button icon="pi pi-download" text rounded v-tooltip.top="'Скачать'" @click="downloadManifest" :disabled="!manifestJSON" />
-            </div>
-          </div>
-        </template>
+                <span>Service Worker файл</span>
+              </div>
+            </Tab>
+          </TabList>
 
-        <template #content>
-          <ManifestCodePreview :manifest-json="manifestJSON" />
-        </template>
-      </Card>
+          <TabPanels>
+            <TabPanel :value="FILE_NAMES.MANIFEST">
+              <div class="tw:space-y-4">
+                <div class="tw:flex tw:items-center tw:justify-between tw:mb-4">
+                  <div>
+                    <h4 class="tw:font-semibold tw:text-gray-800">Manifest файл</h4>
+                    <p class="tw:text-sm tw:text-gray-600">Конфигурация веб-приложения</p>
+                  </div>
 
-      <Card>
-        <template #header>
-          <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
-            <i class="pi pi-check-circle tw:text-xl tw:text-green-600"></i>
-            <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Возможности PWA</h3>
-          </div>
-        </template>
+                  <div class="tw:flex tw:gap-2">
+                    <Button
+                      icon="pi pi-copy"
+                      text
+                      rounded
+                      v-tooltip.top="'Копировать'"
+                      :disabled="!hasManifestData"
+                      @click="copyManifest"
+                    />
 
-        <template #content>
-          <PWAFeatures />
-        </template>
-      </Card>
-    </div>
+                    <Button
+                      icon="pi pi-download"
+                      text
+                      rounded
+                      v-tooltip.top="'Скачать'"
+                      :disabled="!hasManifestData"
+                      @click="downloadManifest"
+                    />
+                  </div>
+                </div>
+
+                <div
+                  v-if="isLoadingManifest"
+                  class="tw:flex tw:items-center tw:justify-center tw:py-12"
+                >
+                  <ProgressSpinner />
+                </div>
+
+                <ManifestCodePreview v-else :manifest-json="manifestJSON" />
+              </div>
+            </TabPanel>
+
+            <TabPanel :value="FILE_NAMES.SERVICE_WORKER">
+              <div class="tw:space-y-4">
+                <div class="tw:flex tw:items-center tw:justify-between tw:mb-4">
+                  <div>
+                    <h4 class="tw:font-semibold tw:text-gray-800">Service Worker файл</h4>
+
+                    <p class="tw:text-sm tw:text-gray-600">
+                      Код для кэширования и офлайн-режима
+                    </p>
+                  </div>
+
+                  <div class="tw:flex tw:gap-2">
+                    <Button
+                      icon="pi pi-copy"
+                      text
+                      rounded
+                      v-tooltip.top="'Копировать'"
+                      :disabled="!hasServiceWorkerData"
+                      :loading="isLoadingServiceWorker"
+                      @click="copyServiceWorker"
+                    />
+
+                    <Button
+                      icon="pi pi-download"
+                      text
+                      rounded
+                      v-tooltip.top="'Скачать'"
+                      :disabled="!hasServiceWorkerData"
+                      :loading="isLoadingServiceWorker"
+                      @click="downloadServiceWorker"
+                    />
+                  </div>
+                </div>
+
+                <div
+                  v-if="isLoadingServiceWorker"
+                  class="tw:flex tw:items-center tw:justify-center tw:py-12"
+                >
+                  <ProgressSpinner />
+                </div>
+
+                <ServiceWorkerCodePreview v-else :code="serviceWorkerCode" />
+              </div>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </template>
+    </Card>
   </div>
 </template>

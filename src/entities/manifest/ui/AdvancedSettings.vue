@@ -5,7 +5,10 @@ import PostSelector from '@/features/post-selector/ui/PostSelector.vue';
 import SelectField from '@/shared/ui/SelectField.vue';
 import InputField from '@/shared/ui/InputField.vue';
 
-import { LANGUAGE_OPTIONS, TEXT_DIRECTION_OPTIONS } from '@/shared/config/localization.constants';
+import {
+  LANGUAGE_OPTIONS,
+  TEXT_DIRECTION_OPTIONS,
+} from '@/shared/config/localization.constants';
 
 import { useManifestQuery } from '../model/useManifestQuery';
 

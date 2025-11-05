@@ -33,6 +33,12 @@ const handleTextInput = (value: string | undefined) => {
       class="tw:w-12 tw:h-10 tw:border tw:border-gray-300 tw:rounded-md tw:cursor-pointer tw:bg-transparent tw:p-0 tw:disabled:cursor-not-allowed tw:disabled:opacity-60"
       :disabled="disabled"
     />
-    <InputText :model-value="modelValue" @update:model-value="handleTextInput" class="tw:flex-1" :placeholder="placeholder" :disabled="disabled" />
+    <InputText
+      :model-value="modelValue"
+      @update:model-value="handleTextInput"
+      class="tw:flex-1"
+      :placeholder="placeholder"
+      :disabled="disabled"
+    />
   </div>
 </template>

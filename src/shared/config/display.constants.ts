@@ -1,4 +1,10 @@
-import { DisplayMode, IconPurpose, OrientationMode, RelatedApplicationPlatform, ScreenshotFormFactor } from '@/shared/types/manifest';
+import {
+  DisplayMode,
+  IconPurpose,
+  OrientationMode,
+  RelatedApplicationPlatform,
+  ScreenshotFormFactor,
+} from '@/shared/types/manifest';
 
 /**
  * Icon purpose options for dropdown

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import { Card } from 'primevue';
 
 import BasicInfoSettings from '@/entities/manifest/ui/BasicInfoSettings.vue';
@@ -9,12 +10,22 @@ import RelatedAppsSettings from '@/entities/manifest/ui/RelatedAppsSettings.vue'
 import ShortcutsSettings from '@/entities/manifest/ui/ShortcutsSettings.vue';
 import IconsSettings from '@/entities/manifest/ui/IconsSettings.vue';
 import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue';
+
+import { useManifestQuery } from '@/entities/manifest/model/useManifestQuery';
+
+const { loadManifest } = useManifestQuery();
+
+onMounted(() => {
+  loadManifest();
+});
 </script>
 
 <template>
   <div class="tw:p-4 sm:tw:p-8">
     <div class="tw:mb-8 tw:text-center">
-      <h2 class="tw:text-2xl sm:tw:text-3xl tw:font-bold tw:text-gray-800 tw:mb-2">Настройки Manifest</h2>
+      <h2 class="tw:text-2xl sm:tw:text-3xl tw:font-bold tw:text-gray-800 tw:mb-2">
+        Настройки Manifest
+      </h2>
 
       <p class="tw:text-gray-600 tw:text-lg">Конфигурация веб-приложения манифеста</p>
     </div>
@@ -25,7 +36,9 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
           <template #header>
             <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
               <i class="pi pi-info-circle tw:text-xl tw:text-blue-600"></i>
-              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Основная информация</h3>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">
+                Основная информация
+              </h3>
             </div>
           </template>
 
@@ -53,7 +66,9 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
           <template #header>
             <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
               <i class="pi pi-cog tw:text-xl tw:text-blue-600"></i>
-              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Дополнительные настройки</h3>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">
+                Дополнительные настройки
+              </h3>
             </div>
           </template>
 
@@ -81,7 +96,9 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
           <template #header>
             <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
               <i class="pi pi-bolt tw:text-xl tw:text-blue-600"></i>
-              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Шорткаты приложения</h3>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">
+                Шорткаты приложения
+              </h3>
             </div>
           </template>
 
@@ -94,7 +111,9 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
           <template #header>
             <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
               <i class="pi pi-mobile tw:text-xl tw:text-blue-600"></i>
-              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Связанные приложения</h3>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">
+                Связанные приложения
+              </h3>
             </div>
           </template>
 
@@ -109,7 +128,9 @@ import ScreenshotsSettings from '@/entities/manifest/ui/ScreenshotsSettings.vue'
           <template #header>
             <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
               <i class="pi pi-image tw:text-xl tw:text-blue-600"></i>
-              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Иконки приложения</h3>
+              <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">
+                Иконки приложения
+              </h3>
             </div>
           </template>
 

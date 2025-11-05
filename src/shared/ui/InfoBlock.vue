@@ -53,7 +53,10 @@ const classes = severityClasses[props.severity];
     </div>
 
     <div class="tw:flex-1">
-      <ul v-if="asList" :class="['tw:list-disc tw:list-inside tw:space-y-1', classes.list]">
+      <ul
+        v-if="asList"
+        :class="['tw:list-disc tw:list-inside tw:space-y-1', classes.list]"
+      >
         <slot></slot>
       </ul>
 

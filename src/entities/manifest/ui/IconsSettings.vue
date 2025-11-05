@@ -47,7 +47,11 @@ const removeIcon = (index: number) => {
   updateManifest({ icons: items });
 };
 
-const updateIcon = (index: number, field: keyof ManifestIcon, value: string | undefined) => {
+const updateIcon = (
+  index: number,
+  field: keyof ManifestIcon,
+  value: string | undefined,
+) => {
   const items = icons.value.map((item, i) => {
     if (i === index) {
       return {
@@ -92,7 +96,9 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
             {{ index + 1 }}
           </div>
 
-          <span class="tw:text-sm tw:font-medium tw:text-gray-700">Иконка #{{ index + 1 }}</span>
+          <span class="tw:text-sm tw:font-medium tw:text-gray-700"
+            >Иконка #{{ index + 1 }}</span
+          >
         </div>
 
         <div class="tw:flex tw:gap-2">
@@ -125,7 +131,14 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
             "
           />
 
-          <Button icon="pi pi-trash" outlined rounded severity="danger" v-tooltip.top="'Удалить'" @click="removeIcon(index)" />
+          <Button
+            icon="pi pi-trash"
+            outlined
+            rounded
+            severity="danger"
+            v-tooltip.top="'Удалить'"
+            @click="removeIcon(index)"
+          />
         </div>
       </div>
 
@@ -167,7 +180,15 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
       </div>
     </div>
 
-    <Button label="Добавить иконку" icon="pi pi-plus" outlined class="tw:w-full" size="large" :disabled="icons.length >= 20" @click="addIcon" />
+    <Button
+      label="Добавить иконку"
+      icon="pi pi-plus"
+      outlined
+      class="tw:w-full"
+      size="large"
+      :disabled="icons.length >= 20"
+      @click="addIcon"
+    />
 
     <div v-if="icons.length >= 20" class="text-sm text-orange-600 tw:text-center">
       <i class="pi pi-info-circle mr-1"></i>

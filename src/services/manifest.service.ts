@@ -11,7 +11,10 @@ class ManifestAPI {
   }
 
   async updateManifest(payload: Partial<ManifestSettings>) {
-    const { data } = await apiClient.post<APIResponse<ManifestSettings>>('/manifest', payload);
+    const { data } = await apiClient.post<APIResponse<ManifestSettings>>(
+      '/manifest',
+      payload,
+    );
 
     return data;
   }

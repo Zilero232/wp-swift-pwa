@@ -11,6 +11,7 @@ defined('ABSPATH') || exit;
 
 use SwiftPWA\FileHandler\File_Handler;
 use SwiftPWA\PWAConstants\Plugin_PWA_Constants;
+use SwiftPWA\ServiceWorker\Service_Worker_Generator;
 
 class Plugin
 {
@@ -59,11 +60,28 @@ class Plugin
 		// Create default manifest.json if it doesn't exist
 		if (!File_Handler::file_exists(Plugin_PWA_Constants::FILE_MANIFEST_NAME)) {
 			$default_manifest = include SWIFT_PWA_PLUGIN_PATH . 'includes/config/manifest-default.php';
-			
+
 			File_Handler::create_file(
 				Plugin_PWA_Constants::FILE_MANIFEST_NAME,
 				json_encode($default_manifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
 			);
+		}
+
+		// Create default service-worker.js if it doesn't exist
+		if (!File_Handler::file_exists(Plugin_PWA_Constants::FILE_SERVICE_WORKER_NAME)) {
+			$default_config = include SWIFT_PWA_PLUGIN_PATH . 'includes/config/service-worker-default.php';
+
+			$sw_code = Service_Worker_Generator::generate($default_config);
+
+			if (is_wp_error($sw_code)) {
+				// Log error but don't fail activation
+				error_log('Swift PWA: Failed to generate service worker: ' . $sw_code->get_error_message());
+			} else {
+				File_Handler::create_file(
+					Plugin_PWA_Constants::FILE_SERVICE_WORKER_NAME,
+					$sw_code
+				);
+			}
 		}
 	}
 
@@ -87,6 +105,11 @@ class Plugin
 		// Delete manifest.json file on uninstall
 		if (File_Handler::file_exists(Plugin_PWA_Constants::FILE_MANIFEST_NAME)) {
 			File_Handler::delete_file(Plugin_PWA_Constants::FILE_MANIFEST_NAME);
+		}
+
+		// Delete service-worker.js file on uninstall
+		if (File_Handler::file_exists(Plugin_PWA_Constants::FILE_SERVICE_WORKER_NAME)) {
+			File_Handler::delete_file(Plugin_PWA_Constants::FILE_SERVICE_WORKER_NAME);
 		}
 	}
 }

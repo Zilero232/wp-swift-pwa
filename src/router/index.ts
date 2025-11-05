@@ -21,6 +21,11 @@ const router = createRouter({
           component: () => import('@/views/ManifestView.vue'),
         },
         {
+          path: '/service-worker',
+          name: RouteName.SERVICE_WORKER,
+          component: () => import('@/views/ServiceWorkerView.vue'),
+        },
+        {
           path: '/preview',
           name: RouteName.PREVIEW,
           component: () => import('@/views/PreviewView.vue'),

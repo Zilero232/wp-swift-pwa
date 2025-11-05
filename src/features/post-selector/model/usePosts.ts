@@ -8,20 +8,21 @@ export function usePosts(searchQuery: MaybeRefOrGetter<string>) {
     return [`posts${toValue(searchQuery) ? `-${toValue(searchQuery)}` : ''}`];
   });
 
-  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } = useInfiniteQuery({
-    queryKey: queryKey.value,
-    queryFn: async ({ pageParam = 1 }) => {
-      return await postsAPI.getPosts({
-        page: pageParam,
-        per_page: 20,
-        search: toValue(searchQuery),
-      });
-    },
-    getNextPageParam: (lastPage) => {
-      return lastPage.data.has_more ? lastPage.data.posts.length / 20 + 1 : undefined;
-    },
-    initialPageParam: 1,
-  });
+  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } =
+    useInfiniteQuery({
+      queryKey: queryKey.value,
+      queryFn: async ({ pageParam = 1 }) => {
+        return await postsAPI.getPosts({
+          page: pageParam,
+          per_page: 20,
+          search: toValue(searchQuery),
+        });
+      },
+      getNextPageParam: (lastPage) => {
+        return lastPage.data.has_more ? lastPage.data.posts.length / 20 + 1 : undefined;
+      },
+      initialPageParam: 1,
+    });
 
   // Flatten all pages into a single array
   const posts = computed(() => {

@@ -34,7 +34,10 @@ const removeShortcut = (index: number) => {
 };
 
 const updateShortcut = (index: number, field: keyof ManifestShortcut, value: string) => {
-  const items = queryManifest.data.value?.shortcuts?.map((item, i) => (i === index ? { ...item, [field]: value || undefined } : item)) || [];
+  const items =
+    queryManifest.data.value?.shortcuts?.map((item, i) =>
+      i === index ? { ...item, [field]: value || undefined } : item,
+    ) || [];
 
   updateManifest({ shortcuts: items });
 };
@@ -42,7 +45,11 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
 
 <template>
   <div class="tw:flex tw:flex-col tw:gap-4">
-    <div v-for="(shortcut, index) in queryManifest.data.value?.shortcuts" :key="index" class="tw:border tw:border-gray-200 tw:rounded-lg tw:p-4">
+    <div
+      v-for="(shortcut, index) in queryManifest.data.value?.shortcuts"
+      :key="index"
+      class="tw:border tw:border-gray-200 tw:rounded-lg tw:p-4"
+    >
       <div class="tw:flex tw:flex-col tw:gap-3">
         <div class="tw:flex tw:items-center tw:gap-2">
           <InputField
@@ -86,10 +93,22 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
       </div>
 
       <div class="tw:flex tw:justify-end tw:mt-3">
-        <Button icon="pi pi-trash" severity="danger" text @click="removeShortcut(index)" />
+        <Button
+          icon="pi pi-trash"
+          severity="danger"
+          text
+          @click="removeShortcut(index)"
+        />
       </div>
     </div>
 
-    <Button label="Добавить шорткат" icon="pi pi-plus" outlined @click="addShortcut" :disabled="shortcuts.length >= 4" class="tw:w-full" />
+    <Button
+      label="Добавить шорткат"
+      icon="pi pi-plus"
+      outlined
+      @click="addShortcut"
+      :disabled="shortcuts.length >= 4"
+      class="tw:w-full"
+    />
   </div>
 </template>

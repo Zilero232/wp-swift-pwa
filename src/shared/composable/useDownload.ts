@@ -19,7 +19,10 @@ export function useDownload() {
    * Copy text to clipboard
    */
   const copyToClipboard = async (text: string, options?: CopyOptions) => {
-    const { successMessage = 'Скопировано в буфер обмена', errorMessage = 'Ошибка копирования' } = options || {};
+    const {
+      successMessage = 'Скопировано в буфер обмена',
+      errorMessage = 'Ошибка копирования',
+    } = options || {};
 
     try {
       await navigator.clipboard.writeText(text);
@@ -40,10 +43,16 @@ export function useDownload() {
    * Download content as file
    */
   const downloadFile = (content: string | Blob, options: DownloadOptions) => {
-    const { filename, mimeType = 'text/plain', successMessage = 'Файл загружен', errorMessage = 'Ошибка загрузки файла' } = options;
+    const {
+      filename,
+      mimeType = 'text/plain',
+      successMessage = 'Файл загружен',
+      errorMessage = 'Ошибка загрузки файла',
+    } = options;
 
     try {
-      const blob = content instanceof Blob ? content : new Blob([content], { type: mimeType });
+      const blob =
+        content instanceof Blob ? content : new Blob([content], { type: mimeType });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
 
@@ -72,7 +81,11 @@ export function useDownload() {
   /**
    * Download JSON file
    */
-  const downloadJSON = (data: unknown, filename: string, options?: Omit<DownloadOptions, 'filename' | 'mimeType'>) => {
+  const downloadJSON = (
+    data: unknown,
+    filename: string,
+    options?: Omit<DownloadOptions, 'filename' | 'mimeType'>,
+  ) => {
     const jsonString = JSON.stringify(data, null, 2);
 
     return downloadFile(jsonString, {

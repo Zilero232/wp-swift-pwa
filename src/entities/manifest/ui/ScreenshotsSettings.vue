@@ -46,7 +46,11 @@ const removeScreenshot = (index: number) => {
   updateManifest({ screenshots: items });
 };
 
-const updateScreenshot = (index: number, field: keyof ManifestScreenshot, value: string | undefined) => {
+const updateScreenshot = (
+  index: number,
+  field: keyof ManifestScreenshot,
+  value: string | undefined,
+) => {
   const items = screenshots.value.map((item, i) => {
     if (i === index) {
       return {
@@ -66,7 +70,13 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
 
   const items = screenshots.value.map((item, i) => {
     if (i === selectedIndexItem.value) {
-      return { ...item, src: url, sizes: `${width}x${height}`, type: mime_type, label: alt };
+      return {
+        ...item,
+        src: url,
+        sizes: `${width}x${height}`,
+        type: mime_type,
+        label: alt,
+      };
     }
 
     return item;
@@ -91,7 +101,9 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
             {{ index + 1 }}
           </div>
 
-          <span class="tw:text-sm tw:font-medium tw:text-gray-700">Скриншот #{{ index + 1 }}</span>
+          <span class="tw:text-sm tw:font-medium tw:text-gray-700"
+            >Скриншот #{{ index + 1 }}</span
+          >
         </div>
 
         <div class="tw:flex tw:gap-2">
@@ -124,7 +136,14 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
             "
           />
 
-          <Button icon="pi pi-trash" outlined rounded severity="danger" v-tooltip.top="'Удалить'" @click="removeScreenshot(index)" />
+          <Button
+            icon="pi pi-trash"
+            outlined
+            rounded
+            severity="danger"
+            v-tooltip.top="'Удалить'"
+            @click="removeScreenshot(index)"
+          />
         </div>
       </div>
 

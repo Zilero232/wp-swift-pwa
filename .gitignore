@@ -21,6 +21,9 @@ certs
 # Build
 build/
 
+# Dummy folder
+dummy-non-existing-folder/
+
 # Node
 node_modules
 .DS_Store

@@ -12,7 +12,12 @@ interface GetPostsParams {
 
 class PostsAPI {
   async getPosts(params?: GetPostsParams) {
-    const { page = 1, per_page = 10, search = '', post_type = 'post,page' } = params || {};
+    const {
+      page = 1,
+      per_page = 10,
+      search = '',
+      post_type = 'post,page',
+    } = params || {};
 
     const { data } = await apiClient.get<APIResponse<PostsResponse>>('/posts', {
       params: {

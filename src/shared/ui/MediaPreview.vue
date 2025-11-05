@@ -48,8 +48,17 @@ watch(
 </script>
 
 <template>
-  <Dialog :visible="visible" @update:visible="emit('update:visible', $event)" :header="title" modal :style="{ width: '90vw', maxWidth: '900px' }">
-    <div v-if="!imageLoaded && !imageError" class="tw:flex tw:justify-center tw:items-center tw:p-12">
+  <Dialog
+    :visible="visible"
+    @update:visible="emit('update:visible', $event)"
+    :header="title"
+    modal
+    :style="{ width: '90vw', maxWidth: '900px' }"
+  >
+    <div
+      v-if="!imageLoaded && !imageError"
+      class="tw:flex tw:justify-center tw:items-center tw:p-12"
+    >
       <i class="pi pi-spin pi-spinner tw:text-4xl tw:text-gray-400"></i>
     </div>
 
@@ -69,15 +78,23 @@ watch(
         @load="handleImageLoad"
       />
 
-      <div v-if="image.label" class="tw:text-xs tw:text-gray-500 tw:text-center tw:truncate">
+      <div
+        v-if="image.label"
+        class="tw:text-xs tw:text-gray-500 tw:text-center tw:truncate"
+      >
         {{ image.label }}
       </div>
     </div>
 
-    <div v-if="imageError" class="tw:flex tw:flex-col tw:items-center tw:justify-center tw:p-12 tw:text-center">
+    <div
+      v-if="imageError"
+      class="tw:flex tw:flex-col tw:items-center tw:justify-center tw:p-12 tw:text-center"
+    >
       <i class="pi pi-exclamation-triangle tw:text-6xl tw:text-red-400 tw:mb-4"></i>
 
-      <p class="tw:text-lg tw:text-center tw:text-gray-600">Не удалось загрузить изображение</p>
+      <p class="tw:text-lg tw:text-center tw:text-gray-600">
+        Не удалось загрузить изображение
+      </p>
     </div>
 
     <template #footer>
