@@ -1,18 +1,28 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { InputSwitch } from 'primevue';
+import {
+ computed 
+} from 'vue';
+import {
+ ToggleSwitch 
+} from 'primevue';
 
 import InputField from '@/shared/ui/InputField.vue';
 
-import { useServiceWorkerQuery } from '../model/useServiceWorkerQuery';
+import type {
+ RuntimeCacheConfig 
+} from '@/shared/types/service-worker';
 
-const { queryServiceWorker, updateServiceWorker } = useServiceWorkerQuery();
+import {
+ useServiceWorkerQuery 
+} from '../model/useServiceWorkerQuery';
+
+const {
+ queryServiceWorker, updateServiceWorker 
+} = useServiceWorkerQuery();
 
 const queryServiceWorkerData = computed(() => queryServiceWorker.data.value);
 
-const updateRuntimeCache = (
-  payload: Partial<typeof queryServiceWorkerData.value.runtime_cache>,
-) => {
+const updateRuntimeCache = (payload: Partial<RuntimeCacheConfig>) => {
   if (!queryServiceWorkerData.value?.runtime_cache) return;
 
   updateServiceWorker({
@@ -33,11 +43,13 @@ const updateRuntimeCache = (
         <label class="tw:font-medium tw:text-gray-700 tw:block tw:mb-1"
           >Включить runtime cache</label
         >
+
         <small class="tw:text-gray-500"
           >Автоматическое кэширование ресурсов во время использования</small
         >
       </div>
-      <InputSwitch
+
+      <ToggleSwitch
         :model-value="queryServiceWorkerData?.runtime_cache?.enabled"
         @update:model-value="updateRuntimeCache({ enabled: $event })"
       />
@@ -53,13 +65,7 @@ const updateRuntimeCache = (
         type="number"
         :model-value="queryServiceWorkerData?.runtime_cache?.max_entries?.toString()"
         @update:model-value="updateRuntimeCache({ max_entries: Number($event) })"
-      >
-        <template #helper>
-          <small class="tw:text-gray-500 tw:block tw:mt-1"
-            >Максимальное количество файлов в кэше</small
-          >
-        </template>
-      </InputField>
+      />
 
       <InputField
         label="Максимальный возраст (секунды)"
@@ -67,13 +73,7 @@ const updateRuntimeCache = (
         type="number"
         :model-value="queryServiceWorkerData?.runtime_cache?.max_age_seconds?.toString()"
         @update:model-value="updateRuntimeCache({ max_age_seconds: Number($event) })"
-      >
-        <template #helper>
-          <small class="tw:text-gray-500 tw:block tw:mt-1"
-            >Время жизни записи в кэше (86400 = 24 часа)</small
-          >
-        </template>
-      </InputField>
+      />
     </div>
   </div>
 </template>

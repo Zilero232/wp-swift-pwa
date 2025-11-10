@@ -12,5 +12,8 @@ export const useStatusFormatters = () => {
     return new Date(timestamp * 1000).toLocaleString('ru-RU');
   };
 
-  return { formatFileSize, formatDate };
+  return {
+    formatFileSize,
+    formatDate,
+  };
 };

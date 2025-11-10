@@ -1,12 +1,19 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { RouterView, useRoute } from 'vue-router';
-import { ProgressSpinner } from 'primevue';
+import {
+ computed 
+} from 'vue';
+import {
+ RouterView, useRoute 
+} from 'vue-router';
 
 import Header from '@/widgets/header/Header.vue';
 import Footer from '@/widgets/footer/Footer.vue';
 
-import { RouteName } from '@/shared/config/routes.constants';
+import LoadingSpinner from '@/shared/ui/LoadingSpinner.vue';
+
+import {
+ RouteName 
+} from '@/shared/config/routes.constants';
 
 const route = useRoute();
 
@@ -23,7 +30,7 @@ const isWelcomePage = computed(() => route.name === RouteName.WELCOME);
       </template>
 
       <template #fallback>
-        <ProgressSpinner />
+        <LoadingSpinner />
       </template>
     </Suspense>
   </main>

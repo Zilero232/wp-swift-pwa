@@ -1,8 +1,14 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { Message } from 'primevue';
+import {
+ computed 
+} from 'vue';
+import {
+ Message 
+} from 'primevue';
 
-import type { StatusResponse } from '@/shared/types/status';
+import type {
+ StatusResponse 
+} from '@/shared/types/status';
 
 interface Props {
   status: StatusResponse;

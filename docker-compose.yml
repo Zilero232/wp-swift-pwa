@@ -11,13 +11,12 @@ services:
       MYSQL_DATABASE: "${DB_DATABASE}"
       MYSQL_USER: "${DB_USER}"
       MYSQL_PASSWORD: "${DB_PASSWORD}"
+
   wordpress:
     image: wordpress:6.8.3-php8.3
     depends_on:
       - mysql
     restart: always
-    ports:
-      - "8080:80"
     environment:
       WORDPRESS_DB_HOST: mysql:3306
       WORDPRESS_DB_USER: "${DB_USER}"
@@ -32,6 +31,7 @@ services:
     volumes:
       - ./.srv/wordpress/:/var/www/html
       - ./:/var/www/html/wp-content/plugins/wp-swift-pwa
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     depends_on:
@@ -45,3 +45,15 @@ services:
       MYSQL_USERNAME: "${DB_USER}"
       MYSQL_ROOT_PASSWORD: "${DB_ROOT_PASSWORD}"
       PMA_HOST: mysql
+
+  nginx:
+    image: nginx:latest
+    depends_on:
+      - wordpress
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./certs/swift.pwa.dev+1.pem:/etc/nginx/ssl/swift.pwa.dev.pem
+      - ./certs/swift.pwa.dev+1-key.pem:/etc/nginx/ssl/swift.pwa.dev-key.pem
+    ports:
+      - "443:443"
+    restart: always

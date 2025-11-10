@@ -1,6 +1,10 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
+import {
+ createRouter, createWebHashHistory 
+} from 'vue-router';
 
-import { RouteName } from '@/shared/config/routes.constants';
+import {
+ RouteName 
+} from '@/shared/config/routes.constants';
 
 const router = createRouter({
   // Use hash history for WordPress admin context to avoid conflicts

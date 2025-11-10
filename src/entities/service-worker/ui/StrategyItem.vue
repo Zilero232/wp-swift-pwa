@@ -1,19 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Button } from 'primevue';
+import {
+ ref 
+} from 'vue';
+import {
+ Button 
+} from 'primevue';
 
 import SelectField from '@/shared/ui/SelectField.vue';
 import InputField from '@/shared/ui/InputField.vue';
 
-import type { CacheStrategy } from '@/shared/types/service-worker';
-import type { StrategyItem } from '../model/useCacheStrategies';
+import type {
+ ENUM_CACHE_STRATEGIES 
+} from '@/shared/types/service-worker';
 
-import { CACHE_STRATEGIES } from '../constants';
+import type {
+ StrategyItem 
+} from '../model/useCacheStrategies';
+
+import {
+ CACHE_STRATEGIES 
+} from '../constants';
 
 interface Props {
   strategy: StrategyItem;
   icon: string;
-  onUpdateStrategy: (extensions: string, value: CacheStrategy) => void;
+  onUpdateStrategy: (extensions: string, value: ENUM_CACHE_STRATEGIES) => void;
   onUpdateExtensions: (oldExtensions: string, newExtensions: string) => void;
   onRemove: (extensions: string) => void;
 }

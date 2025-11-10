@@ -1,16 +1,26 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { Button } from 'primevue';
+import {
+ computed 
+} from 'vue';
+import {
+ Button 
+} from 'primevue';
 
 import PostSelector from '@/features/post-selector/ui/PostSelector.vue';
 
 import InputField from '@/shared/ui/InputField.vue';
 
-import type { ManifestShortcut } from '@/shared/types/manifest';
+import type {
+ ManifestShortcut 
+} from '@/shared/types/manifest';
 
-import { useManifestQuery } from '../model/useManifestQuery';
+import {
+ useManifestQuery 
+} from '../model/useManifestQuery';
 
-const { queryManifest, updateManifest } = useManifestQuery();
+const {
+ queryManifest, updateManifest 
+} = useManifestQuery();
 
 const shortcuts = computed(() => queryManifest.data.value?.shortcuts ?? []);
 
@@ -24,22 +34,33 @@ const addShortcut = () => {
     url: '',
   });
 
-  updateManifest({ shortcuts: items });
+  updateManifest({
+    shortcuts: items,
+  });
 };
 
 const removeShortcut = (index: number) => {
   const items = shortcuts.value.filter((_, i) => i !== index) ?? [];
 
-  updateManifest({ shortcuts: items });
+  updateManifest({
+    shortcuts: items,
+  });
 };
 
 const updateShortcut = (index: number, field: keyof ManifestShortcut, value: string) => {
   const items =
     queryManifest.data.value?.shortcuts?.map((item, i) =>
-      i === index ? { ...item, [field]: value || undefined } : item,
+      i === index
+        ? {
+            ...item,
+            [field]: value || undefined,
+          }
+        : item,
     ) || [];
 
-  updateManifest({ shortcuts: items });
+  updateManifest({
+    shortcuts: items,
+  });
 };
 </script>
 

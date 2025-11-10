@@ -1,13 +1,18 @@
 /**
  * Cache strategies for different resource types
  */
-export type CacheStrategy = 'cacheFirst' | 'networkFirst' | 'networkOnly' | 'cacheOnly';
+export enum ENUM_CACHE_STRATEGIES {
+  CACHE_FIRST = 'cacheFirst',
+  NETWORK_FIRST = 'networkFirst',
+  NETWORK_ONLY = 'networkOnly',
+  CACHE_ONLY = 'cacheOnly',
+}
 
 /**
  * Cache strategies configuration
  */
 export interface CacheStrategies {
-  [extensions: string]: CacheStrategy;
+  [extensions: string]: ENUM_CACHE_STRATEGIES;
 }
 
 /**
@@ -24,6 +29,7 @@ export interface RuntimeCacheConfig {
  */
 export interface BackgroundSyncConfig {
   enabled: boolean;
+  queue_name: string;
 }
 
 /**
@@ -31,6 +37,16 @@ export interface BackgroundSyncConfig {
  */
 export interface PushNotificationsConfig {
   enabled: boolean;
+  vapid_public_key: string;
+}
+
+/**
+ * Service Worker registration configuration
+ */
+export interface RegistrationConfig {
+  scope: string;
+  update_via_cache: 'imports' | 'all' | 'none';
+  type: 'classic' | 'module';
 }
 
 /**
@@ -43,6 +59,9 @@ export interface ServiceWorkerSettings {
   strategies: CacheStrategies;
   precache: string[];
   runtime_cache: RuntimeCacheConfig;
+  registration: RegistrationConfig; // добавь это поле
+  skip_patterns: string[];
+  debug: boolean;
   background_sync?: BackgroundSyncConfig;
   push_notifications?: PushNotificationsConfig;
 }

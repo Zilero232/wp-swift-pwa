@@ -1,7 +1,11 @@
 import apiClient from '@/shared/api/client';
 
-import type { APIResponse } from '@/shared/types';
-import type { PostsResponse } from '@/shared/types/posts';
+import type {
+ APIResponse 
+} from '@/shared/types';
+import type {
+ PostsResponse 
+} from '@/shared/types/posts';
 
 interface GetPostsParams {
   page?: number;
@@ -19,7 +23,9 @@ class PostsAPI {
       post_type = 'post,page',
     } = params || {};
 
-    const { data } = await apiClient.get<APIResponse<PostsResponse>>('/posts', {
+    const {
+ data 
+} = await apiClient.get<APIResponse<PostsResponse>>('/posts', {
       params: {
         page,
         per_page,

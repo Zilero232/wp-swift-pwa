@@ -134,6 +134,13 @@ class ServiceWorkerController extends RestController
 		// Generate service worker code from config
 		$sw_code = $this->generate_service_worker_code($data);
 
+		if (is_wp_error($sw_code)) {
+			return $this->error_response(
+				$sw_code->get_error_message(),
+				 500
+			);
+		}
+
 		// Update file
 		$file_exists = File_Handler::file_exists(Plugin_PWA_Constants::FILE_SERVICE_WORKER_NAME);
 

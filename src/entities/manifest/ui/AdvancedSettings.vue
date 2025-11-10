@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import {
+ computed 
+} from 'vue';
 import PostSelector from '@/features/post-selector/ui/PostSelector.vue';
 
 import SelectField from '@/shared/ui/SelectField.vue';
@@ -10,9 +12,13 @@ import {
   TEXT_DIRECTION_OPTIONS,
 } from '@/shared/config/localization.constants';
 
-import { useManifestQuery } from '../model/useManifestQuery';
+import {
+ useManifestQuery 
+} from '../model/useManifestQuery';
 
-const { queryManifest, updateManifest } = useManifestQuery();
+const {
+ queryManifest, updateManifest 
+} = useManifestQuery();
 
 const queryManifestData = computed(() => queryManifest.data.value);
 </script>

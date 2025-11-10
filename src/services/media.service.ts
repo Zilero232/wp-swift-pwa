@@ -1,7 +1,11 @@
 import apiClient from '@/shared/api/client';
 
-import type { APIResponse } from '@/shared/types';
-import type { MediaAttachment } from '@/shared/types/media';
+import type {
+ APIResponse 
+} from '@/shared/types';
+import type {
+ MediaAttachment 
+} from '@/shared/types/media';
 
 export interface MediaLibraryResponse {
   items: MediaAttachment[];
@@ -17,7 +21,9 @@ class MediaAPI {
 
     formData.append('file', file);
 
-    const { data } = await apiClient.post<APIResponse<MediaAttachment>>(
+    const {
+ data 
+} = await apiClient.post<APIResponse<MediaAttachment>>(
       `${this.baseUrl}/upload`,
       formData,
       {
@@ -35,7 +41,9 @@ class MediaAPI {
   }
 
   async getAttachment(id: number) {
-    const { data } = await apiClient.get<APIResponse<MediaAttachment>>(
+    const {
+ data 
+} = await apiClient.get<APIResponse<MediaAttachment>>(
       `${this.baseUrl}/attachment/${id}`,
     );
 
@@ -47,20 +55,18 @@ class MediaAPI {
   }
 
   async getLibrary(params?: { search?: string; per_page?: number }) {
-    const { data } = await apiClient.get<APIResponse<MediaLibraryResponse>>(
+    const {
+ data 
+} = await apiClient.get<APIResponse<MediaLibraryResponse>>(
       `${this.baseUrl}/library`,
       {
         params,
       },
     );
 
-    console.log(data);
-
     if (!data.success) {
       throw new Error(data.message || 'Failed to load library');
     }
-
-    console.log(data.data);
 
     return data.data;
   }

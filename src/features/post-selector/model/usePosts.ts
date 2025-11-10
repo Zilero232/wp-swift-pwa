@@ -1,17 +1,27 @@
-import { computed, toValue, type MaybeRefOrGetter } from 'vue';
-import { useInfiniteQuery } from '@tanstack/vue-query';
+import {
+ computed, toValue, type MaybeRefOrGetter 
+} from 'vue';
+import {
+ useInfiniteQuery 
+} from '@tanstack/vue-query';
 
-import { postsAPI } from '@/services/posts.service';
+import {
+ postsAPI 
+} from '@/services/posts.service';
 
 export function usePosts(searchQuery: MaybeRefOrGetter<string>) {
   const queryKey = computed(() => {
-    return [`posts${toValue(searchQuery) ? `-${toValue(searchQuery)}` : ''}`];
+    return ['posts', toValue(searchQuery)];
   });
 
-  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, refetch } =
+  const {
+ data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, refetch 
+} =
     useInfiniteQuery({
-      queryKey: queryKey.value,
-      queryFn: async ({ pageParam = 1 }) => {
+      queryKey,
+      queryFn: async ({
+ pageParam = 1 
+}) => {
         return await postsAPI.getPosts({
           page: pageParam,
           per_page: 20,
@@ -30,8 +40,13 @@ export function usePosts(searchQuery: MaybeRefOrGetter<string>) {
   });
 
   const postOptions = computed(() => [
-    { label: 'Главная страница (/)', value: '/' },
-    ...posts.value.map(({ title, type, link }) => ({
+    {
+      label: 'Главная страница (/)',
+      value: '/',
+    },
+    ...posts.value.map(({
+ title, type, link 
+}) => ({
       label: `${title} (${type})`,
       value: link,
     })),

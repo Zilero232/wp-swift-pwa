@@ -1,19 +1,26 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import {
+ computed 
+} from 'vue';
+
+import InfoBlock from '@/shared/ui/InfoBlock.vue';
 
 import QuickTypeSelector from './QuickTypeSelector.vue';
 import StrategyItem from './StrategyItem.vue';
 import AddStrategyForm from './AddStrategyForm.vue';
 import DefaultStrategyField from './DefaultStrategyField.vue';
-import StrategyInfo from './StrategyInfo.vue';
 
-import { useCacheStrategies } from '../model/useCacheStrategies';
+import {
+ useCacheStrategies 
+} from '../model/useCacheStrategies';
 
-import { BASE_TYPES } from '../constants';
+import {
+ BASE_EXTENSIONS, STRATEGY_INFO 
+} from '../constants';
 
 const {
-  currentStrategies,
   defaultStrategy,
+  currentStrategies,
   addBaseType,
   updateStrategy,
   updateExtensions,
@@ -24,8 +31,10 @@ const {
 } = useCacheStrategies();
 
 const availableBaseTypes = computed(() => {
-  return BASE_TYPES.filter((bt) => {
-    return !currentStrategies.value.some((cs) => cs.extensions === bt.extensions);
+  return BASE_EXTENSIONS.filter((baseExtension) => {
+    return !currentStrategies.value.some(
+      (strategy) => strategy.extensions === baseExtension.extensions,
+    );
   });
 });
 </script>
@@ -68,6 +77,10 @@ const availableBaseTypes = computed(() => {
       @update="updateDefaultStrategy"
     />
 
-    <StrategyInfo />
+    <InfoBlock title="О стратегиях:" as-list>
+      <li v-for="(info, key) in STRATEGY_INFO" :key="key">
+        <strong>{{ info.title }}</strong> - {{ info.description }}
+      </li>
+    </InfoBlock>
   </div>
 </template>

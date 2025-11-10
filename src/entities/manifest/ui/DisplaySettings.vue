@@ -1,14 +1,22 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { Dropdown } from 'primevue';
+import {
+ computed 
+} from 'vue';
 
+import SelectField from '@/shared/ui/SelectField.vue';
 import ColorInput from '@/shared/ui/ColorInput.vue';
 
-import { DISPLAY_OPTIONS, ORIENTATION_OPTIONS } from '@/shared/config/display.constants';
+import {
+ DISPLAY_OPTIONS, ORIENTATION_OPTIONS 
+} from '@/shared/config/display.constants';
 
-import { useManifestQuery } from '../model/useManifestQuery';
+import {
+ useManifestQuery 
+} from '../model/useManifestQuery';
 
-const { queryManifest, updateManifest } = useManifestQuery();
+const {
+ queryManifest, updateManifest 
+} = useManifestQuery();
 
 const queryManifestData = computed(() => queryManifest.data.value);
 </script>
@@ -16,36 +24,36 @@ const queryManifestData = computed(() => queryManifest.data.value);
 <template>
   <div class="tw:flex tw:flex-col tw:gap-6">
     <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-4">
-      <Dropdown
+      <SelectField
+        label="Display"
+        icon="pi pi-display"
+        :options="DISPLAY_OPTIONS"
         :model-value="queryManifestData?.display"
         @update:model-value="updateManifest({ display: $event })"
-        :options="DISPLAY_OPTIONS"
-        option-label="label"
-        option-value="value"
-        class="tw:w-full"
       />
 
-      <Dropdown
+      <SelectField
+        label="Orientation"
+        icon="pi pi-orientation"
+        :options="ORIENTATION_OPTIONS"
         :model-value="queryManifestData?.orientation"
         @update:model-value="updateManifest({ orientation: $event })"
-        :options="ORIENTATION_OPTIONS"
-        option-label="label"
-        option-value="value"
-        class="tw:w-full"
       />
     </div>
 
     <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-4">
       <ColorInput
-        :model-value="queryManifestData?.theme_color || ''"
-        @update:model-value="updateManifest({ theme_color: $event })"
+        label="Theme Color"
         placeholder="#000000"
+        :model-value="queryManifestData?.theme_color || ''"
+        @update:model-value="updateManifest({ theme_color: `#${$event}` })"
       />
 
       <ColorInput
-        :model-value="queryManifestData?.background_color || '#ffffff'"
-        @update:model-value="updateManifest({ background_color: $event })"
+        label="Background Color"
         placeholder="#ffffff"
+        :model-value="queryManifestData?.background_color || '#ffffff'"
+        @update:model-value="updateManifest({ background_color: `#${$event}` })"
       />
     </div>
   </div>

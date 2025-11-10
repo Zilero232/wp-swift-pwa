@@ -1,15 +1,25 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query';
+import {
+ useQuery, useMutation, useQueryClient 
+} from '@tanstack/vue-query';
 
-import { serviceWorkerAPI } from '@/services/service-worker.service';
+import {
+ serviceWorkerAPI 
+} from '@/services/service-worker.service';
 
-import { useToast } from '@/shared/composable/useToast';
+import {
+ useToast 
+} from '@/shared/composable/useToast';
 
-import type { ServiceWorkerSettings } from '@/shared/types/service-worker';
+import type {
+ ServiceWorkerSettings 
+} from '@/shared/types/service-worker';
 
 const SERVICE_WORKER_KEY = ['service-worker'];
 
 export function useServiceWorkerQuery() {
-  const { showSuccess, showError } = useToast();
+  const {
+ showSuccess, showError 
+} = useToast();
   const queryClient = useQueryClient();
 
   const queryServiceWorker = useQuery({
@@ -17,10 +27,8 @@ export function useServiceWorkerQuery() {
     queryFn: async () => {
       const response = await serviceWorkerAPI.getServiceWorker();
 
-      if (response.success) {
-        showSuccess(response.message || 'Service Worker fetched successfully');
-      } else {
-        showError(response.message || 'Failed to fetch Service Worker');
+      if (!response.success) {
+        throw new Error(response.message || 'Failed to fetch Service Worker');
       }
 
       return response.data;
@@ -41,7 +49,9 @@ export function useServiceWorkerQuery() {
       return response.data;
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['service-worker'] });
+      queryClient.invalidateQueries({
+        queryKey: ['service-worker'],
+      });
 
       showSuccess('Service Worker обновлён успешно');
     },
@@ -53,15 +63,15 @@ export function useServiceWorkerQuery() {
   const queryServiceWorkerCode = useQuery({
     queryKey: ['service-worker-code'],
     queryFn: async () => {
-      const response = await serviceWorkerAPI.getServiceWorkerCode();
+      const {
+ data, success, message 
+} = await serviceWorkerAPI.getServiceWorkerCode();
 
-      if (response.success) {
-        showSuccess(response.message || 'Service Worker code fetched successfully');
-      } else {
-        showError(response.message || 'Failed to fetch Service Worker code');
+      if (!success) {
+        throw new Error(message || 'Failed to fetch Service Worker code');
       }
 
-      return response.data.code;
+      return data.code;
     },
     enabled: false,
   });
@@ -71,7 +81,10 @@ export function useServiceWorkerQuery() {
 
     if (!currentServiceWorker) return;
 
-    const updatedServiceWorker = { ...currentServiceWorker, ...payload };
+    const updatedServiceWorker = {
+      ...currentServiceWorker,
+      ...payload,
+    };
 
     queryClient.setQueryData(['service-worker'], updatedServiceWorker);
   };

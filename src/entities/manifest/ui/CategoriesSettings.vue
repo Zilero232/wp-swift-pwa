@@ -1,14 +1,24 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { MultiSelect, Tag } from 'primevue';
+import {
+ computed 
+} from 'vue';
+import {
+ MultiSelect, Tag 
+} from 'primevue';
 
 import InfoBlock from '@/shared/ui/InfoBlock.vue';
 
-import { APP_CATEGORIES } from '@/shared/config/categories.constants';
+import {
+ APP_CATEGORIES 
+} from '@/shared/config/categories.constants';
 
-import { useManifestQuery } from '../model/useManifestQuery';
+import {
+ useManifestQuery 
+} from '../model/useManifestQuery';
 
-const { queryManifest, updateManifest } = useManifestQuery();
+const {
+ queryManifest, updateManifest 
+} = useManifestQuery();
 
 const categories = computed(() => queryManifest.data.value?.categories ?? []);
 
@@ -22,7 +32,9 @@ const categoryOptions = computed(() =>
 const removeCategory = (category: string) => {
   const updated = categories.value.filter((c) => c !== category) ?? [];
 
-  updateManifest({ categories: updated });
+  updateManifest({
+    categories: updated,
+  });
 };
 </script>
 

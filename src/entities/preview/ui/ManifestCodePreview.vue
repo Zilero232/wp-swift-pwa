@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
-import { codeToHtml } from 'shiki';
+import {
+ ref, watch 
+} from 'vue';
+import {
+ codeToHtml 
+} from 'shiki';
 
 interface Props {
   manifestJson: string;
@@ -21,7 +25,9 @@ const highlight = async (code: string) => {
   });
 };
 
-watch(() => props.manifestJson, highlight, { immediate: true });
+watch(() => props.manifestJson, highlight, {
+  immediate: true,
+});
 </script>
 
 <template>

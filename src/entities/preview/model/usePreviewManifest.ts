@@ -1,16 +1,26 @@
-import { computed } from 'vue';
+import {
+ computed 
+} from 'vue';
 
-import { useManifestQuery } from '@/entities/manifest/model/useManifestQuery';
+import {
+ useManifestQuery 
+} from '@/entities/manifest/model/useManifestQuery';
 
-import { useDownload } from '@/shared/composable/useDownload';
+import {
+ useDownload 
+} from '@/shared/composable/useDownload';
 
-import { FILE_NAMES } from '@/shared/config/files.constants';
+import {
+ FILE_NAMES 
+} from '@/shared/config/files.constants';
 
 export function usePreviewManifest() {
-  const { queryManifest } = useManifestQuery();
-  const { copyToClipboard, downloadJSON } = useDownload();
-
-  const isLoading = computed(() => queryManifest.isPending.value);
+  const {
+ queryManifest 
+} = useManifestQuery();
+  const {
+ copyToClipboard, downloadJSON 
+} = useDownload();
 
   const manifestJSON = computed(() => {
     if (!queryManifest.data.value) return '';
@@ -39,8 +49,8 @@ export function usePreviewManifest() {
   };
 
   return {
-    isLoadingManifest: isLoading,
-    hasManifestData: hasData,
+    isLoadingManifest: queryManifest.isPending,
+    hasManifestData: !!hasData.value,
     manifestJSON,
     copyManifest: copy,
     downloadManifest: download,

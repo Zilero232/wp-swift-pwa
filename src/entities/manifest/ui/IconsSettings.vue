@@ -1,21 +1,38 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { Button } from 'primevue';
+import {
+ computed, ref 
+} from 'vue';
+import {
+ Button 
+} from 'primevue';
+
+import {
+ MediaLibrary 
+} from '@/features/media-library';
 
 import InputField from '@/shared/ui/InputField.vue';
-import MediaLibrary from '@/shared/ui/MediaLibrary.vue';
 import MediaPreview from '@/shared/ui/MediaPreview.vue';
 import SelectField from '@/shared/ui/SelectField.vue';
 import InfoBlock from '@/shared/ui/InfoBlock.vue';
 
-import type { MediaAttachment } from '@/shared/types/media';
-import { type ManifestIcon, IconPurpose } from '@/shared/types/manifest';
+import type {
+ MediaAttachment 
+} from '@/shared/types/media';
+import {
+ type ManifestIcon, IconPurpose 
+} from '@/shared/types/manifest';
 
-import { useManifestQuery } from '../model/useManifestQuery';
+import {
+ useManifestQuery 
+} from '../model/useManifestQuery';
 
-import { ICON_PURPOSE_OPTIONS } from '@/shared/config/display.constants';
+import {
+ ICON_PURPOSE_OPTIONS 
+} from '@/shared/config/display.constants';
 
-const { queryManifest, updateManifest } = useManifestQuery();
+const {
+ queryManifest, updateManifest 
+} = useManifestQuery();
 
 const icons = computed(() => queryManifest.data.value?.icons ?? []);
 
@@ -34,7 +51,9 @@ const addIcon = () => {
     purpose: IconPurpose.ANY,
   });
 
-  updateManifest({ icons: items });
+  updateManifest({
+    icons: items,
+  });
 };
 
 const removeIcon = (index: number) => {
@@ -44,7 +63,9 @@ const removeIcon = (index: number) => {
     selectedIndexItem.value = null;
   }
 
-  updateManifest({ icons: items });
+  updateManifest({
+    icons: items,
+  });
 };
 
 const updateIcon = (
@@ -63,21 +84,32 @@ const updateIcon = (
     return item;
   });
 
-  updateManifest({ icons: items });
+  updateManifest({
+    icons: items,
+  });
 };
 
-const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment) => {
+const handleLibrarySelect = ({
+ url, width, height, mime_type 
+}: MediaAttachment) => {
   if (selectedIndexItem.value === null) return;
 
   const items = icons.value.map((item, i) => {
     if (i === selectedIndexItem.value) {
-      return { ...item, src: url, sizes: `${width}x${height}`, type: mime_type };
+      return {
+        ...item,
+        src: url,
+        sizes: `${width}x${height}`,
+        type: mime_type,
+      };
     }
 
     return item;
   });
 
-  updateManifest({ icons: items });
+  updateManifest({
+    icons: items,
+  });
 };
 </script>
 

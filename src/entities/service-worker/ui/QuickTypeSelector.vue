@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { Button } from 'primevue';
+import {
+ Button 
+} from 'primevue';
 
-import type { BaseType } from '../constants';
+import type {
+ BASE_EXTENSIONS 
+} from '../constants';
 
 interface Props {
-  availableTypes: BaseType[];
-  onSelect: (baseType: BaseType) => void;
+  availableTypes: typeof BASE_EXTENSIONS;
+  onSelect: (baseType: (typeof BASE_EXTENSIONS)[number]) => void;
 }
 
 defineProps<Props>();

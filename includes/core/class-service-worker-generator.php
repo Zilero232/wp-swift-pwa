@@ -79,25 +79,43 @@ class Service_Worker_Generator
 		$strategies = $config['strategies'] ?? array();
 		$precache = $config['precache'] ?? array();
 		$runtime_cache = $config['runtime_cache'] ?? array();
+		$skip_patterns = $config['skip_patterns'] ?? array('/wp-admin/', '/wp-login.php');
+		$debug = $config['debug'] ?? false;
+		
 		$max_entries = $runtime_cache['max_entries'] ?? 50;
 
-		// Формируем строку стратегий кэширования
-		$strategies_code = '';
+		// Format strategies as valid JavaScript object
+		$strategies_items = array();
 		foreach ($strategies as $type => $strategy) {
-			$strategies_code .= sprintf(
-				"      '%s': '%s',\n",
+			$strategies_items[] = sprintf(
+				"  '%s': '%s'",
 				esc_js($type),
 				esc_js($strategy)
 			);
 		}
 
+		$strategies_code = "{\n" . implode(",\n", $strategies_items) . "\n}";
+
+		// Format skip patterns as valid JavaScript array
+		$skip_items = array();
+		foreach ($skip_patterns as $pattern) {
+			$skip_items[] = sprintf(
+				"  '%s'",
+				esc_js($pattern)
+			);
+		}
+		
+		$skip_patterns_code = "[\n" . implode(",\n", $skip_items) . "\n]";
+
 		return array(
 			'VERSION' => esc_js($version),
 			'CACHE_NAME' => esc_js($cache_name),
 			'OFFLINE_PAGE' => esc_js($offline_page),
-			'CACHE_STRATEGIES' => rtrim($strategies_code),
+			'CACHE_STRATEGIES' => $strategies_code,
 			'PRECACHE_FILES' => json_encode($precache, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
 			'MAX_ENTRIES' => (int) $max_entries,
+			'SKIP_PATTERNS' => $skip_patterns_code,
+			'DEBUG' => $debug ? 'true' : 'false',
 		);
 	}
 

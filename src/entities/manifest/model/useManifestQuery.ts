@@ -1,15 +1,25 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query';
+import {
+ useQuery, useMutation, useQueryClient 
+} from '@tanstack/vue-query';
 
-import { manifestAPI } from '@/services/manifest.service';
+import {
+ manifestAPI 
+} from '@/services/manifest.service';
 
-import { useToast } from '@/shared/composable/useToast';
+import {
+ useToast 
+} from '@/shared/composable/useToast';
 
-import type { ManifestSettings } from '@/shared/types/manifest';
+import type {
+ ManifestSettings 
+} from '@/shared/types/manifest';
 
 const MANIFEST_KEY = ['manifest'];
 
 export const useManifestQuery = () => {
-  const { showSuccess, showError } = useToast();
+  const {
+ showSuccess, showError 
+} = useToast();
 
   const queryClient = useQueryClient();
 
@@ -18,10 +28,8 @@ export const useManifestQuery = () => {
     queryFn: async () => {
       const response = await manifestAPI.getManifest();
 
-      if (response.success) {
-        showSuccess(response.message || 'Manifest fetched successfully');
-      } else {
-        showError(response.message || 'Failed to fetch manifest');
+      if (!response.success) {
+        throw new Error(response.message || 'Failed to fetch manifest');
       }
 
       return response.data;
@@ -48,7 +56,10 @@ export const useManifestQuery = () => {
 
     if (!currentManifest) return;
 
-    const updatedManifest = { ...currentManifest, ...payload };
+    const updatedManifest = {
+      ...currentManifest,
+      ...payload,
+    };
 
     queryClient.setQueryData(MANIFEST_KEY, updatedManifest);
   };
@@ -57,5 +68,10 @@ export const useManifestQuery = () => {
     queryManifest.refetch();
   };
 
-  return { queryManifest, mutationUpdateManifest, updateManifest, loadManifest };
+  return {
+    queryManifest,
+    mutationUpdateManifest,
+    updateManifest,
+    loadManifest,
+  };
 };

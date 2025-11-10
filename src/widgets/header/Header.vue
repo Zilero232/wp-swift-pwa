@@ -1,21 +1,38 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { Button, useConfirm } from 'primevue';
-import { useRoute } from 'vue-router';
+import {
+ computed 
+} from 'vue';
+import {
+ Button, useConfirm 
+} from 'primevue';
+import {
+ useRoute 
+} from 'vue-router';
+
+import {
+ useManifestQuery 
+} from '@/entities/manifest/model/useManifestQuery';
+import {
+ useServiceWorkerQuery 
+} from '@/entities/service-worker/model/useServiceWorkerQuery';
+
+import {
+ RouteName 
+} from '@/shared/config/routes.constants';
 
 import Navigation from './ui/Navigation.vue';
 
-import { useManifestQuery } from '@/entities/manifest/model/useManifestQuery';
-import { useServiceWorkerQuery } from '@/entities/service-worker/model/useServiceWorkerQuery';
-import { RouteName } from '@/shared/config/routes.constants';
-
 const {
-  swiftPwaSettings: { version },
+  swiftPwaSettings: {
+ version 
+},
 } = window;
 
 const route = useRoute();
 const confirm = useConfirm();
-const { queryManifest, mutationUpdateManifest } = useManifestQuery();
+const {
+ queryManifest, mutationUpdateManifest 
+} = useManifestQuery();
 
 const isDisabled = computed(() => {
   return mutationUpdateManifest.isPending || !queryManifest.data.value;
@@ -25,7 +42,9 @@ const isShowButtons = computed(() => {
   return route.name === RouteName.MANIFEST || route.name === RouteName.SERVICE_WORKER;
 });
 
-const { queryServiceWorker, mutationUpdateServiceWorker } = useServiceWorkerQuery();
+const {
+ queryServiceWorker, mutationUpdateServiceWorker 
+} = useServiceWorkerQuery();
 
 const isDisabledServiceWorker = computed(() => {
   return mutationUpdateServiceWorker.isPending.value || !queryServiceWorker.data.value;
@@ -107,7 +126,7 @@ const handleUpdateManifest = () => {
             label="Сбросить"
             severity="secondary"
             text
-            :disabled="isDisabledServiceWorker.value"
+            :disabled="isDisabledServiceWorker"
             @click="handleResetServiceWorker"
           />
 
@@ -115,7 +134,7 @@ const handleUpdateManifest = () => {
             icon="pi pi-save"
             label="Сохранить"
             :loading="mutationUpdateServiceWorker.isPending.value"
-            :disabled="isDisabledServiceWorker.value"
+            :disabled="isDisabledServiceWorker"
             @click="handleUpdateServiceWorker"
           />
         </template>

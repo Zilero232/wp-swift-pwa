@@ -1,25 +1,42 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { Button } from 'primevue';
+import {
+ ref, computed 
+} from 'vue';
+import {
+ Button 
+} from 'primevue';
+
+import {
+ MediaLibrary 
+} from '@/features/media-library';
 
 import SelectField from '@/shared/ui/SelectField.vue';
 import InputField from '@/shared/ui/InputField.vue';
-import MediaLibrary from '@/shared/ui/MediaLibrary.vue';
 import MediaPreview from '@/shared/ui/MediaPreview.vue';
 
-import type { MediaAttachment } from '@/shared/types/media';
-import type { ManifestScreenshot } from '@/shared/types/manifest';
+import type {
+ MediaAttachment 
+} from '@/shared/types/media';
+import type {
+ ManifestScreenshot 
+} from '@/shared/types/manifest';
 
-import { SCREENSHOT_FORM_FACTOR_OPTIONS } from '@/shared/config/display.constants';
+import {
+ SCREENSHOT_FORM_FACTOR_OPTIONS 
+} from '@/shared/config/display.constants';
 
-import { useManifestQuery } from '../model/useManifestQuery';
+import {
+ useManifestQuery 
+} from '../model/useManifestQuery';
 
-const { queryManifest, updateManifest } = useManifestQuery();
+const {
+ queryManifest, updateManifest 
+} = useManifestQuery();
 
 const screenshots = computed(() => queryManifest.data.value?.screenshots ?? []);
 
-const showLibrary = ref(false);
-const showPreview = ref(false);
+const showLibrary = ref<boolean>(false);
+const showPreview = ref<boolean>(false);
 
 const selectedIndexItem = ref<number | null>(null);
 
@@ -33,7 +50,9 @@ const addScreenshot = () => {
     label: '',
   });
 
-  updateManifest({ screenshots: items });
+  updateManifest({
+    screenshots: items,
+  });
 };
 
 const removeScreenshot = (index: number) => {
@@ -43,7 +62,9 @@ const removeScreenshot = (index: number) => {
     selectedIndexItem.value = null;
   }
 
-  updateManifest({ screenshots: items });
+  updateManifest({
+    screenshots: items,
+  });
 };
 
 const updateScreenshot = (
@@ -62,10 +83,14 @@ const updateScreenshot = (
     return item;
   });
 
-  updateManifest({ screenshots: items });
+  updateManifest({
+    screenshots: items,
+  });
 };
 
-const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttachment) => {
+const handleLibrarySelect = ({
+ url, width, height, mime_type, alt 
+}: MediaAttachment) => {
   if (selectedIndexItem.value === null) return;
 
   const items = screenshots.value.map((item, i) => {
@@ -82,7 +107,9 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
     return item;
   });
 
-  updateManifest({ screenshots: items });
+  updateManifest({
+    screenshots: items,
+  });
 };
 </script>
 

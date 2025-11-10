@@ -1,42 +1,57 @@
-import { computed } from 'vue';
+import {
+ computed 
+} from 'vue';
 
-import type { CacheStrategy } from '@/shared/types/service-worker';
-import { useToast } from '@/shared/composable/useToast';
+import {
+ useToast 
+} from '@/shared/composable/useToast';
+import {
+ ENUM_CACHE_STRATEGIES 
+} from '@/shared/types/service-worker';
 
-import { useServiceWorkerQuery } from './useServiceWorkerQuery';
+import {
+ useServiceWorkerQuery 
+} from './useServiceWorkerQuery';
 
-import { BASE_TYPES } from '../constants';
+import {
+ BASE_EXTENSIONS 
+} from '../constants';
 
 export interface StrategyItem {
   id: string;
   extensions: string;
-  strategy: CacheStrategy;
+  strategy: ENUM_CACHE_STRATEGIES;
   isBase: boolean;
 }
 
 export function useCacheStrategies() {
-  const { queryServiceWorker, updateServiceWorker } = useServiceWorkerQuery();
-  const { showError } = useToast();
+  const {
+ queryServiceWorker, updateServiceWorker 
+} = useServiceWorkerQuery();
+  const {
+ showError 
+} = useToast();
 
   const serviceWorkerData = computed(() => queryServiceWorker.data.value);
 
+  const strategies = computed(() => serviceWorkerData.value?.strategies || {});
+
   const defaultStrategy = computed(() => {
-    return serviceWorkerData.value?.strategies?.default || 'networkFirst';
+    return strategies.value.default || 'networkFirst';
   });
 
   const currentStrategies = computed((): StrategyItem[] => {
-    const strategies = serviceWorkerData.value?.strategies || {};
     const result: StrategyItem[] = [];
 
-    Object.keys(strategies).forEach((extensions) => {
+    Object.keys(strategies.value).forEach((extensions) => {
       if (extensions === 'default') return;
 
-      const isBase = BASE_TYPES.some((base) => base.extensions === extensions);
+      const isBase = BASE_EXTENSIONS.some((base) => base.extensions === extensions);
 
       result.push({
         id: extensions,
         extensions,
-        strategy: strategies[extensions] || 'cacheFirst',
+        strategy: strategies.value[extensions] || ENUM_CACHE_STRATEGIES.CACHE_FIRST,
         isBase,
       });
     });
@@ -44,29 +59,38 @@ export function useCacheStrategies() {
     return result;
   });
 
-  const addBaseType = (baseType: (typeof BASE_TYPES)[0]) => {
+  // Helper function to update strategies
+  const updateStrategies = (
+    updater: (current: Record<string, ENUM_CACHE_STRATEGIES>) => void,
+  ) => {
+    if (!strategies.value) return;
+
+    const updated = {
+      ...strategies.value,
+    };
+    updater(updated);
+    updateServiceWorker({
+      strategies: updated,
+    });
+  };
+
+  const addBaseType = (baseType: (typeof BASE_EXTENSIONS)[0]) => {
     if (currentStrategies.value.some((s) => s.extensions === baseType.extensions)) {
       return showError('Тип ресурса уже добавлен');
     }
 
-    const strategies = { ...serviceWorkerData.value?.strategies };
-    strategies[baseType.extensions] = 'cacheFirst';
-
-    updateServiceWorker({ strategies });
+    updateStrategies((current) => {
+      current[baseType.extensions] = ENUM_CACHE_STRATEGIES.CACHE_FIRST;
+    });
   };
 
-  const updateStrategy = (extensions: string, strategy: CacheStrategy) => {
-    if (!serviceWorkerData.value?.strategies) return;
-
-    const strategies = { ...serviceWorkerData.value.strategies };
-    strategies[extensions] = strategy;
-
-    updateServiceWorker({ strategies });
+  const updateStrategy = (extensions: string, strategy: ENUM_CACHE_STRATEGIES) => {
+    updateStrategies((current) => {
+      current[extensions] = strategy;
+    });
   };
 
   const updateExtensions = (oldExtensions: string, newExtensions: string) => {
-    if (!serviceWorkerData.value?.strategies) return;
-
     const normalizedNew = newExtensions.trim().toLowerCase();
 
     if (!normalizedNew || normalizedNew === oldExtensions) return;
@@ -79,22 +103,19 @@ export function useCacheStrategies() {
       return showError('Такие расширения уже существуют');
     }
 
-    const strategies = { ...serviceWorkerData.value.strategies };
-    const strategy = strategies[oldExtensions];
+    updateStrategies((current) => {
+      const strategy = current[oldExtensions];
 
-    delete strategies[oldExtensions];
-    strategies[normalizedNew] = strategy;
+      delete current[oldExtensions];
 
-    updateServiceWorker({ strategies });
+      current[normalizedNew] = strategy || ENUM_CACHE_STRATEGIES.CACHE_FIRST;
+    });
   };
 
-  const updateDefaultStrategy = (strategy: CacheStrategy) => {
-    if (!serviceWorkerData.value?.strategies) return;
-
-    const strategies = { ...serviceWorkerData.value.strategies };
-    strategies.default = strategy;
-
-    updateServiceWorker({ strategies });
+  const updateDefaultStrategy = (strategy: ENUM_CACHE_STRATEGIES) => {
+    updateStrategies((current) => {
+      current.default = strategy;
+    });
   };
 
   const addCustomExtensions = (extensions: string) => {
@@ -106,25 +127,20 @@ export function useCacheStrategies() {
       return showError('Такие расширения уже добавлены');
     }
 
-    const strategies = { ...serviceWorkerData.value?.strategies };
-    strategies[normalized] = 'cacheFirst';
-
-    updateServiceWorker({ strategies });
+    updateStrategies((current) => {
+      current[normalized] = ENUM_CACHE_STRATEGIES.CACHE_FIRST;
+    });
   };
 
   const removeStrategy = (extensions: string) => {
-    if (!serviceWorkerData.value?.strategies) return;
-
-    const strategies = { ...serviceWorkerData.value.strategies };
-    delete strategies[extensions];
-
-    updateServiceWorker({ strategies });
+    updateStrategies((current) => {
+      delete current[extensions];
+    });
   };
 
   const getIcon = (extensions: string, isBase: boolean) => {
     if (isBase) {
-      const base = BASE_TYPES.find((b) => b.extensions === extensions);
-
+      const base = BASE_EXTENSIONS.find((b) => b.extensions === extensions);
       return base?.icon || 'pi pi-file';
     }
 

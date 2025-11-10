@@ -1,20 +1,30 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { Button, Checkbox } from 'primevue';
+import {
+ computed 
+} from 'vue';
+import {
+ Button, Checkbox 
+} from 'primevue';
 
 import SelectField from '@/shared/ui/SelectField.vue';
 import InputField from '@/shared/ui/InputField.vue';
 
-import { RELATED_APPLICATION_PLATFORM_OPTIONS } from '@/shared/config/display.constants';
+import {
+ RELATED_APPLICATION_PLATFORM_OPTIONS 
+} from '@/shared/config/display.constants';
 
 import {
   RelatedApplicationPlatform,
   type RelatedApplication,
 } from '@/shared/types/manifest';
 
-import { useManifestQuery } from '../model/useManifestQuery';
+import {
+ useManifestQuery 
+} from '../model/useManifestQuery';
 
-const { queryManifest, updateManifest } = useManifestQuery();
+const {
+ queryManifest, updateManifest 
+} = useManifestQuery();
 
 const relatedApplications = computed(
   () => queryManifest.data.value?.related_applications ?? [],
@@ -29,22 +39,33 @@ const addApp = () => {
     id: '',
   });
 
-  updateManifest({ related_applications: apps });
+  updateManifest({
+    related_applications: apps,
+  });
 };
 
 const removeApp = (index: number) => {
   const apps = relatedApplications.value.filter((_, i) => i !== index) ?? [];
 
-  updateManifest({ related_applications: apps });
+  updateManifest({
+    related_applications: apps,
+  });
 };
 
 const updateApp = (index: number, field: keyof RelatedApplication, value: string) => {
   const apps =
     relatedApplications.value.map((app, i) =>
-      i === index ? { ...app, [field]: value || undefined } : app,
+      i === index
+        ? {
+            ...app,
+            [field]: value || undefined,
+          }
+        : app,
     ) ?? [];
 
-  updateManifest({ related_applications: apps });
+  updateManifest({
+    related_applications: apps,
+  });
 };
 </script>
 

@@ -1,13 +1,18 @@
 <?php
 /**
- * Plugin Name: [Zilero] Swift PWA
+ * Plugin Name: Swift PWA
  * Plugin URI: https://github.com/Zilero232/wp-swift-pwa
- * Description: Generates the `manifest.json` file, which is used for managing and storing the data related to Swift PWA configurations. It integrates with various data sources and provides an efficient way to manage and update Swift PWA-specific content and settings.
+ * Description: Transforms your WordPress site into a Progressive Web App with manifest.json and service worker
  * Version: 1.0.0
+ * Requires at least: 6.0
+ * Requires PHP: 8.0
+ * Tested up to: 6.7
  * Author: zilero
  * Author URI: https://github.com/Zilero232
- *
- * @package Zilero\SwiftPWA
+ * License: GPL v3 or later
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.html
+ * Text Domain: swift-pwa
+ * Domain Path: /languages
  */
 
 if (!defined('ABSPATH')) {

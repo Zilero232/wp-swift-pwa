@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import SelectField from '@/shared/ui/SelectField.vue';
-import type { CacheStrategy } from '@/shared/types/service-worker';
-import { CACHE_STRATEGIES } from '../constants';
+import {
+ ENUM_CACHE_STRATEGIES 
+} from '@/shared/types/service-worker';
+
+import {
+ CACHE_STRATEGIES 
+} from '../constants';
 
 interface Props {
-  modelValue: CacheStrategy;
-  onUpdate: (value: CacheStrategy) => void;
+  modelValue: string;
+  onUpdate: (value: ENUM_CACHE_STRATEGIES) => void;
 }
 
 defineProps<Props>();
@@ -20,6 +25,7 @@ defineProps<Props>();
       :model-value="modelValue"
       @update:model-value="onUpdate($event)"
     />
+
     <p class="tw:text-xs tw:text-gray-500 tw:mt-2">
       Эта стратегия будет применяться к файлам, которые не соответствуют ни одному из
       настроенных расширений

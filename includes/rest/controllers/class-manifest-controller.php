@@ -126,10 +126,16 @@ class ManifestController extends RestController
 			return $this->error_response('Invalid manifest data', 400);
 		}
 
+        $encoded_data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return $this->error_response('Invalid manifest data', 400);
+        }
+
 		// Update file
 		$result = File_Handler::update_file(
 			Plugin_PWA_Constants::FILE_MANIFEST_NAME,
-			json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE)
+			$encoded_data
 		);
 
 		if (is_wp_error($result)) {

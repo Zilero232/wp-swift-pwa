@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const {
-  swiftPwaSettings: { apiUrl, nonce },
+  swiftPwaSettings: {
+ apiUrl, nonce 
+},
 } = window;
 
 // Create axios instance

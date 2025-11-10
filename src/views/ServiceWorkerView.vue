@@ -1,17 +1,26 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
-import { Card } from 'primevue';
-import { useRouter } from 'vue-router';
+import {
+ toValue, onMounted 
+} from 'vue';
 
 import BasicSettings from '@/entities/service-worker/ui/BasicSettings.vue';
+import RegistrationSettings from '@/entities/service-worker/ui/RegistrationSettings.vue';
+import SkipPatternsSettings from '@/entities/service-worker/ui/SkipPatternsSettings.vue';
 import CacheStrategiesSettings from '@/entities/service-worker/ui/CacheStrategiesSettings.vue';
 import RuntimeCacheSettings from '@/entities/service-worker/ui/RuntimeCacheSettings.vue';
+import AdvancedSettings from '@/entities/service-worker/ui/AdvancedSettings.vue';
 
-import { useServiceWorkerQuery } from '@/entities/service-worker/model/useServiceWorkerQuery';
+import {
+ useServiceWorkerQuery 
+} from '@/entities/service-worker/model/useServiceWorkerQuery';
 
-const router = useRouter();
+import PageHeader from '@/shared/ui/PageHeader.vue';
+import LoadingSpinner from '@/shared/ui/LoadingSpinner.vue';
+import CardSection from '@/shared/ui/CardSection.vue';
 
-const { loadServiceWorker } = useServiceWorkerQuery();
+const {
+ queryServiceWorker, loadServiceWorker 
+} = useServiceWorkerQuery();
 
 onMounted(() => {
   loadServiceWorker();
@@ -20,60 +29,41 @@ onMounted(() => {
 
 <template>
   <div class="tw:p-4 sm:tw:p-8">
-    <div class="tw:mb-8 tw:text-center">
-      <h2 class="tw:text-2xl sm:tw:text-3xl tw:font-bold tw:text-gray-800 tw:mb-2">
-        Настройки Service Worker
-      </h2>
+    <PageHeader
+      title="Настройки Service Worker"
+      description="Конфигурация кэширования и офлайн-функциональности"
+    />
 
-      <p class="tw:text-gray-600 tw:text-lg">
-        Конфигурация кэширования и офлайн-функциональности
-      </p>
-    </div>
+    <LoadingSpinner v-if="toValue(queryServiceWorker.isPending)" />
 
-    <div class="tw:flex tw:flex-col tw:gap-8">
-      <Card>
-        <template #header>
-          <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
-            <i class="pi pi-cog tw:text-xl tw:text-blue-600"></i>
-            <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">
-              Основные параметры
-            </h3>
-          </div>
-        </template>
-
-        <template #content>
+    <div v-else class="tw:flex tw:flex-col tw:gap-8">
+      <div class="tw:grid tw:grid-cols-1 tw:xl:grid-cols-2 tw:gap-8">
+        <CardSection title="Основные параметры" icon="pi pi-cog">
           <BasicSettings />
-        </template>
-      </Card>
+        </CardSection>
 
-      <Card>
-        <template #header>
-          <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
-            <i class="pi pi-sitemap tw:text-xl tw:text-purple-600"></i>
+        <CardSection title="Настройки регистрации" icon="pi pi-globe">
+          <RegistrationSettings />
+        </CardSection>
+      </div>
 
-            <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">
-              Стратегии кэширования
-            </h3>
-          </div>
-        </template>
+      <div class="tw:grid tw:grid-cols-1 tw:xl:grid-cols-2 tw:gap-8">
+        <CardSection title="Исключения (Skip Patterns)" icon="pi pi-ban">
+          <SkipPatternsSettings />
+        </CardSection>
 
-        <template #content>
-          <CacheStrategiesSettings />
-        </template>
-      </Card>
-
-      <Card>
-        <template #header>
-          <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
-            <i class="pi pi-database tw:text-xl tw:text-green-600"></i>
-            <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800">Runtime Cache</h3>
-          </div>
-        </template>
-
-        <template #content>
+        <CardSection title="Runtime Cache" icon="pi pi-database">
           <RuntimeCacheSettings />
-        </template>
-      </Card>
+        </CardSection>
+      </div>
+
+      <CardSection title="Стратегии кэширования" icon="pi pi-sitemap">
+        <CacheStrategiesSettings />
+      </CardSection>
+
+      <CardSection title="Дополнительные настройки" icon="pi pi-sliders-h">
+        <AdvancedSettings />
+      </CardSection>
     </div>
   </div>
 </template>

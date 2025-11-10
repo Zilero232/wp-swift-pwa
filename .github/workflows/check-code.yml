@@ -1,0 +1,89 @@
+name: Code Analysis
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: JS Build & Lint
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install JS dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Run ESLint
+        run: bun run lint:check
+
+      - name: Run TypeScript check
+        run: bun run type-check
+
+      - name: Build project
+        run: bun run build
+
+  phpcs:
+    name: PHPCS check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          ini-values: memory_limit=1G
+          coverage: none
+          tools: cs2pr
+
+      - name: Install Composer dependencies
+        uses: ramsey/composer-install@v2
+        with:
+          custom-cache-suffix: $(date -u "+%Y-%m")
+
+      - name: Get Changed Files
+        id: changed-files
+        uses: tj-actions/changed-files@v45
+        with:
+          files: |
+            **/*.php
+
+      - name: List all changed files
+        if: steps.changed-files.outputs.any_changed == 'true'
+        env:
+          ALL_CHANGED_FILES: ${{ steps.changed-files.outputs.all_changed_files }}
+        run: |
+          for file in ${ALL_CHANGED_FILES}; do
+            echo "$file was changed"
+          done
+
+      - name: Tool versions
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          php --version
+          composer --version
+          ./vendor/bin/phpcs-changed --version
+
+      - name: Run PHPCS (changed files)
+        if: steps.changed-files.outputs.any_changed == 'true'
+        run: |
+          HEAD_REF=$(git rev-parse HEAD)
+          git checkout "$HEAD_REF"
+          ./vendor/bin/phpcs-changed -s --git --git-base origin/${{ github.base_ref }} --standard="./phpcs.xml" ${{ steps.changed-files.outputs.all_changed_files }}
+
+      - name: No PHP changes
+        if: steps.changed-files.outputs.any_changed != 'true'
+        run: echo "No PHP files changed. Skipping PHPCS."

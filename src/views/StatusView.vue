@@ -1,30 +1,28 @@
 <script setup lang="ts">
-import { useStatusQuery } from '@/entities/status/model/useStatusQuery';
+import {
+ useStatusQuery 
+} from '@/entities/status/model/useStatusQuery';
 
 import HttpsStatus from '@/entities/status/ui/HttpsStatus.vue';
 import FilesTable from '@/entities/status/ui/FilesTable.vue';
 import StatusSummary from '@/entities/status/ui/StatusSummary.vue';
 
-const { queryStatus } = useStatusQuery();
+import PageHeader from '@/shared/ui/PageHeader.vue';
+import LoadingSpinner from '@/shared/ui/LoadingSpinner.vue';
 
-const statusData = queryStatus.data;
-const isLoading = queryStatus.isPending;
-const error = queryStatus.error;
+const {
+ isPending, data, error 
+} = useStatusQuery();
 </script>
 
 <template>
   <div class="tw:p-6">
-    <div class="tw:mb-6">
-      <h2 class="tw:text-2xl tw:font-bold tw:mb-2">Статус PWA</h2>
+    <PageHeader
+      title="Статус PWA"
+      description="Проверка готовности вашего сайта к работе в качестве Progressive Web App"
+    />
 
-      <p class="tw:text-gray-600">
-        Проверка готовности вашего сайта к работе в качестве Progressive Web App
-      </p>
-    </div>
-
-    <div v-if="isLoading" class="tw:flex tw:justify-center tw:p-8">
-      <i class="pi pi-spinner pi-spin tw:text-3xl"></i>
-    </div>
+    <LoadingSpinner v-if="isPending" />
 
     <div
       v-else-if="error"
@@ -37,12 +35,12 @@ const error = queryStatus.error;
       </div>
     </div>
 
-    <template v-else-if="statusData">
-      <HttpsStatus :https="statusData.https" />
+    <template v-else-if="data">
+      <HttpsStatus :https="data.https" />
 
-      <FilesTable :files="statusData.files" />
+      <FilesTable :files="data.files" />
 
-      <StatusSummary :status="statusData" />
+      <StatusSummary :status="data" />
     </template>
   </div>
 </template>

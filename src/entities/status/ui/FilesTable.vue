@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { DataTable, Column, Tag } from 'primevue';
+import {
+ DataTable, Column, Tag 
+} from 'primevue';
 
-import { useStatusFormatters } from '../model/useStatusFormatters';
+import {
+ useStatusFormatters 
+} from '../model/useStatusFormatters';
 
-import type { FileStatus } from '@/shared/types/status';
+import type {
+ FileStatus 
+} from '@/shared/types/status';
 
 interface Props {
   files: FileStatus[];
@@ -11,7 +17,9 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const { formatFileSize, formatDate } = useStatusFormatters();
+const {
+ formatFileSize, formatDate 
+} = useStatusFormatters();
 </script>
 
 <template>

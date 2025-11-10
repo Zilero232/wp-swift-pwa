@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import {
+ computed 
+} from 'vue';
 
 import InputField from '@/shared/ui/InputField.vue';
 
-import { useServiceWorkerQuery } from '../model/useServiceWorkerQuery';
+import {
+ useServiceWorkerQuery 
+} from '../model/useServiceWorkerQuery';
 
-const { queryServiceWorker, updateServiceWorker } = useServiceWorkerQuery();
+const {
+ queryServiceWorker, updateServiceWorker 
+} = useServiceWorkerQuery();
 
 const queryServiceWorkerData = computed(() => queryServiceWorker.data.value);
 </script>

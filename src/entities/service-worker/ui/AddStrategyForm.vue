@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Button } from 'primevue';
+import {
+ ref 
+} from 'vue';
+import {
+ Button 
+} from 'primevue';
 import InputField from '@/shared/ui/InputField.vue';
 
 interface Props {
@@ -24,7 +28,8 @@ const handleAdd = () => {
     <h3 class="tw:text-sm tw:font-semibold tw:text-gray-700 tw:mb-3">
       Добавить пользовательские расширения:
     </h3>
-    <div class="tw:flex tw:gap-2">
+
+    <div class="tw:flex tw:gap-2 tw:items-end">
       <InputField
         v-model="newExtensionsInput"
         label="Расширения (через запятую)"
@@ -32,8 +37,10 @@ const handleAdd = () => {
         class="tw:flex-1"
         @keyup.enter="handleAdd"
       />
-      <Button label="Добавить" icon="pi pi-plus" class="tw:mt-6" @click="handleAdd" />
+
+      <Button label="Добавить" icon="pi pi-plus" class="tw:h-[34px]" @click="handleAdd" />
     </div>
+
     <p class="tw:text-xs tw:text-gray-500 tw:mt-2">
       Введите расширения через запятую без точек (например: mp4,webm,mp3)
     </p>

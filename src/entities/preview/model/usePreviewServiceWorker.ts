@@ -1,20 +1,28 @@
-import { computed } from 'vue';
+import {
+ computed 
+} from 'vue';
 
-import { useServiceWorkerQuery } from '@/entities/service-worker/model/useServiceWorkerQuery';
+import {
+ useServiceWorkerQuery 
+} from '@/entities/service-worker/model/useServiceWorkerQuery';
 
-import { useDownload } from '@/shared/composable/useDownload';
+import {
+ useDownload 
+} from '@/shared/composable/useDownload';
 
-import { FILE_NAMES } from '@/shared/config/files.constants';
+import {
+ FILE_NAMES 
+} from '@/shared/config/files.constants';
 
 export function usePreviewServiceWorker() {
-  const { queryServiceWorkerCode } = useServiceWorkerQuery();
-  const { copyToClipboard, downloadFile } = useDownload();
-
-  const isLoading = computed(() => queryServiceWorkerCode.isPending.value);
+  const {
+ queryServiceWorkerCode 
+} = useServiceWorkerQuery();
+  const {
+ copyToClipboard, downloadFile 
+} = useDownload();
 
   const code = computed(() => queryServiceWorkerCode.data.value || '');
-
-  const hasData = computed(() => !!code.value);
 
   const copy = () => {
     copyToClipboard(code.value, {
@@ -39,8 +47,8 @@ export function usePreviewServiceWorker() {
   };
 
   return {
-    isLoadingServiceWorker: isLoading,
-    hasServiceWorkerData: hasData,
+    isLoadingServiceWorker: queryServiceWorkerCode.isFetching,
+    hasServiceWorkerData: !!code.value,
     serviceWorkerCode: code,
     copyServiceWorker: copy,
     downloadServiceWorker: download,

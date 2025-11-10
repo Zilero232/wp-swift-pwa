@@ -65,7 +65,9 @@ class File_Handler
 		if (!$wp_filesystem) {
 			require_once self::$base_path . 'wp-admin/includes/file.php';
 
-			WP_Filesystem();
+			if (!WP_Filesystem()) {
+				return new WP_Error('filesystem_unavailable', 'Unable to initialize filesystem abstraction.');
+			}
 		}
 
 		$file_path = self::get_file_path($file_name);
@@ -108,7 +110,9 @@ class File_Handler
 		if (!$wp_filesystem) {
 			require_once self::$base_path . 'wp-admin/includes/file.php';
 
-			WP_Filesystem();
+			if (!WP_Filesystem()) {
+				return new WP_Error('filesystem_unavailable', 'Unable to initialize filesystem abstraction.');
+			}
 		}
 
 		$file_path = self::get_file_path($file_type);
@@ -154,7 +158,9 @@ class File_Handler
 		if (!$wp_filesystem) {
 			require_once self::$base_path . 'wp-admin/includes/file.php';
 
-			WP_Filesystem();
+			if (!WP_Filesystem()) {
+				return new WP_Error('filesystem_unavailable', 'Unable to initialize filesystem abstraction.');
+			}
 		}
 
 		$file_path = self::get_file_path($file_type);
@@ -195,7 +201,9 @@ class File_Handler
 		if (!$wp_filesystem) {
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 
-			WP_Filesystem();
+			if (!WP_Filesystem()) {
+				return new WP_Error('filesystem_unavailable', 'Unable to initialize filesystem abstraction.');
+			}
 		}
 
 		$file_path = self::get_file_path($file_type);

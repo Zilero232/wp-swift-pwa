@@ -1,4 +1,10 @@
-import { useToast } from './useToast';
+import {
+ useClipboard 
+} from '@vueuse/core';
+
+import {
+ useToast 
+} from './useToast';
 
 interface DownloadOptions {
   filename: string;
@@ -13,7 +19,12 @@ interface CopyOptions {
 }
 
 export function useDownload() {
-  const { showSuccess, showError } = useToast();
+  const {
+ showSuccess, showError 
+} = useToast();
+  const {
+ copy, isSupported 
+} = useClipboard();
 
   /**
    * Copy text to clipboard
@@ -24,8 +35,14 @@ export function useDownload() {
       errorMessage = 'Ошибка копирования',
     } = options || {};
 
+    if (!isSupported.value) {
+      showError('Буфер обмена не поддерживается в вашем браузере');
+
+      return false;
+    }
+
     try {
-      await navigator.clipboard.writeText(text);
+      await copy(text);
 
       showSuccess(successMessage);
 
@@ -52,7 +69,11 @@ export function useDownload() {
 
     try {
       const blob =
-        content instanceof Blob ? content : new Blob([content], { type: mimeType });
+        content instanceof Blob
+          ? content
+          : new Blob([content], {
+              type: mimeType,
+            });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
 

@@ -1,7 +1,11 @@
 <script setup lang="ts">
-import { Message } from 'primevue';
+import {
+ Message 
+} from 'primevue';
 
-import type { HttpsStatus } from '@/shared/types/status';
+import type {
+ HttpsStatus 
+} from '@/shared/types/status';
 
 interface Props {
   https: HttpsStatus;

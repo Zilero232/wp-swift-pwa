@@ -1,10 +1,17 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { Select, Button, type SelectFilterEvent } from 'primevue';
+import {
+ onMounted, ref 
+} from 'vue';
+import {
+ Select, Button, type SelectFilterEvent 
+} from 'primevue';
+import {
+ useDebounceFn 
+} from '@vueuse/core';
 
-import { useDebounce } from '@/shared/composable/useDebounce';
-
-import { usePosts } from '../model/usePosts';
+import {
+ usePosts 
+} from '../model/usePosts';
 
 interface Props {
   label?: string;
@@ -22,10 +29,12 @@ const emit = defineEmits<{
   'update:modelValue': [value: string];
 }>();
 
-const { isLoading, hasMore, postOptions, loadPosts, loadMore } = usePosts(searchQuery);
+const {
+ isLoading, hasMore, postOptions, loadPosts, loadMore 
+} = usePosts(searchQuery);
 
 // Debounced search handler
-const { debouncedFn: debouncedHandleFilter } = useDebounce((event: SelectFilterEvent) => {
+const debouncedHandleFilter = useDebounceFn((event: SelectFilterEvent) => {
   searchQuery.value = event.value;
 }, 300);
 
