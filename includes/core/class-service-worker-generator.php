@@ -9,10 +9,10 @@ namespace SwiftPWA\ServiceWorker;
 
 use WP_Error;
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
-class Service_Worker_Generator
-{
+class Service_Worker_Generator {
+
 	/**
 	 * Template path
 	 *
@@ -25,9 +25,8 @@ class Service_Worker_Generator
 	 *
 	 * @return string
 	 */
-	private static function get_template_path(): string
-	{
-		if (self::$template_path === null) {
+	private static function get_template_path(): string {
+		if ( self::$template_path === null ) {
 			self::$template_path = SWIFT_PWA_PLUGIN_PATH . 'includes/templates/service-worker.template.js';
 		}
 
@@ -40,29 +39,28 @@ class Service_Worker_Generator
 	 * @param array $config Configuration array.
 	 * @return string|WP_Error Generated code or error.
 	 */
-	public static function generate(array $config): string|WP_Error
-	{
+	public static function generate( array $config ): string|WP_Error {
 		$template_path = self::get_template_path();
 
-		if (!file_exists($template_path)) {
+		if ( ! file_exists( $template_path ) ) {
 			return new WP_Error(
 				'template_not_found',
-				sprintf('Service Worker template not found: %s', $template_path)
+				sprintf( 'Service Worker template not found: %s', $template_path )
 			);
 		}
 
-		$template = file_get_contents($template_path);
+		$template = wp_remote_get( $template_path );
 
-		if ($template === false) {
+		if ( is_wp_error( $template ) ) {
 			return new WP_Error(
 				'template_read_failed',
 				'Failed to read Service Worker template'
 			);
 		}
 
-		$variables = self::prepare_variables($config);
+		$variables = self::prepare_variables( $config );
 
-		return self::render_template($template, $variables);
+		return self::render_template( $template['body'], $variables );
 	}
 
 	/**
@@ -71,51 +69,50 @@ class Service_Worker_Generator
 	 * @param array $config Configuration array.
 	 * @return array Variables array.
 	 */
-	private static function prepare_variables(array $config): array
-	{
-		$version = $config['version'] ?? '1.0.0';
-		$cache_name = $config['cache_name'] ?? 'swift-pwa-cache-v1';
-		$offline_page = $config['offline_page'] ?? '/offline.html';
-		$strategies = $config['strategies'] ?? array();
-		$precache = $config['precache'] ?? array();
+	private static function prepare_variables( array $config ): array {
+		$version       = $config['version'] ?? '1.0.0';
+		$cache_name    = $config['cache_name'] ?? 'swift-pwa-cache-v1';
+		$offline_page  = $config['offline_page'] ?? '/offline.html';
+		$strategies    = $config['strategies'] ?? array();
+		$precache      = $config['precache'] ?? array();
 		$runtime_cache = $config['runtime_cache'] ?? array();
-		$skip_patterns = $config['skip_patterns'] ?? array('/wp-admin/', '/wp-login.php');
-		$debug = $config['debug'] ?? false;
-		
+		$skip_patterns = $config['skip_patterns'] ?? array( '/wp-admin/', '/wp-login.php' );
+		$debug         = $config['debug'] ?? false;
+
 		$max_entries = $runtime_cache['max_entries'] ?? 50;
 
-		// Format strategies as valid JavaScript object
+		// Format strategies as valid JavaScript object.
 		$strategies_items = array();
-		foreach ($strategies as $type => $strategy) {
+		foreach ( $strategies as $type => $strategy ) {
 			$strategies_items[] = sprintf(
 				"  '%s': '%s'",
-				esc_js($type),
-				esc_js($strategy)
+				esc_js( $type ),
+				esc_js( $strategy )
 			);
 		}
 
-		$strategies_code = "{\n" . implode(",\n", $strategies_items) . "\n}";
+		$strategies_code = "{\n" . implode( ",\n", $strategies_items ) . "\n}";
 
-		// Format skip patterns as valid JavaScript array
+		// Format skip patterns as valid JavaScript array.
 		$skip_items = array();
-		foreach ($skip_patterns as $pattern) {
+		foreach ( $skip_patterns as $pattern ) {
 			$skip_items[] = sprintf(
 				"  '%s'",
-				esc_js($pattern)
+				esc_js( $pattern )
 			);
 		}
-		
-		$skip_patterns_code = "[\n" . implode(",\n", $skip_items) . "\n]";
+
+		$skip_patterns_code = "[\n" . implode( ",\n", $skip_items ) . "\n]";
 
 		return array(
-			'VERSION' => esc_js($version),
-			'CACHE_NAME' => esc_js($cache_name),
-			'OFFLINE_PAGE' => esc_js($offline_page),
+			'VERSION'          => esc_js( $version ),
+			'CACHE_NAME'       => esc_js( $cache_name ),
+			'OFFLINE_PAGE'     => esc_js( $offline_page ),
 			'CACHE_STRATEGIES' => $strategies_code,
-			'PRECACHE_FILES' => json_encode($precache, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES),
-			'MAX_ENTRIES' => (int) $max_entries,
-			'SKIP_PATTERNS' => $skip_patterns_code,
-			'DEBUG' => $debug ? 'true' : 'false',
+			'PRECACHE_FILES'   => wp_json_encode( $precache, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES ),
+			'MAX_ENTRIES'      => (int) $max_entries,
+			'SKIP_PATTERNS'    => $skip_patterns_code,
+			'DEBUG'            => $debug ? 'true' : 'false',
 		);
 	}
 
@@ -126,17 +123,16 @@ class Service_Worker_Generator
 	 * @param array  $variables Variables to replace.
 	 * @return string Rendered template.
 	 */
-	private static function render_template(string $template, array $variables): string
-	{
+	private static function render_template( string $template, array $variables ): string {
 		$replacements = array();
 
-		foreach ($variables as $key => $value) {
-			$replacements['{{' . $key . '}}'] = $value;
+		foreach ( $variables as $key => $value ) {
+			$replacements[ '{{' . $key . '}}' ] = $value;
 		}
 
 		return str_replace(
-			array_keys($replacements),
-			array_values($replacements),
+			array_keys( $replacements ),
+			array_values( $replacements ),
 			$template
 		);
 	}

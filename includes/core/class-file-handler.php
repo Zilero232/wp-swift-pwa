@@ -9,7 +9,7 @@
 
 namespace SwiftPWA\FileHandler;
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 use WP_Error;
 
@@ -18,8 +18,8 @@ use WP_Error;
  *
  * Manages file operations for LLMS plugin, including reading and writing content to files.
  */
-class File_Handler
-{
+class File_Handler {
+
 	/**
 	 * Instance of this class
 	 *
@@ -39,9 +39,8 @@ class File_Handler
 	 *
 	 * @return self Singleton instance of the class.
 	 */
-	public static function init(): self
-	{
-		if (null === self::$instance) {
+	public static function init(): self {
+		if ( null === self::$instance ) {
 			self::$instance = new self();
 		}
 
@@ -58,35 +57,34 @@ class File_Handler
 	 *
 	 * @return bool|WP_Error True on success, WP_Error on failure.
 	 */
-	public static function create_file($file_name, $content): bool|WP_Error
-	{
+	public static function create_file( $file_name, $content ): bool|WP_Error {
 		global $wp_filesystem;
 
-		if (!$wp_filesystem) {
+		if ( ! $wp_filesystem ) {
 			require_once self::$base_path . 'wp-admin/includes/file.php';
 
-			if (!WP_Filesystem()) {
-				return new WP_Error('filesystem_unavailable', 'Unable to initialize filesystem abstraction.');
+			if ( ! WP_Filesystem() ) {
+				return new WP_Error( 'filesystem_unavailable', 'Unable to initialize filesystem abstraction.' );
 			}
 		}
 
-		$file_path = self::get_file_path($file_name);
+		$file_path = self::get_file_path( $file_name );
 
-		// Check if file already exists
-		if ($wp_filesystem->exists($file_path)) {
+		// Check if file already exists.
+		if ( $wp_filesystem->exists( $file_path ) ) {
 			return new WP_Error(
 				'file_already_exists',
-				sprintf('File already exists: %s', $file_name)
+				sprintf( 'File already exists: %s', $file_name )
 			);
 		}
 
-		// Create file
-		$result = $wp_filesystem->put_contents($file_path, $content);
+		// Create file.
+		$result = $wp_filesystem->put_contents( $file_path, $content );
 
-		if (!$result) {
+		if ( ! $result ) {
 			return new WP_Error(
 				'file_creation_failed',
-				sprintf('Failed to create file: %s', $file_name)
+				sprintf( 'Failed to create file: %s', $file_name )
 			);
 		}
 
@@ -102,38 +100,37 @@ class File_Handler
 	 *
 	 * @return string|WP_Error File content or WP_Error on failure.
 	 */
-	public static function get_file_content($file_type): string|WP_Error
-	{
+	public static function get_file_content( $file_type ): string|WP_Error {
 		// Include filesystem and make sure that it's properly set up.
 		global $wp_filesystem;
 
-		if (!$wp_filesystem) {
+		if ( ! $wp_filesystem ) {
 			require_once self::$base_path . 'wp-admin/includes/file.php';
 
-			if (!WP_Filesystem()) {
-				return new WP_Error('filesystem_unavailable', 'Unable to initialize filesystem abstraction.');
+			if ( ! WP_Filesystem() ) {
+				return new WP_Error( 'filesystem_unavailable', 'Unable to initialize filesystem abstraction.' );
 			}
 		}
 
-		$file_path = self::get_file_path($file_type);
+		$file_path = self::get_file_path( $file_type );
 
-		if (empty($file_path)) {
+		if ( empty( $file_path ) ) {
 			return new WP_Error(
 				'invalid_file_type',
-				sprintf('Invalid file type: %s', $file_type)
+				sprintf( 'Invalid file type: %s', $file_type )
 			);
 		}
 
-		if (!$wp_filesystem->exists($file_path)) {
+		if ( ! $wp_filesystem->exists( $file_path ) ) {
 			return '';
 		}
 
-		$content = $wp_filesystem->get_contents($file_path);
+		$content = $wp_filesystem->get_contents( $file_path );
 
-		if (!is_string($content)) {
+		if ( ! is_string( $content ) ) {
 			return new WP_Error(
 				'file_read_failed',
-				sprintf('Failed to read file: %s', $file_path)
+				sprintf( 'Failed to read file: %s', $file_path )
 			);
 		}
 
@@ -150,35 +147,34 @@ class File_Handler
 	 *
 	 * @return bool|WP_Error True on success, WP_Error on failure.
 	 */
-	public static function update_file($file_type, $content): bool|WP_Error
-	{
+	public static function update_file( $file_type, $content ): bool|WP_Error {
 		// Include filesystem and make sure that it's properly set up.
 		global $wp_filesystem;
 
-		if (!$wp_filesystem) {
+		if ( ! $wp_filesystem ) {
 			require_once self::$base_path . 'wp-admin/includes/file.php';
 
-			if (!WP_Filesystem()) {
-				return new WP_Error('filesystem_unavailable', 'Unable to initialize filesystem abstraction.');
+			if ( ! WP_Filesystem() ) {
+				return new WP_Error( 'filesystem_unavailable', 'Unable to initialize filesystem abstraction.' );
 			}
 		}
 
-		$file_path = self::get_file_path($file_type);
+		$file_path = self::get_file_path( $file_type );
 
-		// Check if file exists
-		if (!$wp_filesystem->exists($file_path)) {
+		// Check if file exists.
+		if ( ! $wp_filesystem->exists( $file_path ) ) {
 			return new WP_Error(
 				'file_not_found',
-				sprintf('File does not exist: %s', $file_name)
+				sprintf( 'File does not exist: %s', $file_name )
 			);
 		}
 
-		$result = $wp_filesystem->put_contents($file_path, $content);
+		$result = $wp_filesystem->put_contents( $file_path, $content );
 
-		if (!$result) {
+		if ( ! $result ) {
 			return new WP_Error(
 				'file_update_failed',
-				sprintf('Failed to update file: %s', $file_path)
+				sprintf( 'Failed to update file: %s', $file_path )
 			);
 		}
 
@@ -194,34 +190,33 @@ class File_Handler
 	 *
 	 * @return bool|WP_Error True on success, WP_Error on failure.
 	 */
-	public static function delete_file($file_type): bool|WP_Error
-	{
+	public static function delete_file( $file_type ): bool|WP_Error {
 		global $wp_filesystem;
 
-		if (!$wp_filesystem) {
+		if ( ! $wp_filesystem ) {
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 
-			if (!WP_Filesystem()) {
-				return new WP_Error('filesystem_unavailable', 'Unable to initialize filesystem abstraction.');
+			if ( ! WP_Filesystem() ) {
+				return new WP_Error( 'filesystem_unavailable', 'Unable to initialize filesystem abstraction.' );
 			}
 		}
 
-		$file_path = self::get_file_path($file_type);
-		
+		$file_path = self::get_file_path( $file_type );
+
 		// Check if file exists.
-		if (!self::file_exists($file_type)) {
+		if ( ! self::file_exists( $file_type ) ) {
 			return new WP_Error(
 				'file_not_found',
-				sprintf('File does not exist: %s', $file_path)
+				sprintf( 'File does not exist: %s', $file_path )
 			);
 		}
 
-		$result = $wp_filesystem->delete($file_path);
+		$result = $wp_filesystem->delete( $file_path );
 
-		if (!$result) {
+		if ( ! $result ) {
 			return new WP_Error(
 				'file_delete_failed',
-				sprintf('Failed to delete file: %s', $file_path)
+				sprintf( 'Failed to delete file: %s', $file_path )
 			);
 		}
 
@@ -235,17 +230,16 @@ class File_Handler
 	 *
 	 * @return bool|WP_Error True if file exists, false otherwise.
 	 */
-	public static function file_exists($file_type): bool|WP_Error
-	{
+	public static function file_exists( $file_type ): bool|WP_Error {
 		global $wp_filesystem;
 
-		if (!$wp_filesystem) {
+		if ( ! $wp_filesystem ) {
 			require_once ABSPATH . 'wp-admin/includes/file.php';
 
 			WP_Filesystem();
 		}
 
-		return $wp_filesystem->exists(self::get_file_path($file_type));
+		return $wp_filesystem->exists( self::get_file_path( $file_type ) );
 	}
 
 	/**
@@ -255,8 +249,7 @@ class File_Handler
 	 *
 	 * @return string Full file path.
 	 */
-	public static function get_file_path($file_type): string
-	{
+	public static function get_file_path( $file_type ): string {
 		return self::$base_path . $file_type;
 	}
 }

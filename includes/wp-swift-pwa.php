@@ -7,7 +7,7 @@
 
 namespace SwiftPWA;
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
 // Require files.
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/admin/class-plugin.php';

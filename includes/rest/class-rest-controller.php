@@ -9,48 +9,51 @@ namespace SwiftPWA\Rest;
 
 use WP_REST_Response;
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
-abstract class RestController
-{
-    /**
-     * Plugin namespace.
-     */
-    protected $namespace = SWIFT_PWA_PLUGIN_REST_API_BASE;
+abstract class RestController {
 
-    /**
-     * Check if user has permission.
-     */
-    public function check_permission(): bool
-    {
-        return current_user_can('manage_options');
-    }
+	/**
+	 * Plugin namespace.
+	 */
+	protected $namespace = SWIFT_PWA_PLUGIN_REST_API_BASE;
 
-    /**
-     * Register routes.
-     */
-    abstract public function register_routes();
+	/**
+	 * Check if user has permission.
+	 */
+	public function check_permission(): bool {
+		return current_user_can( 'manage_options' );
+	}
 
-    /**
-     * Format success response.
-     */
-    protected function success_response($data = null, string $message = ''): WP_REST_Response
-    {
-        return new WP_REST_Response([
-            'success' => true,
-            'data' => $data,
-            'message' => $message
-        ], 200);
-    }
+	/**
+	 * Register routes.
+	 */
+	abstract public function register_routes();
 
-    /**
-     * Format error response.
-     */
-    protected function error_response(string $message, int $status = 400): WP_REST_Response
-    {
-        return new WP_REST_Response([
-            'success' => false,
-            'message' => $message
-        ], $status);
-    }
+	/**
+	 * Format success response.
+	 */
+	protected function success_response( $data = null, string $message = '' ): WP_REST_Response {
+		return new WP_REST_Response(
+			[
+				'success' => true,
+				'data'    => $data,
+				'message' => $message,
+			],
+			200
+		);
+	}
+
+	/**
+	 * Format error response.
+	 */
+	protected function error_response( string $message, int $status = 400 ): WP_REST_Response {
+		return new WP_REST_Response(
+			[
+				'success' => false,
+				'message' => $message,
+			],
+			$status
+		);
+	}
 }

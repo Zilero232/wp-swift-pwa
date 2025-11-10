@@ -15,10 +15,10 @@ use SwiftPWA\Rest\RestController;
 use SwiftPWA\FileHandler\File_Handler;
 use SwiftPWA\PWAConstants\Plugin_PWA_Constants;
 
-defined('ABSPATH') || exit;
+defined( 'ABSPATH' ) || exit;
 
-class StatusController extends RestController
-{
+class StatusController extends RestController {
+
 	/**
 	 * Resource name.
 	 */
@@ -34,13 +34,12 @@ class StatusController extends RestController
 	/**
 	 * Constructor
 	 */
-	private function __construct()
-	{
-		$callback = function ($method_name) {
-			return array($this, $method_name);
+	private function __construct() {
+		$callback = function ( $method_name ) {
+			return array( $this, $method_name );
 		};
 
-		add_action('rest_api_init', $callback('register_routes'));
+		add_action( 'rest_api_init', $callback( 'register_routes' ) );
 	}
 
 	/**
@@ -48,9 +47,8 @@ class StatusController extends RestController
 	 *
 	 * @return self Singleton instance of the class.
 	 */
-	public static function init(): self
-	{
-		if (self::$instance === null) {
+	public static function init(): self {
+		if ( self::$instance === null ) {
 			self::$instance = new self();
 		}
 
@@ -60,17 +58,16 @@ class StatusController extends RestController
 	/**
 	 * Register routes.
 	 */
-	public function register_routes()
-	{
-		// Get files status
+	public function register_routes() {
+		// Get files status.
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base,
 			[
-				'methods' => WP_REST_Server::READABLE,
-				'callback' => [$this, 'get_status'],
-				'permission_callback' => [$this, 'check_permission'],
-				'args' => array()
+				'methods'             => WP_REST_Server::READABLE,
+				'callback'            => [ $this, 'get_status' ],
+				'permission_callback' => [ $this, 'check_permission' ],
+				'args'                => array(),
 			]
 		);
 	}
@@ -81,50 +78,54 @@ class StatusController extends RestController
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response
 	 */
-	public function get_status(WP_REST_Request $request): WP_REST_Response
-	{
+	public function get_status( WP_REST_Request $request ): WP_REST_Response {
 		// Check HTTPS status.
-		$is_ssl = is_ssl();
+		$is_ssl   = is_ssl();
 		$site_url = get_site_url();
 
 		$https_status = [
-			'enabled' => $is_ssl,
+			'enabled'  => $is_ssl,
 			'site_url' => $site_url,
-			'message' => $is_ssl
+			'message'  => $is_ssl
 				? 'Ваш сайт использует безопасное HTTPS соединение'
 				: 'Progressive Web Apps требуют HTTPS. Обратитесь к хостинг-провайдеру для установки SSL сертификата.',
 		];
 
 		$files = [
 			[
-				'name' => Plugin_PWA_Constants::FILE_MANIFEST_NAME,
+				'name'        => Plugin_PWA_Constants::FILE_MANIFEST_NAME,
 				'description' => 'PWA Manifest file',
 			],
 			[
-				'name' => Plugin_PWA_Constants::FILE_SERVICE_WORKER_NAME,
+				'name'        => Plugin_PWA_Constants::FILE_SERVICE_WORKER_NAME,
 				'description' => 'Service Worker file',
 			],
 		];
 
-		$files_status = array_map(function ($file) {
-			$exists = File_Handler::file_exists($file['name']);
-			$file_path = File_Handler::get_file_path($file['name']);
+		$files_status = array_map(
+			function ( $file ) {
+				$exists    = File_Handler::file_exists( $file['name'] );
+				$file_path = File_Handler::get_file_path( $file['name'] );
 
-			return [
-				'name' => $file['name'],
-				'description' => $file['description'],
-				'exists' => $exists,
-				'path' => $file_path,
-				'url' => $exists ? home_url($file['name']) : null,
-				'size' => $exists ? filesize($file_path) : null,
-				'modified' => $exists ? filemtime($file_path) : null,
-			];
-		}, $files);
+				return [
+					'name'        => $file['name'],
+					'description' => $file['description'],
+					'exists'      => $exists,
+					'path'        => $file_path,
+					'url'         => $exists ? home_url( $file['name'] ) : null,
+					'size'        => $exists ? filesize( $file_path ) : null,
+					'modified'    => $exists ? filemtime( $file_path ) : null,
+				];
+			},
+			$files
+		);
 
-		return $this->success_response([
-			'https' => $https_status,
-			'files' => $files_status,
-		]);
+		return $this->success_response(
+			[
+				'https' => $https_status,
+				'files' => $files_status,
+			]
+		);
 	}
 }
 

@@ -9,6 +9,11 @@
 			"email": "sasha.artemev.1002@mail.ru"
 		}
 	],	
+	"scripts": {
+		"lint": "phpcs --standard=phpcs.xml --extensions=php --ignore=vendor/,node_modules/,build/ -n .",
+		"lint:fix": "phpcbf --standard=phpcs.xml --extensions=php --ignore=vendor/,node_modules/,build/ .",
+		"lint:changed": "phpcs-changed --git --git-base=main --standard=phpcs.xml"
+	},
 	"require": {
 		"kucrut/vite-for-wp": "^0.12.0"
 	},

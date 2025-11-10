@@ -9,8 +9,8 @@ namespace SwiftPWA\Enqueue;
 
 use Kucrut\Vite;
 
-class Enqueue
-{
+class Enqueue {
+
 	/**
 	 * Singleton instance
 	 *
@@ -21,13 +21,12 @@ class Enqueue
 	/**
 	 * Constructor
 	 */
-	private function __construct()
-	{
-		$callback = function ($method_name) {
-			return array($this, $method_name);
+	private function __construct() {
+		$callback = function ( $method_name ) {
+			return array( $this, $method_name );
 		};
 
-		add_action('admin_enqueue_scripts', $callback('admin_enqueue_scripts'));
+		add_action( 'admin_enqueue_scripts', $callback( 'admin_enqueue_scripts' ) );
 	}
 
 	/**
@@ -35,9 +34,8 @@ class Enqueue
 	 *
 	 * @return self Singleton instance of the class.
 	 */
-	public static function init(): self
-	{
-		if (self::$instance === null) {
+	public static function init(): self {
+		if ( self::$instance === null ) {
 			self::$instance = new self();
 		}
 
@@ -49,13 +47,12 @@ class Enqueue
 	 *
 	 * @return void
 	 */
-	public function admin_enqueue_scripts()
-	{
+	public function admin_enqueue_scripts() {
 		Vite\enqueue_asset(
 			SWIFT_PWA_PLUGIN_PATH . 'build',
 			'src/main.ts',
 			[
-				'handle' => 'swift-pwa-admin-js',
+				'handle'    => 'swift-pwa-admin-js',
 				'in-footer' => true,
 			]
 		);
@@ -64,8 +61,8 @@ class Enqueue
 			'swift-pwa-admin-js',
 			'swiftPwaSettings',
 			[
-				'apiUrl' => rest_url(SWIFT_PWA_PLUGIN_REST_API_BASE),
-				'nonce' => wp_create_nonce('wp_rest'),
+				'apiUrl'  => rest_url( SWIFT_PWA_PLUGIN_REST_API_BASE ),
+				'nonce'   => wp_create_nonce( 'wp_rest' ),
 				'version' => SWIFT_PWA_PLUGIN_VER,
 			]
 		);
