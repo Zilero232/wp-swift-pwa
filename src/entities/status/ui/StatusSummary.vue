@@ -1,14 +1,8 @@
 <script setup lang="ts">
-import {
- computed 
-} from 'vue';
-import {
- Message 
-} from 'primevue';
+import { Message } from "primevue";
+import { computed } from "vue";
 
-import type {
- StatusResponse 
-} from '@/shared/types/status';
+import type { StatusResponse } from "@/shared/types/status";
 
 interface Props {
   status: StatusResponse;
@@ -23,16 +17,9 @@ const isReady = computed(() => {
 
 <template>
   <div class="tw:mt-6">
-    <Message
-      v-if="isReady"
-      severity="success"
-      icon="pi pi-check-circle"
-      :closable="false"
-    >
+    <Message v-if="isReady" severity="success" icon="pi pi-check-circle" :closable="false">
       <strong>✅ Ваш сайт готов к работе в качестве PWA!</strong>
-      <span class="tw:block tw:text-sm tw:mt-1">
-        Все необходимые требования выполнены.
-      </span>
+      <span class="tw:block tw:text-sm tw:mt-1"> Все необходимые требования выполнены. </span>
     </Message>
 
     <Message v-else severity="info" icon="pi pi-info-circle" :closable="false">

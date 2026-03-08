@@ -1,9 +1,5 @@
-import {
- useToast as usePrimeToast 
-} from 'primevue/usetoast';
-import type {
- ToastMessageOptions 
-} from 'primevue';
+import type { ToastMessageOptions } from "primevue";
+import { useToast as usePrimeToast } from "primevue/usetoast";
 
 const defaultOptions: ToastMessageOptions = {
   life: 3000,
@@ -20,33 +16,33 @@ export const useToast = () => {
     });
   };
 
-  const showSuccess = (detail: string, summary = 'Успешно') => {
+  const showSuccess = (detail: string, summary = "Успешно") => {
     showToast({
-      severity: 'success',
+      severity: "success",
       summary,
       detail,
     });
   };
 
-  const showError = (detail: string, summary = 'Ошибка') => {
+  const showError = (detail: string, summary = "Ошибка") => {
     showToast({
-      severity: 'error',
+      severity: "error",
       summary,
       detail,
     });
   };
 
-  const showWarn = (detail: string, summary = 'Внимание') => {
+  const showWarn = (detail: string, summary = "Внимание") => {
     showToast({
-      severity: 'warn',
+      severity: "warn",
       summary,
       detail,
     });
   };
 
-  const showInfo = (detail: string, summary = 'Информация') => {
+  const showInfo = (detail: string, summary = "Информация") => {
     showToast({
-      severity: 'info',
+      severity: "info",
       summary,
       detail,
     });

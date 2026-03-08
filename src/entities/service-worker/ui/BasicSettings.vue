@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import {
- computed 
-} from 'vue';
+import { computed } from "vue";
 
-import InputField from '@/shared/ui/InputField.vue';
+import { CACHE_STRATEGIES, STRATEGY_INFO } from "../constants";
+import { useServiceWorkerMutation } from "../model/useServiceWorkerMutation";
+import { useServiceWorkerQuery } from "../model/useServiceWorkerQuery";
 
-import {
- useServiceWorkerQuery 
-} from '../model/useServiceWorkerQuery';
+import { PostSelector } from "@/features/post-selector";
+import InfoBlock from "@/shared/ui/InfoBlock.vue";
+import InputField from "@/shared/ui/InputField.vue";
+import SelectField from "@/shared/ui/SelectField.vue";
 
-const {
- queryServiceWorker, updateServiceWorker 
-} = useServiceWorkerQuery();
+const { queryServiceWorker } = useServiceWorkerQuery();
+const { updateServiceWorker } = useServiceWorkerMutation();
 
 const queryServiceWorkerData = computed(() => queryServiceWorker.data.value);
 </script>
@@ -36,12 +36,26 @@ const queryServiceWorkerData = computed(() => queryServiceWorker.data.value);
       />
     </div>
 
-    <InputField
+    <PostSelector
       label="Офлайн страница"
       icon="pi pi-wifi"
-      placeholder="/offline.html"
+      placeholder="Выберите страницу или пост"
       :model-value="queryServiceWorkerData?.offline_page"
       @update:model-value="updateServiceWorker({ offline_page: $event })"
     />
+
+    <SelectField
+      label="Стратегия кэширования"
+      icon="pi pi-sitemap"
+      :options="CACHE_STRATEGIES"
+      :model-value="queryServiceWorkerData?.strategy"
+      @update:model-value="updateServiceWorker({ strategy: $event })"
+    />
+
+    <InfoBlock title="О выбранной стратегии:" as-list>
+      <li v-for="(strategy, key) in STRATEGY_INFO" :key="key">
+        <strong>{{ key }}:</strong> {{ strategy.description }}
+      </li>
+    </InfoBlock>
   </div>
 </template>

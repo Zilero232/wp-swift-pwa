@@ -1,12 +1,8 @@
-import {
- useQuery 
-} from '@tanstack/vue-query';
+import { useQuery } from "@tanstack/vue-query";
 
-import {
- statusAPI 
-} from '@/services/status.service';
+import { statusAPI } from "@/services/status.service";
 
-const STATUS_KEY = ['pwa-status'];
+const STATUS_KEY = ["pwa-status"];
 
 export const useStatusQuery = () => {
   const queryStatus = useQuery({
@@ -15,7 +11,7 @@ export const useStatusQuery = () => {
       const response = await statusAPI.getStatus();
 
       if (!response.success) {
-        throw new Error(response.message || 'Failed to fetch status');
+        throw new Error(response.message || "Failed to fetch status");
       }
 
       return response.data;

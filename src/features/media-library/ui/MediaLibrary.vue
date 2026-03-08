@@ -1,33 +1,26 @@
 <script setup lang="ts">
-import ModalDialog from '@/shared/ui/ModalDialog.vue';
-import InputField from '@/shared/ui/InputField.vue';
-import EmptyState from '@/shared/ui/EmptyState.vue';
+import { useMediaLibrary } from "../model/useMediaLibrary";
 
-import MediaFileUpload from './MediaFileUpload.vue';
+import MediaFileUpload from "./MediaFileUpload.vue";
 
-import {
- useMediaLibrary 
-} from '../model/useMediaLibrary';
-
-import type {
- MediaAttachment 
-} from '@/shared/types/media';
+import type { MediaAttachment } from "@/shared/types/media";
+import EmptyState from "@/shared/ui/EmptyState.vue";
+import InputField from "@/shared/ui/InputField.vue";
+import ModalDialog from "@/shared/ui/ModalDialog.vue";
 
 interface Props {
   visible: boolean;
 }
 
 interface Emits {
-  (e: 'update:visible', value: boolean): void;
-  (e: 'select', data: MediaAttachment): void;
+  (e: "update:visible", value: boolean): void;
+  (e: "select", data: MediaAttachment): void;
 }
 
 const props = defineProps<Props>();
 const emit = defineEmits<Emits>();
 
-const {
- isLoading, searchQuery, libraryItems, addUploadedToLibrary, showSuccessMessage 
-} =
+const { isLoading, searchQuery, libraryItems, addUploadedToLibrary, showSuccessMessage } =
   useMediaLibrary({
     visible: () => props.visible,
   });
@@ -37,8 +30,8 @@ const handleUpload = (data: MediaAttachment) => {
 };
 
 const handleSelectAttachment = (item: MediaAttachment) => {
-  emit('select', item);
-  emit('update:visible', false);
+  emit("select", item);
+  emit("update:visible", false);
 
   showSuccessMessage();
 };
@@ -88,24 +81,16 @@ const handleSelectAttachment = (item: MediaAttachment) => {
               />
             </div>
 
-            <div
-              class="tw:p-2 tw:text-xs tw:truncate tw:text-gray-700"
-              :title="item.title"
-            >
+            <div class="tw:p-2 tw:text-xs tw:truncate tw:text-gray-700" :title="item.title">
               {{ item.title }}
             </div>
           </div>
         </div>
 
         <div class="tw:border-t tw:pt-4">
-          <div class="tw:text-sm tw:text-gray-600 tw:mb-2">
-            Или загрузите новое изображение:
-          </div>
+          <div class="tw:text-sm tw:text-gray-600 tw:mb-2">Или загрузите новое изображение:</div>
 
-          <MediaFileUpload
-            choose-label="Загрузить новое изображение"
-            @uploaded="handleUpload"
-          />
+          <MediaFileUpload choose-label="Загрузить новое изображение" @uploaded="handleUpload" />
         </div>
       </div>
     </template>

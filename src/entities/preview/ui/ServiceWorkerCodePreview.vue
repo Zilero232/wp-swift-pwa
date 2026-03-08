@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import {
- ref, watch 
-} from 'vue';
-import {
- codeToHtml 
-} from 'shiki';
+import { codeToHtml } from "shiki";
+import { ref, watch } from "vue";
 
 interface Props {
   code: string;
@@ -12,16 +8,16 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const highlightedCode = ref('');
+const highlightedCode = ref("");
 
 const highlight = async (code: string) => {
   if (!code) {
-    return (highlightedCode.value = '');
+    return (highlightedCode.value = "");
   }
 
   highlightedCode.value = await codeToHtml(code, {
-    lang: 'javascript',
-    theme: 'one-dark-pro',
+    lang: "javascript",
+    theme: "one-dark-pro",
   });
 };
 
@@ -38,9 +34,7 @@ watch(() => props.code, highlight, {
 
     <div v-else class="tw:p-8 tw:text-center tw:text-gray-500">
       <i class="pi pi-inbox tw:text-4xl tw:mb-4 tw:block tw:text-gray-400"></i>
-      <p class="tw:text-lg">
-        Service Worker не найден. Создайте настройки Service Worker.
-      </p>
+      <p class="tw:text-lg">Service Worker не найден. Создайте настройки Service Worker.</p>
     </div>
   </div>
 </template>

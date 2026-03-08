@@ -7,6 +7,7 @@
 
 namespace SwiftPWA\Rest\ServiceWorker;
 
+use WP_Error;
 use WP_REST_Server;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -24,6 +25,11 @@ class ServiceWorkerController extends RestController {
 	 * Resource name.
 	 */
 	protected $rest_base = 'service-worker';
+
+	/**
+	 * Option name for storing SW config.
+	 */
+	const CONFIG_OPTION_NAME = 'swift_pwa_service_worker_config';
 
 	/**
 	 * Singleton instance
@@ -92,33 +98,34 @@ class ServiceWorkerController extends RestController {
 				'methods'             => WP_REST_Server::READABLE,
 				'callback'            => [ $this, 'get_service_worker_code' ],
 				'permission_callback' => [ $this, 'check_permission' ],
-				'args'                => array(),
+				'args'                => [
+					'config' => array(),
+				],
 			]
 		);
 	}
 
 	/**
 	 * Get service worker settings.
+	 * 
+	 * @param WP_REST_Request $request Request object.
+	 * 
+	 * @return WP_REST_Response Response object.
 	 */
-	public function get_service_worker( WP_REST_Request $request ): WP_REST_Response {
-		$sw_content = File_Handler::get_file_content( Plugin_PWA_Constants::FILE_SERVICE_WORKER_NAME );
-
-		// If file doesn't exist or error, return default.
-		if ( is_wp_error( $sw_content ) || empty( $sw_content ) ) {
-			$default_config = include SWIFT_PWA_PLUGIN_PATH . 'includes/config/service-worker-default.php';
-			return $this->success_response( $default_config );
-		}
-
-		// Try to extract config from service worker file.
-		$config = $this->extract_config_from_sw( $sw_content );
-
+	public function get_service_worker( $request ) {
+		$config = $this->get_config();
+		
 		return $this->success_response( $config );
 	}
 
 	/**
 	 * Update service worker settings.
+	 * 
+	 * @param WP_REST_Request $request Request object.
+	 * 
+	 * @return WP_REST_Response Response object.
 	 */
-	public function update_service_worker( WP_REST_Request $request ): WP_REST_Response {
+	public function update_service_worker( $request ) {
 		$data = $request->get_json_params();
 
 		// Validate data.
@@ -126,8 +133,21 @@ class ServiceWorkerController extends RestController {
 			return $this->error_response( 'Invalid service worker data', 400 );
 		}
 
+		// Merge with defaults to ensure all required fields exist.
+		$config = array_merge( $this->get_default_config(), $data );
+
+		// Save config to database first.
+		$saved = $this->save_config( $config );
+		
+		if ( is_wp_error( $saved ) ) {
+			return $this->error_response(
+				$saved->get_error_message(),
+				500
+			);
+		}
+
 		// Generate service worker code from config.
-		$sw_code = $this->generate_service_worker_code( $data );
+		$sw_code = Service_Worker_Generator::generate( $config );
 
 		if ( is_wp_error( $sw_code ) ) {
 			return $this->error_response(
@@ -136,7 +156,7 @@ class ServiceWorkerController extends RestController {
 			);
 		}
 
-		// Update file.
+		// Update/create JS file.
 		$file_exists = File_Handler::file_exists( Plugin_PWA_Constants::FILE_SERVICE_WORKER_NAME );
 
 		if ( $file_exists ) {
@@ -158,50 +178,72 @@ class ServiceWorkerController extends RestController {
 			);
 		}
 
-		return $this->success_response( $data, 'Service Worker updated successfully' );
+		return $this->success_response( $config, 'Service Worker updated successfully' );
 	}
 
 	/**
 	 * Get service worker code.
+	 * 
+	 * @param array $config Configuration array.
+	 * 
+	 * @return WP_REST_Response Response object.
 	 */
-	public function get_service_worker_code( WP_REST_Request $request ): WP_REST_Response {
-		$sw_content = File_Handler::get_file_content( Plugin_PWA_Constants::FILE_SERVICE_WORKER_NAME );
+	public function get_service_worker_code( $config ) {
+		$sw_code = Service_Worker_Generator::generate( $config );
 
-		if ( is_wp_error( $sw_content ) || empty( $sw_content ) ) {
-			$default_config = include SWIFT_PWA_PLUGIN_PATH . 'includes/config/service-worker-default.php';
-			$sw_content     = $this->generate_service_worker_code( $default_config );
+		if ( is_wp_error( $sw_code ) ) {
+			return $this->error_response(
+				$sw_code->get_error_message(),
+				500
+			);
 		}
 
-		return $this->success_response( [ 'code' => $sw_content ] );
+		return $this->success_response( [ 'code' => $sw_code ] );
 	}
 
 	/**
-	 * Extract config from service worker code.
+	 * Get config from database or return default.
+	 * 
+	 * @return array Configuration array.
 	 */
-	private function extract_config_from_sw( string $sw_code ): array {
-		// Try to extract config object from SW code
-		// This is a simple extraction - you might want to improve it.
-		$default_config = include SWIFT_PWA_PLUGIN_PATH . 'includes/config/service-worker-default.php';
+	private function get_config(): array {
+		$config = get_option( self::CONFIG_OPTION_NAME );
 
-		// Extract version.
-		if ( preg_match( '/const\s+VERSION\s*=\s*[\'"]([^\'"]+)[\'"]/', $sw_code, $matches ) ) {
-			$default_config['version'] = $matches[1];
+		// If no saved config, return defaults.
+		if ( empty( $config ) || ! is_array( $config ) ) {
+			$config = $this->get_default_config();
 		}
 
-		// Extract cache name.
-		if ( preg_match( '/const\s+CACHE_NAME\s*=\s*[\'"]([^\'"]+)[\'"]/', $sw_code, $matches ) ) {
-			$default_config['cache_name'] = $matches[1];
-		}
-
-		return $default_config;
+		return $config;
 	}
 
+	/**
+	 * Save config to database.
+	 * 
+	 * @param array $config Configuration array.
+	 * 
+	 * @return bool|WP_Error True on success, WP_Error on failure.
+	 */
+	private function save_config( array $config ) {
+		$updated = update_option( self::CONFIG_OPTION_NAME, $config, false );
+
+		if ( ! $updated && get_option( self::CONFIG_OPTION_NAME ) !== $config ) {
+			return new WP_Error(
+				'config_save_failed',
+				'Failed to save service worker configuration'
+			);
+		}
+
+		return true;
+	}
 
 	/**
-	 * Generate service worker code from config.
+	 * Get default config.
+	 * 
+	 * @return array Default configuration.
 	 */
-	private function generate_service_worker_code( array $config ): string|WP_Error {
-		return Service_Worker_Generator::generate( $config );
+	private function get_default_config(): array {
+		return include SWIFT_PWA_PLUGIN_PATH . 'includes/config/service-worker-default.php';
 	}
 }
 

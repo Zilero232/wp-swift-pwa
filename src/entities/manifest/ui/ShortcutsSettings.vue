@@ -1,26 +1,16 @@
 <script setup lang="ts">
-import {
- computed 
-} from 'vue';
-import {
- Button 
-} from 'primevue';
+import { Button } from "primevue";
+import { computed } from "vue";
 
-import PostSelector from '@/features/post-selector/ui/PostSelector.vue';
+import { useManifestMutation } from "../model/useManifestMutation";
+import { useManifestQuery } from "../model/useManifestQuery";
 
-import InputField from '@/shared/ui/InputField.vue';
+import PostSelector from "@/features/post-selector/ui/PostSelector.vue";
+import type { ManifestShortcut } from "@/shared/types/manifest";
+import InputField from "@/shared/ui/InputField.vue";
 
-import type {
- ManifestShortcut 
-} from '@/shared/types/manifest';
-
-import {
- useManifestQuery 
-} from '../model/useManifestQuery';
-
-const {
- queryManifest, updateManifest 
-} = useManifestQuery();
+const { queryManifest } = useManifestQuery();
+const { updateManifest } = useManifestMutation();
 
 const shortcuts = computed(() => queryManifest.data.value?.shortcuts ?? []);
 
@@ -28,10 +18,10 @@ const addShortcut = () => {
   const items = [...shortcuts.value];
 
   items.push({
-    name: '',
-    short_name: '',
-    description: '',
-    url: '',
+    name: "",
+    short_name: "",
+    description: "",
+    url: "",
   });
 
   updateManifest({
@@ -114,12 +104,7 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
       </div>
 
       <div class="tw:flex tw:justify-end tw:mt-3">
-        <Button
-          icon="pi pi-trash"
-          severity="danger"
-          text
-          @click="removeShortcut(index)"
-        />
+        <Button icon="pi pi-trash" severity="danger" text @click="removeShortcut(index)" />
       </div>
     </div>
 

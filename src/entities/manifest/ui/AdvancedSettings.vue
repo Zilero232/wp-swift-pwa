@@ -1,24 +1,16 @@
 <script setup lang="ts">
-import {
- computed 
-} from 'vue';
-import PostSelector from '@/features/post-selector/ui/PostSelector.vue';
+import { computed } from "vue";
 
-import SelectField from '@/shared/ui/SelectField.vue';
-import InputField from '@/shared/ui/InputField.vue';
+import { useManifestMutation } from "../model/useManifestMutation";
+import { useManifestQuery } from "../model/useManifestQuery";
 
-import {
-  LANGUAGE_OPTIONS,
-  TEXT_DIRECTION_OPTIONS,
-} from '@/shared/config/localization.constants';
+import PostSelector from "@/features/post-selector/ui/PostSelector.vue";
+import { LANGUAGE_OPTIONS, TEXT_DIRECTION_OPTIONS } from "@/shared/config/localization.constants";
+import InputField from "@/shared/ui/InputField.vue";
+import SelectField from "@/shared/ui/SelectField.vue";
 
-import {
- useManifestQuery 
-} from '../model/useManifestQuery';
-
-const {
- queryManifest, updateManifest 
-} = useManifestQuery();
+const { queryManifest } = useManifestQuery();
+const { updateManifest } = useManifestMutation();
 
 const queryManifestData = computed(() => queryManifest.data.value);
 </script>

@@ -1,42 +1,27 @@
 <script setup lang="ts">
-import {
- computed 
-} from 'vue';
-import {
- Button, Checkbox 
-} from 'primevue';
+import { Button, Checkbox } from "primevue";
+import { computed } from "vue";
 
-import SelectField from '@/shared/ui/SelectField.vue';
-import InputField from '@/shared/ui/InputField.vue';
+import { useManifestMutation } from "../model/useManifestMutation";
+import { useManifestQuery } from "../model/useManifestQuery";
 
-import {
- RELATED_APPLICATION_PLATFORM_OPTIONS 
-} from '@/shared/config/display.constants';
+import { RELATED_APPLICATION_PLATFORM_OPTIONS } from "@/shared/config/display.constants";
+import { RelatedApplicationPlatform, type RelatedApplication } from "@/shared/types/manifest";
+import InputField from "@/shared/ui/InputField.vue";
+import SelectField from "@/shared/ui/SelectField.vue";
 
-import {
-  RelatedApplicationPlatform,
-  type RelatedApplication,
-} from '@/shared/types/manifest';
+const { queryManifest } = useManifestQuery();
+const { updateManifest } = useManifestMutation();
 
-import {
- useManifestQuery 
-} from '../model/useManifestQuery';
-
-const {
- queryManifest, updateManifest 
-} = useManifestQuery();
-
-const relatedApplications = computed(
-  () => queryManifest.data.value?.related_applications ?? [],
-);
+const relatedApplications = computed(() => queryManifest.data.value?.related_applications ?? []);
 
 const addApp = () => {
   const apps = [...relatedApplications.value];
 
   apps.push({
     platform: RelatedApplicationPlatform.PLAY,
-    url: '',
-    id: '',
+    url: "",
+    id: "",
   });
 
   updateManifest({

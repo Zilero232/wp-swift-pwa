@@ -1,38 +1,27 @@
-import {
- computed, toValue, type MaybeRefOrGetter 
-} from 'vue';
-import {
- useInfiniteQuery 
-} from '@tanstack/vue-query';
+import { useInfiniteQuery } from "@tanstack/vue-query";
+import { computed, toValue, type MaybeRefOrGetter } from "vue";
 
-import {
- postsAPI 
-} from '@/services/posts.service';
+import { postsAPI } from "@/services/posts.service";
 
 export function usePosts(searchQuery: MaybeRefOrGetter<string>) {
   const queryKey = computed(() => {
-    return ['posts', toValue(searchQuery)];
+    return ["posts", toValue(searchQuery)];
   });
 
-  const {
- data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage, refetch 
-} =
-    useInfiniteQuery({
-      queryKey,
-      queryFn: async ({
- pageParam = 1 
-}) => {
-        return await postsAPI.getPosts({
-          page: pageParam,
-          per_page: 20,
-          search: toValue(searchQuery),
-        });
-      },
-      getNextPageParam: (lastPage) => {
-        return lastPage.data.has_more ? lastPage.data.posts.length / 20 + 1 : undefined;
-      },
-      initialPageParam: 1,
-    });
+  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } = useInfiniteQuery({
+    queryKey,
+    queryFn: async ({ pageParam = 1 }) => {
+      return await postsAPI.getPosts({
+        page: pageParam,
+        per_page: 20,
+        search: toValue(searchQuery),
+      });
+    },
+    getNextPageParam: (lastPage) => {
+      return lastPage.data.has_more ? lastPage.data.posts.length / 20 + 1 : undefined;
+    },
+    initialPageParam: 1,
+  });
 
   // Flatten all pages into a single array
   const posts = computed(() => {
@@ -41,12 +30,10 @@ export function usePosts(searchQuery: MaybeRefOrGetter<string>) {
 
   const postOptions = computed(() => [
     {
-      label: 'Главная страница (/)',
-      value: '/',
+      label: "Главная страница (/)",
+      value: "/",
     },
-    ...posts.value.map(({
- title, type, link 
-}) => ({
+    ...posts.value.map(({ title, type, link }) => ({
       label: `${title} (${type})`,
       value: link,
     })),
@@ -61,9 +48,8 @@ export function usePosts(searchQuery: MaybeRefOrGetter<string>) {
   return {
     posts,
     postOptions,
-    isLoading: computed(() => isLoading.value || isFetchingNextPage.value),
+    isLoading: isLoading || isFetchingNextPage,
     hasMore: hasNextPage,
-    loadPosts: refetch,
     loadMore,
   };
 }

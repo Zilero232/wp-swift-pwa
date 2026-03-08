@@ -1,12 +1,8 @@
 <script setup lang="ts">
-import {
- ref, watch 
-} from 'vue';
-import {
- Tag 
-} from 'primevue';
+import { Tag } from "primevue";
+import { ref, watch } from "vue";
 
-import ModalDialog from '@/shared/ui/ModalDialog.vue';
+import ModalDialog from "@/shared/ui/ModalDialog.vue";
 
 interface Image {
   src: string;
@@ -22,11 +18,11 @@ interface Props {
 }
 
 interface Emits {
-  (e: 'update:visible', value: boolean): void;
+  (e: "update:visible", value: boolean): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  title: 'Предпросмотр изображения',
+  title: "Предпросмотр изображения",
 });
 
 const emit = defineEmits<Emits>();
@@ -54,11 +50,7 @@ watch(
 </script>
 
 <template>
-  <ModalDialog
-    :visible="visible"
-    :header="title"
-    @update:visible="emit('update:visible', $event)"
-  >
+  <ModalDialog :visible="visible" :header="title" @update:visible="emit('update:visible', $event)">
     <template #content>
       <div
         v-if="!imageLoaded && !imageError"
@@ -83,10 +75,7 @@ watch(
           @load="handleImageLoad"
         />
 
-        <div
-          v-if="image.label"
-          class="tw:text-xs tw:text-gray-500 tw:text-center tw:truncate"
-        >
+        <div v-if="image.label" class="tw:text-xs tw:text-gray-500 tw:text-center tw:truncate">
           {{ image.label }}
         </div>
       </div>
@@ -97,9 +86,7 @@ watch(
       >
         <i class="pi pi-exclamation-triangle tw:text-6xl tw:text-red-400 tw:mb-4"></i>
 
-        <p class="tw:text-lg tw:text-center tw:text-gray-600">
-          Не удалось загрузить изображение
-        </p>
+        <p class="tw:text-lg tw:text-center tw:text-gray-600">Не удалось загрузить изображение</p>
       </div>
     </template>
   </ModalDialog>

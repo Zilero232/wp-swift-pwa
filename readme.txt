@@ -1,6 +1,5 @@
 === Swift PWA – Progressive Web App toolkit for WordPress ===
 Contributors: zilero
-Donate link: https://dalink.to/zilero
 Tags: pwa, progressive web app, manifest, service worker, offline, caching
 Requires at least: 6.0
 Tested up to: 6.7

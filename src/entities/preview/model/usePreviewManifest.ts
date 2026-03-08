@@ -1,29 +1,15 @@
-import {
- computed 
-} from 'vue';
+import { computed } from "vue";
 
-import {
- useManifestQuery 
-} from '@/entities/manifest/model/useManifestQuery';
+import { useManifestQuery } from "@/entities/manifest/model/useManifestQuery";
+import { useDownload } from "@/shared/composable/useDownload";
+import { FILE_NAMES } from "@/shared/config/files.constants";
 
-import {
- useDownload 
-} from '@/shared/composable/useDownload';
-
-import {
- FILE_NAMES 
-} from '@/shared/config/files.constants';
-
-export function usePreviewManifest() {
-  const {
- queryManifest 
-} = useManifestQuery();
-  const {
- copyToClipboard, downloadJSON 
-} = useDownload();
+export const usePreviewManifest = () => {
+  const { queryManifest } = useManifestQuery();
+  const { copyToClipboard, downloadJSON } = useDownload();
 
   const manifestJSON = computed(() => {
-    if (!queryManifest.data.value) return '';
+    if (!queryManifest.data.value) return "";
 
     return JSON.stringify(queryManifest.data.value, null, 2);
   });
@@ -34,8 +20,8 @@ export function usePreviewManifest() {
 
   const copy = () => {
     copyToClipboard(manifestJSON.value, {
-      successMessage: 'Манифест скопирован в буфер обмена',
-      errorMessage: 'Ошибка копирования манифеста',
+      successMessage: "Манифест скопирован в буфер обмена",
+      errorMessage: "Ошибка копирования манифеста",
     });
   };
 
@@ -43,8 +29,8 @@ export function usePreviewManifest() {
     if (!queryManifest.data.value) return;
 
     downloadJSON(queryManifest.data.value, FILE_NAMES.MANIFEST, {
-      successMessage: 'Манифест успешно загружен',
-      errorMessage: 'Ошибка загрузки манифеста',
+      successMessage: "Манифест успешно загружен",
+      errorMessage: "Ошибка загрузки манифеста",
     });
   };
 
@@ -55,4 +41,4 @@ export function usePreviewManifest() {
     copyManifest: copy,
     downloadManifest: download,
   };
-}
+};

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {
- Dialog, Button 
-} from 'primevue';
+import { Dialog, Button } from "primevue";
 
 interface Props {
   visible: boolean;
@@ -9,7 +7,7 @@ interface Props {
 }
 
 interface Emits {
-  (e: 'update:visible', value: boolean): void;
+  (e: "update:visible", value: boolean): void;
 }
 
 defineProps<Props>();
@@ -17,7 +15,7 @@ defineProps<Props>();
 const emit = defineEmits<Emits>();
 
 const handleClose = () => {
-  emit('update:visible', false);
+  emit("update:visible", false);
 };
 </script>
 

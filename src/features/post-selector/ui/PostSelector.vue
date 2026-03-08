@@ -1,17 +1,9 @@
 <script setup lang="ts">
-import {
- onMounted, ref 
-} from 'vue';
-import {
- Select, Button, type SelectFilterEvent 
-} from 'primevue';
-import {
- useDebounceFn 
-} from '@vueuse/core';
+import { useDebounceFn } from "@vueuse/core";
+import { Select, Button, type SelectFilterEvent } from "primevue";
+import { ref } from "vue";
 
-import {
- usePosts 
-} from '../model/usePosts';
+import { usePosts } from "../model/usePosts";
 
 interface Props {
   label?: string;
@@ -23,24 +15,18 @@ interface Props {
 
 defineProps<Props>();
 
-const searchQuery = ref('');
+const searchQuery = ref("");
 
 const emit = defineEmits<{
-  'update:modelValue': [value: string];
+  "update:modelValue": [value: string];
 }>();
 
-const {
- isLoading, hasMore, postOptions, loadPosts, loadMore 
-} = usePosts(searchQuery);
+const { isLoading, hasMore, postOptions, loadMore } = usePosts(searchQuery);
 
 // Debounced search handler
 const debouncedHandleFilter = useDebounceFn((event: SelectFilterEvent) => {
   searchQuery.value = event.value;
 }, 300);
-
-onMounted(() => {
-  loadPosts();
-});
 </script>
 
 <template>
@@ -61,6 +47,7 @@ onMounted(() => {
       :options="postOptions"
       :placeholder="placeholder"
       :loading="isLoading"
+      :disabled="isLoading"
       option-label="label"
       option-value="value"
       :filter="true"

@@ -1,18 +1,10 @@
 <script setup lang="ts">
-import {
- ref 
-} from 'vue';
-import {
- FileUpload, type FileUploadMethods, type FileUploadSelectEvent 
-} from 'primevue';
+import { FileUpload, type FileUploadMethods, type FileUploadSelectEvent } from "primevue";
+import { ref } from "vue";
 
-import type {
- MediaAttachment 
-} from '@/shared/types/media';
+import { useMediaUpload } from "../model/useMediaUpload";
 
-import {
- useMediaUpload 
-} from '../model/useMediaUpload';
+import type { MediaAttachment } from "@/shared/types/media";
 
 interface Props {
   accept?: string;
@@ -21,12 +13,12 @@ interface Props {
 }
 
 interface Emits {
-  (e: 'uploaded', data: MediaAttachment): void;
+  (e: "uploaded", data: MediaAttachment): void;
 }
 
 withDefaults(defineProps<Props>(), {
-  accept: 'image/*',
-  chooseLabel: 'Загрузить',
+  accept: "image/*",
+  chooseLabel: "Загрузить",
   disabled: false,
 });
 
@@ -34,9 +26,7 @@ const emit = defineEmits<Emits>();
 
 const fileUploader = ref<FileUploadMethods>();
 
-const {
- uploadFile, isUploading 
-} = useMediaUpload();
+const { uploadFile, isUploading } = useMediaUpload();
 
 const handleSelect = (event: FileUploadSelectEvent) => {
   const files = event.files;
@@ -46,7 +36,7 @@ const handleSelect = (event: FileUploadSelectEvent) => {
   if (file) {
     uploadFile(file, {
       onSuccess: (data) => {
-        emit('uploaded', data);
+        emit("uploaded", data);
       },
     });
   }

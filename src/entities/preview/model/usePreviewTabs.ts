@@ -1,20 +1,13 @@
-import {
- ref, watch 
-} from 'vue';
+import { ref, watch } from "vue";
 
-import {
- FILE_NAMES 
-} from '@/shared/config/files.constants';
+import { FILE_NAMES } from "@/shared/config/files.constants";
 
 interface UsePreviewTabsProps {
   onManifestTab?: () => void;
   onServiceWorkerTab?: () => void;
 }
 
-export function usePreviewTabs({
-  onManifestTab,
-  onServiceWorkerTab,
-}: UsePreviewTabsProps) {
+export function usePreviewTabs({ onManifestTab, onServiceWorkerTab }: UsePreviewTabsProps) {
   const activeTabValue = ref<string>(FILE_NAMES.MANIFEST);
 
   watch(

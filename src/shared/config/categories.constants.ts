@@ -2,22 +2,22 @@
  * PWA application categories
  */
 export const APP_CATEGORIES = [
-  'business',
-  'education',
-  'entertainment',
-  'finance',
-  'fitness',
-  'food',
-  'games',
-  'health',
-  'lifestyle',
-  'news',
-  'productivity',
-  'shopping',
-  'social',
-  'sports',
-  'travel',
-  'utilities',
+  "business",
+  "education",
+  "entertainment",
+  "finance",
+  "fitness",
+  "food",
+  "games",
+  "health",
+  "lifestyle",
+  "news",
+  "productivity",
+  "shopping",
+  "social",
+  "sports",
+  "travel",
+  "utilities",
 ];
 
 /**

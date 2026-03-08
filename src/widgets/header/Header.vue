@@ -1,38 +1,24 @@
 <script setup lang="ts">
-import {
- computed 
-} from 'vue';
-import {
- Button, useConfirm 
-} from 'primevue';
-import {
- useRoute 
-} from 'vue-router';
+import { Button, useConfirm } from "primevue";
+import { computed } from "vue";
+import { useRoute } from "vue-router";
 
-import {
- useManifestQuery 
-} from '@/entities/manifest/model/useManifestQuery';
-import {
- useServiceWorkerQuery 
-} from '@/entities/service-worker/model/useServiceWorkerQuery';
+import Navigation from "./ui/Navigation.vue";
 
-import {
- RouteName 
-} from '@/shared/config/routes.constants';
-
-import Navigation from './ui/Navigation.vue';
+import { useManifestMutation } from "@/entities/manifest/model/useManifestMutation";
+import { useManifestQuery } from "@/entities/manifest/model/useManifestQuery";
+import { useServiceWorkerMutation } from "@/entities/service-worker/model/useServiceWorkerMutation";
+import { useServiceWorkerQuery } from "@/entities/service-worker/model/useServiceWorkerQuery";
+import { RouteName } from "@/shared/config/routes.constants";
 
 const {
-  swiftPwaSettings: {
- version 
-},
+  swiftPwaSettings: { version },
 } = window;
 
 const route = useRoute();
 const confirm = useConfirm();
-const {
- queryManifest, mutationUpdateManifest 
-} = useManifestQuery();
+const { queryManifest } = useManifestQuery();
+const { mutationUpdateManifest } = useManifestMutation();
 
 const isDisabled = computed(() => {
   return mutationUpdateManifest.isPending || !queryManifest.data.value;
@@ -42,9 +28,9 @@ const isShowButtons = computed(() => {
   return route.name === RouteName.MANIFEST || route.name === RouteName.SERVICE_WORKER;
 });
 
-const {
- queryServiceWorker, mutationUpdateServiceWorker 
-} = useServiceWorkerQuery();
+const { queryServiceWorker } = useServiceWorkerQuery();
+
+const { mutationUpdateServiceWorker } = useServiceWorkerMutation();
 
 const isDisabledServiceWorker = computed(() => {
   return mutationUpdateServiceWorker.isPending.value || !queryServiceWorker.data.value;
@@ -52,13 +38,12 @@ const isDisabledServiceWorker = computed(() => {
 
 const handleResetServiceWorker = () => {
   confirm.require({
-    message:
-      'Вы уверены, что хотите сбросить все настройки? Это действие нельзя отменить.',
-    header: 'Подтверждение сброса',
-    icon: 'pi pi-exclamation-triangle',
-    acceptLabel: 'Да, сбросить',
-    rejectLabel: 'Отмена',
-    acceptClass: 'p-button-danger',
+    message: "Вы уверены, что хотите сбросить все настройки? Это действие нельзя отменить.",
+    header: "Подтверждение сброса",
+    icon: "pi pi-exclamation-triangle",
+    acceptLabel: "Да, сбросить",
+    rejectLabel: "Отмена",
+    acceptClass: "p-button-danger",
     accept: () => {
       mutationUpdateServiceWorker.mutate({});
     },
@@ -71,13 +56,12 @@ const handleUpdateServiceWorker = () => {
 
 const handleResetManifest = () => {
   confirm.require({
-    message:
-      'Вы уверены, что хотите сбросить все настройки? Это действие нельзя отменить.',
-    header: 'Подтверждение сброса',
-    icon: 'pi pi-exclamation-triangle',
-    acceptLabel: 'Да, сбросить',
-    rejectLabel: 'Отмена',
-    acceptClass: 'p-button-danger',
+    message: "Вы уверены, что хотите сбросить все настройки? Это действие нельзя отменить.",
+    header: "Подтверждение сброса",
+    icon: "pi pi-exclamation-triangle",
+    acceptLabel: "Да, сбросить",
+    rejectLabel: "Отмена",
+    acceptClass: "p-button-danger",
     accept: () => {
       mutationUpdateManifest.mutate({});
     },

@@ -1,11 +1,7 @@
 <script setup lang="ts">
-import {
- Message 
-} from 'primevue';
+import { Message } from "primevue";
 
-import type {
- HttpsStatus 
-} from '@/shared/types/status';
+import type { HttpsStatus } from "@/shared/types/status";
 
 interface Props {
   https: HttpsStatus;
@@ -15,16 +11,16 @@ defineProps<Props>();
 
 const WHY_PWA_IMPORTANT = [
   {
-    title: 'Service Workers работают только по HTTPS',
+    title: "Service Workers работают только по HTTPS",
   },
   {
-    title: 'Push-уведомления требуют безопасное соединение',
+    title: "Push-уведомления требуют безопасное соединение",
   },
   {
-    title: 'Защита данных пользователей при офлайн-работе',
+    title: "Защита данных пользователей при офлайн-работе",
   },
   {
-    title: 'Доступ к мощным браузерным API',
+    title: "Доступ к мощным браузерным API",
   },
 ];
 </script>
@@ -36,12 +32,7 @@ const WHY_PWA_IMPORTANT = [
       <span>HTTPS (SSL/TLS)</span>
     </h3>
 
-    <Message
-      v-if="https.enabled"
-      severity="success"
-      icon="pi pi-check-circle"
-      :closable="false"
-    >
+    <Message v-if="https.enabled" severity="success" icon="pi pi-check-circle" :closable="false">
       <div class="tw:flex tw:flex-col tw:gap-1">
         <strong>HTTPS включён</strong>
 

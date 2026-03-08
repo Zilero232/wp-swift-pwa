@@ -1,10 +1,6 @@
-import {
- useClipboard 
-} from '@vueuse/core';
+import { useClipboard } from "@vueuse/core";
 
-import {
- useToast 
-} from './useToast';
+import { useToast } from "./useToast";
 
 interface DownloadOptions {
   filename: string;
@@ -19,24 +15,18 @@ interface CopyOptions {
 }
 
 export function useDownload() {
-  const {
- showSuccess, showError 
-} = useToast();
-  const {
- copy, isSupported 
-} = useClipboard();
+  const { showSuccess, showError } = useToast();
+  const { copy, isSupported } = useClipboard();
 
   /**
    * Copy text to clipboard
    */
   const copyToClipboard = async (text: string, options?: CopyOptions) => {
-    const {
-      successMessage = 'Скопировано в буфер обмена',
-      errorMessage = 'Ошибка копирования',
-    } = options || {};
+    const { successMessage = "Скопировано в буфер обмена", errorMessage = "Ошибка копирования" } =
+      options || {};
 
     if (!isSupported.value) {
-      showError('Буфер обмена не поддерживается в вашем браузере');
+      showError("Буфер обмена не поддерживается в вашем браузере");
 
       return false;
     }
@@ -50,7 +40,7 @@ export function useDownload() {
     } catch (error) {
       showError(errorMessage);
 
-      console.error('Failed to copy to clipboard:', error);
+      console.error("Failed to copy to clipboard:", error);
 
       return false;
     }
@@ -62,9 +52,9 @@ export function useDownload() {
   const downloadFile = (content: string | Blob, options: DownloadOptions) => {
     const {
       filename,
-      mimeType = 'text/plain',
-      successMessage = 'Файл загружен',
-      errorMessage = 'Ошибка загрузки файла',
+      mimeType = "text/plain",
+      successMessage = "Файл загружен",
+      errorMessage = "Ошибка загрузки файла",
     } = options;
 
     try {
@@ -75,7 +65,7 @@ export function useDownload() {
               type: mimeType,
             });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
 
       a.href = url;
       a.download = filename;
@@ -93,7 +83,7 @@ export function useDownload() {
     } catch (error) {
       showError(errorMessage);
 
-      console.error('Failed to download file:', error);
+      console.error("Failed to download file:", error);
 
       return false;
     }
@@ -105,13 +95,13 @@ export function useDownload() {
   const downloadJSON = (
     data: unknown,
     filename: string,
-    options?: Omit<DownloadOptions, 'filename' | 'mimeType'>,
+    options?: Omit<DownloadOptions, "filename" | "mimeType">,
   ) => {
     const jsonString = JSON.stringify(data, null, 2);
 
     return downloadFile(jsonString, {
-      filename: filename.endsWith('.json') ? filename : `${filename}.json`,
-      mimeType: 'application/json',
+      filename: filename.endsWith(".json") ? filename : `${filename}.json`,
+      mimeType: "application/json",
       ...options,
     });
   };

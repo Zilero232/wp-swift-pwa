@@ -1,38 +1,24 @@
 <script setup lang="ts">
-import {
- computed, ref 
-} from 'vue';
-import {
- Button 
-} from 'primevue';
+import { Button } from "primevue";
+import { computed, defineAsyncComponent, ref } from "vue";
 
-import {
- MediaLibrary 
-} from '@/features/media-library';
+import { useManifestMutation } from "../model/useManifestMutation";
+import { useManifestQuery } from "../model/useManifestQuery";
 
-import InputField from '@/shared/ui/InputField.vue';
-import MediaPreview from '@/shared/ui/MediaPreview.vue';
-import SelectField from '@/shared/ui/SelectField.vue';
-import InfoBlock from '@/shared/ui/InfoBlock.vue';
+import { ICON_PURPOSE_OPTIONS } from "@/shared/config/display.constants";
+import { type ManifestIcon, IconPurpose } from "@/shared/types/manifest";
+import type { MediaAttachment } from "@/shared/types/media";
+import InfoBlock from "@/shared/ui/InfoBlock.vue";
+import InputField from "@/shared/ui/InputField.vue";
+import MediaPreview from "@/shared/ui/MediaPreview.vue";
+import SelectField from "@/shared/ui/SelectField.vue";
 
-import type {
- MediaAttachment 
-} from '@/shared/types/media';
-import {
- type ManifestIcon, IconPurpose 
-} from '@/shared/types/manifest';
+const MediaLibrary = defineAsyncComponent(
+  () => import("@/features/media-library/ui/MediaLibrary.vue"),
+);
 
-import {
- useManifestQuery 
-} from '../model/useManifestQuery';
-
-import {
- ICON_PURPOSE_OPTIONS 
-} from '@/shared/config/display.constants';
-
-const {
- queryManifest, updateManifest 
-} = useManifestQuery();
+const { queryManifest } = useManifestQuery();
+const { updateManifest } = useManifestMutation();
 
 const icons = computed(() => queryManifest.data.value?.icons ?? []);
 
@@ -45,9 +31,9 @@ const addIcon = () => {
   const items = [...icons.value];
 
   items.push({
-    src: '',
-    sizes: '',
-    type: '',
+    src: "",
+    sizes: "",
+    type: "",
     purpose: IconPurpose.ANY,
   });
 
@@ -68,11 +54,7 @@ const removeIcon = (index: number) => {
   });
 };
 
-const updateIcon = (
-  index: number,
-  field: keyof ManifestIcon,
-  value: string | undefined,
-) => {
+const updateIcon = (index: number, field: keyof ManifestIcon, value: string | undefined) => {
   const items = icons.value.map((item, i) => {
     if (i === index) {
       return {
@@ -89,9 +71,7 @@ const updateIcon = (
   });
 };
 
-const handleLibrarySelect = ({
- url, width, height, mime_type 
-}: MediaAttachment) => {
+const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment) => {
   if (selectedIndexItem.value === null) return;
 
   const items = icons.value.map((item, i) => {
@@ -128,9 +108,7 @@ const handleLibrarySelect = ({
             {{ index + 1 }}
           </div>
 
-          <span class="tw:text-sm tw:font-medium tw:text-gray-700"
-            >Иконка #{{ index + 1 }}</span
-          >
+          <span class="tw:text-sm tw:font-medium tw:text-gray-700">Иконка #{{ index + 1 }}</span>
         </div>
 
         <div class="tw:flex tw:gap-2">

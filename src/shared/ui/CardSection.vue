@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {
- Card 
-} from 'primevue';
+import { Card } from "primevue";
 
 interface Props {
   title: string;
@@ -10,7 +8,7 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  iconColor: 'tw:text-blue-600',
+  iconColor: "tw:text-blue-600",
 });
 </script>
 

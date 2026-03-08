@@ -1,33 +1,29 @@
 <script setup lang="ts">
-import {
- Button, Card 
-} from 'primevue';
-import {
- useRouter 
-} from 'vue-router';
+import { Button, Card } from "primevue";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
 
 const features = [
   {
-    icon: 'pi pi-mobile',
-    title: 'PWA приложение',
-    description: 'Превратите сайт в приложение с установкой на устройство',
+    icon: "pi pi-mobile",
+    title: "PWA приложение",
+    description: "Превратите сайт в приложение с установкой на устройство",
   },
   {
-    icon: 'pi pi-cog',
-    title: 'Простая настройка',
-    description: 'Визуальный редактор манифеста без кода',
+    icon: "pi pi-cog",
+    title: "Простая настройка",
+    description: "Визуальный редактор манифеста без кода",
   },
   {
-    icon: 'pi pi-wifi-off',
-    title: 'Офлайн режим',
-    description: 'Работа без интернета через Service Worker',
+    icon: "pi pi-wifi-off",
+    title: "Офлайн режим",
+    description: "Работа без интернета через Service Worker",
   },
   {
-    icon: 'pi pi-bolt',
-    title: 'Быстрая работа',
-    description: 'Оптимизация и кэширование для скорости',
+    icon: "pi pi-bolt",
+    title: "Быстрая работа",
+    description: "Оптимизация и кэширование для скорости",
   },
 ];
 
@@ -100,23 +96,17 @@ const goTo = (route: string) => router.push(route);
       </div>
 
       <div class="tw:text-center tw:space-y-4 tw:pt-8">
-        <div
-          class="tw:flex tw:flex-wrap tw:gap-8 tw:justify-center tw:text-sm tw:text-gray-600"
-        >
+        <div class="tw:flex tw:flex-wrap tw:gap-8 tw:justify-center tw:text-sm tw:text-gray-600">
           <div>
             <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">5 мин</div>
             <div>Настройка</div>
           </div>
           <div>
-            <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">
-              Бесплатно
-            </div>
+            <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">Бесплатно</div>
             <div>Навсегда</div>
           </div>
           <div>
-            <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">
-              WordPress
-            </div>
+            <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">WordPress</div>
             <div>Интеграция</div>
           </div>
         </div>

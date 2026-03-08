@@ -1,43 +1,39 @@
-import {
- createRouter, createWebHashHistory 
-} from 'vue-router';
+import { createRouter, createWebHashHistory } from "vue-router";
 
-import {
- RouteName 
-} from '@/shared/config/routes.constants';
+import { RouteName } from "@/shared/config/routes.constants";
 
 const router = createRouter({
   // Use hash history for WordPress admin context to avoid conflicts
   history: createWebHashHistory(),
   routes: [
     {
-      path: '/',
-      component: () => import('@/layouts/MainLayout.vue'),
+      path: "/",
+      component: () => import("@/layouts/MainLayout.vue"),
       children: [
         {
-          path: '',
+          path: "",
           name: RouteName.WELCOME,
-          component: () => import('@/views/WelcomeView.vue'),
+          component: () => import("@/views/WelcomeView.vue"),
         },
         {
-          path: '/manifest',
+          path: "/manifest",
           name: RouteName.MANIFEST,
-          component: () => import('@/views/ManifestView.vue'),
+          component: () => import("@/views/ManifestView.vue"),
         },
         {
-          path: '/service-worker',
+          path: "/service-worker",
           name: RouteName.SERVICE_WORKER,
-          component: () => import('@/views/ServiceWorkerView.vue'),
+          component: () => import("@/views/ServiceWorkerView.vue"),
         },
         {
-          path: '/preview',
+          path: "/preview",
           name: RouteName.PREVIEW,
-          component: () => import('@/views/PreviewView.vue'),
+          component: () => import("@/views/PreviewView.vue"),
         },
         {
-          path: '/status',
+          path: "/status",
           name: RouteName.STATUS,
-          component: () => import('@/views/StatusView.vue'),
+          component: () => import("@/views/StatusView.vue"),
         },
       ],
     },

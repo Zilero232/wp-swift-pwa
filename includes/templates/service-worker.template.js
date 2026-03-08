@@ -1,15 +1,10 @@
 // Service Worker для Swift PWA
 // Версия: {{VERSION}}
-// Генерируется автоматически
 
-const DEBUG = '{{DEBUG}}' === 'true';
 const VERSION = '{{VERSION}}';
 const CACHE_NAME = '{{CACHE_NAME}}';
 const OFFLINE_PAGE = '{{OFFLINE_PAGE}}';
-const MAX_CACHE_ENTRIES = parseInt('{{MAX_ENTRIES}}', 10) || 50;
-
-// Стратегии кэширования
-const CACHE_STRATEGIES = {{CACHE_STRATEGIES}};
+const STRATEGY = '{{STRATEGY}}';
 
 // Файлы для предварительного кэширования
 const PRECACHE_FILES = {{PRECACHE_FILES}};
@@ -23,6 +18,7 @@ const SKIP_PATTERNS = {{SKIP_PATTERNS}};
 
 self.addEventListener('install', (event) => {
   console.log('[Service Worker] Installing version:', VERSION);
+  console.log('[Service Worker] Using strategy:', STRATEGY);
 
   event.waitUntil(
     precacheFiles()
@@ -92,14 +88,13 @@ async function cleanupOldCaches() {
   await Promise.all(
     oldCaches.map(name => {
       console.log('[Service Worker] Deleting cache:', name);
-
       return caches.delete(name);
     })
   );
 }
 
 // ============================================================================
-// Fetch Handling
+// Fetch Handling - Dynamic Strategy Selection
 // ============================================================================
 
 self.addEventListener('fetch', (event) => {
@@ -118,16 +113,11 @@ self.addEventListener('fetch', (event) => {
 
   // Skip patterns (wp-admin, wp-login, etc.)
   if (shouldSkipRequest(url.pathname)) {
-    if (DEBUG) {
-      console.log('[Service Worker] Skipping:', url.pathname);
-    }
-
     return;
   }
 
-  // Determine and apply caching strategy
-  const strategy = determineStrategy(url.pathname);
-  event.respondWith(handleRequest(request, strategy));
+  // Apply selected strategy
+  event.respondWith(handleRequest(request, STRATEGY));
 });
 
 /**
@@ -150,49 +140,7 @@ function shouldSkipRequest(pathname) {
 }
 
 /**
- * Determine caching strategy for a given pathname
- */
-function determineStrategy(pathname) {
-  const strategies = CACHE_STRATEGIES || {};
-
-  // Check each extension group
-  for (const [extensions, strategy] of Object.entries(strategies)) {
-    if (extensions === 'default') continue;
-
-    const extList = extensions.split(',').map(ext => ext.trim());
-
-    if (matchesExtension(pathname, extList)) {
-      return strategy;
-    }
-  }
-
-  // Return default strategy or fallback
-  return strategies.default || 'networkFirst';
-}
-
-/**
- * Check if pathname matches any extension in the list
- */
-function matchesExtension(pathname, extensions) {
-  return extensions.some(ext => {
-    // Special case: HTML pages
-    if (ext === 'html') {
-      return pathname.endsWith('.html') || pathname.endsWith('/');
-    }
-
-    // Special case: API endpoints
-    if (ext === 'api') {
-      return pathname.includes('/wp-json/') || pathname.includes('/api/');
-    }
-
-    // Regular file extension
-    const escapedExt = ext.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return new RegExp(`\\.${escapedExt}$`, 'i').test(pathname);
-  });
-}
-
-/**
- * Handle request with appropriate strategy
+ * Handle request with selected strategy
  */
 async function handleRequest(request, strategy) {
   switch (strategy) {
@@ -200,12 +148,14 @@ async function handleRequest(request, strategy) {
       return cacheFirstStrategy(request);
     case 'networkFirst':
       return networkFirstStrategy(request);
+    case 'staleWhileRevalidate':
+      return staleWhileRevalidateStrategy(request);
     case 'networkOnly':
       return networkOnlyStrategy(request);
     case 'cacheOnly':
       return cacheOnlyStrategy(request);
     default:
-      console.warn('[Service Worker] Unknown strategy:', strategy);
+      console.warn('[Service Worker] Unknown strategy:', strategy, '- using networkFirst');
 
       return networkFirstStrategy(request);
   }
@@ -235,7 +185,6 @@ async function cacheFirstStrategy(request) {
     return response;
   } catch (error) {
     console.error('[Service Worker] Cache First failed:', error);
-
     return handleOffline(request);
   }
 }
@@ -266,6 +215,29 @@ async function networkFirstStrategy(request) {
 }
 
 /**
+ * Stale While Revalidate: Return cache immediately, update in background
+ */
+async function staleWhileRevalidateStrategy(request) {
+  const cached = await caches.match(request);
+
+  // Fetch in background and update cache
+  const fetchPromise = fetch(request)
+    .then(response => {
+      if (response.ok) {
+        cacheResponse(request, response.clone());
+      }
+      return response;
+    })
+    .catch(error => {
+      console.warn('[Service Worker] Background update failed:', error);
+      return null;
+    });
+
+  // Return cached version immediately or wait for network
+  return cached || fetchPromise;
+}
+
+/**
  * Network Only: Always fetch from network
  */
 async function networkOnlyStrategy(request) {
@@ -273,7 +245,6 @@ async function networkOnlyStrategy(request) {
     return await fetch(request);
   } catch (error) {
     console.error('[Service Worker] Network Only failed:', error);
-
     return handleOffline(request);
   }
 }
@@ -306,7 +277,6 @@ async function cacheOnlyStrategy(request) {
 async function cacheResponse(request, response) {
   try {
     const cache = await caches.open(CACHE_NAME);
-
     await cache.put(request, response);
   } catch (error) {
     console.warn('[Service Worker] Failed to cache response:', error);
@@ -336,50 +306,3 @@ async function handleOffline(request) {
     }
   );
 }
-
-/**
- * Check if cache size exceeds limit and remove oldest entries
- */
-async function maintainCacheSize() {
-  try {
-    const cache = await caches.open(CACHE_NAME);
-    const requests = await cache.keys();
-
-    if (requests.length <= MAX_CACHE_ENTRIES) {
-      return;
-    }
-
-    console.log('[Service Worker] Cache size:', requests.length, '/ Max:', MAX_CACHE_ENTRIES);
-
-    // Get all cached responses with their dates
-    const entries = await Promise.all(
-      requests.map(async (request) => {
-        const response = await cache.match(request);
-        const dateHeader = response?.headers.get('date');
-        const timestamp = dateHeader ? new Date(dateHeader).getTime() : 0;
-
-        return { request, timestamp };
-      })
-    );
-
-    // Sort by timestamp (oldest first)
-    entries.sort((a, b) => a.timestamp - b.timestamp);
-
-    // Delete oldest entries
-    const toDelete = entries.slice(0, entries.length - MAX_CACHE_ENTRIES);
-    console.log('[Service Worker] Removing', toDelete.length, 'old cache entries');
-
-    await Promise.all(
-      toDelete.map(({ request }) => cache.delete(request))
-    );
-  } catch (error) {
-    console.error('[Service Worker] Cache maintenance failed:', error);
-  }
-}
-
-// ============================================================================
-// Periodic Tasks
-// ============================================================================
-
-// Run cache maintenance every hour
-setInterval(maintainCacheSize, 3600000);

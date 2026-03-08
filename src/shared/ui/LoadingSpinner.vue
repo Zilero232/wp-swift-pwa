@@ -1,30 +1,28 @@
 <script setup lang="ts">
-import {
- ProgressSpinner 
-} from 'primevue';
+import { ProgressSpinner } from "primevue";
 
 interface Props {
-  size?: 'sm' | 'md' | 'lg';
+  size?: "sm" | "md" | "lg";
   message?: string;
   centered?: boolean;
 }
 
 withDefaults(defineProps<Props>(), {
-  size: 'md',
-  message: '',
+  size: "md",
+  message: "",
   centered: true,
 });
 
 const sizeClasses = {
-  sm: 'tw:w-8 tw:h-8',
-  md: 'tw:w-12 tw:h-12',
-  lg: 'tw:w-16 tw:h-16',
+  sm: "tw:w-8 tw:h-8",
+  md: "tw:w-12 tw:h-12",
+  lg: "tw:w-16 tw:h-16",
 };
 
 const paddingClasses = {
-  sm: 'tw:p-4',
-  md: 'tw:p-8',
-  lg: 'tw:p-12',
+  sm: "tw:p-4",
+  md: "tw:p-8",
+  lg: "tw:p-12",
 };
 </script>
 

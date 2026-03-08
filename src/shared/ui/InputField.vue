@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {
- InputText 
-} from 'primevue';
+import { InputText } from "primevue";
 
 interface Props {
   label: string;

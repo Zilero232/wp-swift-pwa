@@ -1,37 +1,23 @@
 <script setup lang="ts">
-import {
- ref, computed 
-} from 'vue';
-import {
- Button 
-} from 'primevue';
+import { Button } from "primevue";
+import { ref, computed, defineAsyncComponent } from "vue";
 
-import {
- MediaLibrary 
-} from '@/features/media-library';
+import { useManifestMutation } from "../model/useManifestMutation";
+import { useManifestQuery } from "../model/useManifestQuery";
 
-import SelectField from '@/shared/ui/SelectField.vue';
-import InputField from '@/shared/ui/InputField.vue';
-import MediaPreview from '@/shared/ui/MediaPreview.vue';
+import { SCREENSHOT_FORM_FACTOR_OPTIONS } from "@/shared/config/display.constants";
+import type { ManifestScreenshot } from "@/shared/types/manifest";
+import type { MediaAttachment } from "@/shared/types/media";
+import InputField from "@/shared/ui/InputField.vue";
+import MediaPreview from "@/shared/ui/MediaPreview.vue";
+import SelectField from "@/shared/ui/SelectField.vue";
 
-import type {
- MediaAttachment 
-} from '@/shared/types/media';
-import type {
- ManifestScreenshot 
-} from '@/shared/types/manifest';
+const MediaLibrary = defineAsyncComponent(
+  () => import("@/features/media-library/ui/MediaLibrary.vue"),
+);
 
-import {
- SCREENSHOT_FORM_FACTOR_OPTIONS 
-} from '@/shared/config/display.constants';
-
-import {
- useManifestQuery 
-} from '../model/useManifestQuery';
-
-const {
- queryManifest, updateManifest 
-} = useManifestQuery();
+const { queryManifest } = useManifestQuery();
+const { updateManifest } = useManifestMutation();
 
 const screenshots = computed(() => queryManifest.data.value?.screenshots ?? []);
 
@@ -44,10 +30,10 @@ const addScreenshot = () => {
   const items = [...screenshots.value];
 
   items.push({
-    src: '',
-    sizes: '',
-    type: '',
-    label: '',
+    src: "",
+    sizes: "",
+    type: "",
+    label: "",
   });
 
   updateManifest({
@@ -88,9 +74,7 @@ const updateScreenshot = (
   });
 };
 
-const handleLibrarySelect = ({
- url, width, height, mime_type, alt 
-}: MediaAttachment) => {
+const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttachment) => {
   if (selectedIndexItem.value === null) return;
 
   const items = screenshots.value.map((item, i) => {
@@ -128,9 +112,7 @@ const handleLibrarySelect = ({
             {{ index + 1 }}
           </div>
 
-          <span class="tw:text-sm tw:font-medium tw:text-gray-700"
-            >Скриншот #{{ index + 1 }}</span
-          >
+          <span class="tw:text-sm tw:font-medium tw:text-gray-700">Скриншот #{{ index + 1 }}</span>
         </div>
 
         <div class="tw:flex tw:gap-2">

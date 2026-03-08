@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import {
- ref, watch 
-} from 'vue';
-import {
- codeToHtml 
-} from 'shiki';
+import { codeToHtml } from "shiki";
+import { ref, watch } from "vue";
 
 interface Props {
   manifestJson: string;
@@ -12,16 +8,16 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const highlightedCode = ref('');
+const highlightedCode = ref("");
 
 const highlight = async (code: string) => {
   if (!code) {
-    return (highlightedCode.value = '');
+    return (highlightedCode.value = "");
   }
 
   highlightedCode.value = await codeToHtml(code, {
-    lang: 'json',
-    theme: 'one-dark-pro',
+    lang: "json",
+    theme: "one-dark-pro",
   });
 };
 

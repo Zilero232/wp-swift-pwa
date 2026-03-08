@@ -1,22 +1,14 @@
-import './assets/main.css';
+import "./assets/main.css";
 
-import {
- createApp 
-} from 'vue';
-import {
- createPinia 
-} from 'pinia';
-import {
- ToastService, ConfirmationService, Tooltip 
-} from 'primevue';
-import {
- VueQueryPlugin 
-} from '@tanstack/vue-query';
-import PrimeVue from 'primevue/config';
-import Aura from '@primeuix/themes/aura';
+import Aura from "@primeuix/themes/aura";
+import { VueQueryPlugin } from "@tanstack/vue-query";
+import { createPinia } from "pinia";
+import { ToastService, ConfirmationService, Tooltip } from "primevue";
+import PrimeVue from "primevue/config";
+import { createApp } from "vue";
 
-import App from './App.vue';
-import router from './router';
+import App from "./App.vue";
+import router from "./router";
 
 const app = createApp(App);
 
@@ -28,7 +20,7 @@ app.use(PrimeVue, {
   theme: {
     preset: Aura,
     options: {
-      prefix: 'swift-pwa',
+      prefix: "swift-pwa",
       darkModeSelector: false,
     },
   },
@@ -48,7 +40,7 @@ app.use(VueQueryPlugin, {
 app.use(router);
 
 // Register tooltip directive
-app.directive('tooltip', Tooltip);
+app.directive("tooltip", Tooltip);
 
 // Mount app
-app.mount('#swift-pwa-settings-app');
+app.mount("#swift-pwa-settings-app");

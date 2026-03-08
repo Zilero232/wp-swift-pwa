@@ -1,16 +1,13 @@
 <script setup lang="ts">
-import {
- computed 
-} from 'vue';
-import InputField from '@/shared/ui/InputField.vue';
+import { computed } from "vue";
 
-import {
- useManifestQuery 
-} from '../model/useManifestQuery';
+import { useManifestMutation } from "../model/useManifestMutation";
+import { useManifestQuery } from "../model/useManifestQuery";
 
-const {
- queryManifest, updateManifest 
-} = useManifestQuery();
+import InputField from "@/shared/ui/InputField.vue";
+
+const { queryManifest } = useManifestQuery();
+const { updateManifest } = useManifestMutation();
 
 const queryManifestData = computed(() => queryManifest.data.value);
 </script>

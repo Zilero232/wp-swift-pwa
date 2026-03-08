@@ -1,22 +1,15 @@
 <script setup lang="ts">
-import {
- computed 
-} from 'vue';
+import { computed } from "vue";
 
-import SelectField from '@/shared/ui/SelectField.vue';
-import ColorInput from '@/shared/ui/ColorInput.vue';
+import { useManifestMutation } from "../model/useManifestMutation";
+import { useManifestQuery } from "../model/useManifestQuery";
 
-import {
- DISPLAY_OPTIONS, ORIENTATION_OPTIONS 
-} from '@/shared/config/display.constants';
+import { DISPLAY_OPTIONS, ORIENTATION_OPTIONS } from "@/shared/config/display.constants";
+import ColorInput from "@/shared/ui/ColorInput.vue";
+import SelectField from "@/shared/ui/SelectField.vue";
 
-import {
- useManifestQuery 
-} from '../model/useManifestQuery';
-
-const {
- queryManifest, updateManifest 
-} = useManifestQuery();
+const { queryManifest } = useManifestQuery();
+const { updateManifest } = useManifestMutation();
 
 const queryManifestData = computed(() => queryManifest.data.value);
 </script>

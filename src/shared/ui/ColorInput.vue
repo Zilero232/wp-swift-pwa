@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {
- InputText, ColorPicker 
-} from 'primevue';
+import { InputText, ColorPicker } from "primevue";
 
 interface Props {
   label: string;
@@ -13,7 +11,7 @@ interface Props {
 }
 
 interface Emits {
-  (e: 'update:modelValue', value: string): void;
+  (e: "update:modelValue", value: string): void;
 }
 
 defineProps<Props>();
@@ -21,11 +19,11 @@ defineProps<Props>();
 const emit = defineEmits<Emits>();
 
 const handleColorChange = (value: string | undefined) => {
-  emit('update:modelValue', value || '');
+  emit("update:modelValue", value || "");
 };
 
 const handleTextInput = (value: string | undefined) => {
-  emit('update:modelValue', value || '');
+  emit("update:modelValue", value || "");
 };
 </script>
 

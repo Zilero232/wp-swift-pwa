@@ -1,44 +1,25 @@
 <script setup lang="ts">
-import {
- Card, Tabs, TabList, Tab, TabPanels, TabPanel 
-} from 'primevue';
+import { Card, Tabs, TabList, Tab, TabPanels, TabPanel } from "primevue";
+import { defineAsyncComponent } from "vue";
 
-import ManifestCodePreview from '@/entities/preview/ui/ManifestCodePreview.vue';
-import ServiceWorkerCodePreview from '@/entities/preview/ui/ServiceWorkerCodePreview.vue';
-import PreviewActionsBar from '@/entities/preview/ui/PreviewActionsBar.vue';
+import { usePreviewManifest } from "@/entities/preview/model/usePreviewManifest";
+import { usePreviewServiceWorker } from "@/entities/preview/model/usePreviewServiceWorker";
+import { usePreviewTabs } from "@/entities/preview/model/usePreviewTabs";
+import PreviewActionsBar from "@/entities/preview/ui/PreviewActionsBar.vue";
+import { FILE_NAMES } from "@/shared/config/files.constants";
+import LoadingSpinner from "@/shared/ui/LoadingSpinner.vue";
+import PageHeader from "@/shared/ui/PageHeader.vue";
 
-import {
- useManifestQuery 
-} from '@/entities/manifest/model/useManifestQuery';
+const ManifestCodePreview = defineAsyncComponent(
+  () => import("@/entities/preview/ui/ManifestCodePreview.vue"),
+);
 
-import {
- usePreviewManifest 
-} from '@/entities/preview/model/usePreviewManifest';
-import {
- usePreviewServiceWorker 
-} from '@/entities/preview/model/usePreviewServiceWorker';
-import {
- usePreviewTabs 
-} from '@/entities/preview/model/usePreviewTabs';
+const ServiceWorkerCodePreview = defineAsyncComponent(
+  () => import("@/entities/preview/ui/ServiceWorkerCodePreview.vue"),
+);
 
-import PageHeader from '@/shared/ui/PageHeader.vue';
-import LoadingSpinner from '@/shared/ui/LoadingSpinner.vue';
-
-import {
- FILE_NAMES 
-} from '@/shared/config/files.constants';
-
-const {
- loadManifest 
-} = useManifestQuery();
-
-const {
-  isLoadingManifest,
-  hasManifestData,
-  manifestJSON,
-  copyManifest,
-  downloadManifest,
-} = usePreviewManifest();
+const { isLoadingManifest, hasManifestData, manifestJSON, copyManifest, downloadManifest } =
+  usePreviewManifest();
 
 const {
   isLoadingServiceWorker,
@@ -46,17 +27,14 @@ const {
   serviceWorkerCode,
   copyServiceWorker,
   downloadServiceWorker,
-  loadServiceWorkerCode,
 } = usePreviewServiceWorker();
 
-const {
- activeTabValue, setActiveTab 
-} = usePreviewTabs({
+const { activeTabValue, setActiveTab } = usePreviewTabs({
   onManifestTab: () => {
-    loadManifest();
+    // TODO: Load manifest.
   },
   onServiceWorkerTab: () => {
-    loadServiceWorkerCode();
+    // TODO: Load service worker code.
   },
 });
 </script>
@@ -73,9 +51,7 @@ const {
         <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
           <i class="pi pi-file-code tw:text-xl tw:text-blue-600"></i>
 
-          <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800 tw:flex-1">
-            Просмотр файлов
-          </h3>
+          <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800 tw:flex-1">Просмотр файлов</h3>
         </div>
       </template>
 

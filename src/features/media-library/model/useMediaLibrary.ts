@@ -1,46 +1,27 @@
-import {
- computed, shallowRef, toValue, type MaybeRefOrGetter 
-} from 'vue';
-import {
- useQuery, useQueryClient 
-} from '@tanstack/vue-query';
-import {
- refDebounced 
-} from '@vueuse/core';
+import { useQuery, useQueryClient } from "@tanstack/vue-query";
+import { refDebounced } from "@vueuse/core";
+import { computed, shallowRef, toValue, type MaybeRefOrGetter } from "vue";
 
-import {
- mediaAPI, type MediaLibraryResponse 
-} from '@/services/media.service';
-import {
- useToast 
-} from '@/shared/composable/useToast';
-
-import type {
- MediaAttachment 
-} from '@/shared/types/media';
+import { mediaAPI, type MediaLibraryResponse } from "@/services/media.service";
+import { useToast } from "@/shared/composable/useToast";
+import type { MediaAttachment } from "@/shared/types/media";
 
 interface UseMediaLibraryOptions {
   visible: MaybeRefOrGetter<boolean>;
 }
 
-export function useMediaLibrary({
- visible 
-}: UseMediaLibraryOptions) {
-  const {
- showSuccess 
-} = useToast();
+export function useMediaLibrary({ visible }: UseMediaLibraryOptions) {
+  const { showSuccess } = useToast();
   const queryClient = useQueryClient();
 
-  const searchQuery = shallowRef('');
+  const searchQuery = shallowRef("");
   const debouncedSearchValue = refDebounced(searchQuery, 500);
 
   const queryKey = computed(() => {
-    return ['media-library', debouncedSearchValue.value];
+    return ["media-library", debouncedSearchValue.value];
   });
 
-  const {
- isLoading, data 
-} = useQuery({
+  const { isLoading, data } = useQuery({
     queryKey,
     queryFn: async () => {
       return await mediaAPI.getLibrary({
@@ -69,6 +50,6 @@ export function useMediaLibrary({
     libraryItems,
     isLoading,
     addUploadedToLibrary,
-    showSuccessMessage: () => showSuccess('Изображение выбрано'),
+    showSuccessMessage: () => showSuccess("Изображение выбрано"),
   };
 }

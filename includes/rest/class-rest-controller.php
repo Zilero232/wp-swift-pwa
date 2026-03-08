@@ -32,22 +32,37 @@ abstract class RestController {
 
 	/**
 	 * Format success response.
+	 *
+	 * @param mixed  $data Data to return.
+	 * @param string $message Message to return.
+	 *
+	 * @return WP_REST_Response Response object.
 	 */
-	protected function success_response( $data = null, string $message = '' ): WP_REST_Response {
+	protected function success_response( $data = null, $message = '' ) {
+		$response = [
+			'success' => true,
+			'data'    => $data,
+		];
+
+		if ( ! empty( $message ) ) {
+			$response['message'] = $message;
+		}
+
 		return new WP_REST_Response(
-			[
-				'success' => true,
-				'data'    => $data,
-				'message' => $message,
-			],
+			$response,
 			200
 		);
 	}
 
 	/**
 	 * Format error response.
+	 *
+	 * @param string $message Error message.
+	 * @param int    $status HTTP status code.
+	 *
+	 * @return WP_REST_Response Response object.
 	 */
-	protected function error_response( string $message, int $status = 400 ): WP_REST_Response {
+	protected function error_response( $message, $status = 400 ) {
 		return new WP_REST_Response(
 			[
 				'success' => false,

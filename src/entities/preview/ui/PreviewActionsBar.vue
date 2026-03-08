@@ -7,8 +7,8 @@ interface Props {
 }
 
 interface Emits {
-  (e: 'copy'): void;
-  (e: 'download'): void;
+  (e: "copy"): void;
+  (e: "download"): void;
 }
 
 withDefaults(defineProps<Props>(), {

@@ -1,26 +1,16 @@
 <script setup lang="ts">
-import {
- computed 
-} from 'vue';
-import {
- ToggleSwitch 
-} from 'primevue';
+import { ToggleSwitch } from "primevue";
+import { computed } from "vue";
 
-import InputField from '@/shared/ui/InputField.vue';
-import InfoBlock from '@/shared/ui/InfoBlock.vue';
+import { useServiceWorkerMutation } from "../model/useServiceWorkerMutation";
+import { useServiceWorkerQuery } from "../model/useServiceWorkerQuery";
 
-import type {
-  BackgroundSyncConfig,
-  PushNotificationsConfig,
-} from '@/shared/types/service-worker';
+import type { BackgroundSyncConfig, PushNotificationsConfig } from "@/shared/types/service-worker";
+import InfoBlock from "@/shared/ui/InfoBlock.vue";
+import InputField from "@/shared/ui/InputField.vue";
 
-import {
- useServiceWorkerQuery 
-} from '../model/useServiceWorkerQuery';
-
-const {
- queryServiceWorker, updateServiceWorker 
-} = useServiceWorkerQuery();
+const { queryServiceWorker } = useServiceWorkerQuery();
+const { updateServiceWorker } = useServiceWorkerMutation();
 
 const queryServiceWorkerData = computed(() => queryServiceWorker.data.value);
 
@@ -49,30 +39,10 @@ const updatePushNotifications = (payload: Partial<PushNotificationsConfig>) => {
 
 <template>
   <div class="tw:flex tw:flex-col tw:gap-6">
-    <div
-      class="tw:flex tw:items-center tw:justify-between tw:p-4 tw:bg-gray-50 tw:rounded-lg"
-    >
-      <div>
-        <label class="tw:font-medium tw:text-gray-700 tw:block tw:mb-1">
-          Режим отладки
-        </label>
-        <small class="tw:text-gray-500">
-          Включить подробное логирование в консоль браузера
-        </small>
-      </div>
-
-      <ToggleSwitch
-        :model-value="queryServiceWorkerData?.debug"
-        @update:model-value="updateServiceWorker({ debug: $event })"
-      />
-    </div>
-
     <div class="tw:border tw:border-gray-200 tw:rounded-lg tw:p-4 tw:space-y-4">
       <div class="tw:flex tw:items-center tw:justify-between">
         <div>
-          <label class="tw:font-medium tw:text-gray-700 tw:block tw:mb-1">
-            Background Sync
-          </label>
+          <label class="tw:font-medium tw:text-gray-700 tw:block tw:mb-1"> Background Sync </label>
           <small class="tw:text-gray-500"> Синхронизация данных в фоновом режиме </small>
         </div>
 
@@ -95,13 +65,9 @@ const updatePushNotifications = (payload: Partial<PushNotificationsConfig>) => {
     <div class="tw:border tw:border-gray-200 tw:rounded-lg tw:p-4 tw:space-y-4">
       <div class="tw:flex tw:items-center tw:justify-between">
         <div>
-          <label class="tw:font-medium tw:text-gray-700 tw:block tw:mb-1">
-            Push уведомления
-          </label>
+          <label class="tw:font-medium tw:text-gray-700 tw:block tw:mb-1"> Push уведомления </label>
 
-          <small class="tw:text-gray-500">
-            Отправка push-уведомлений пользователям
-          </small>
+          <small class="tw:text-gray-500"> Отправка push-уведомлений пользователям </small>
         </div>
 
         <ToggleSwitch
@@ -122,8 +88,8 @@ const updatePushNotifications = (payload: Partial<PushNotificationsConfig>) => {
 
     <InfoBlock title="Экспериментальные функции:" variant="warning">
       <p class="tw:text-sm">
-        Background Sync и Push Notifications требуют дополнительной настройки на сервере и
-        могут работать не во всех браузерах.
+        Background Sync и Push Notifications требуют дополнительной настройки на сервере и могут
+        работать не во всех браузерах.
       </p>
     </InfoBlock>
   </div>

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import {
- Select 
-} from 'primevue';
+import { Select } from "primevue";
 
 interface Props {
   label: string;

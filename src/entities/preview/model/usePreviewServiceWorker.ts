@@ -1,33 +1,23 @@
-import {
- computed 
-} from 'vue';
+import { computed } from "vue";
 
-import {
- useServiceWorkerQuery 
-} from '@/entities/service-worker/model/useServiceWorkerQuery';
+import { useServiceWorkerCodeQuery } from "@/entities/service-worker/model/useServiceWorkerCodeQuery";
+import { useServiceWorkerQuery } from "@/entities/service-worker/model/useServiceWorkerQuery";
+import { useDownload } from "@/shared/composable/useDownload";
+import { FILE_NAMES } from "@/shared/config/files.constants";
 
-import {
- useDownload 
-} from '@/shared/composable/useDownload';
+export const usePreviewServiceWorker = () => {
+  const { queryServiceWorker } = useServiceWorkerQuery();
 
-import {
- FILE_NAMES 
-} from '@/shared/config/files.constants';
+  const { queryServiceWorkerCode } = useServiceWorkerCodeQuery(queryServiceWorker.data);
 
-export function usePreviewServiceWorker() {
-  const {
- queryServiceWorkerCode 
-} = useServiceWorkerQuery();
-  const {
- copyToClipboard, downloadFile 
-} = useDownload();
+  const { copyToClipboard, downloadFile } = useDownload();
 
-  const code = computed(() => queryServiceWorkerCode.data.value || '');
+  const code = computed(() => queryServiceWorkerCode.data.value || "");
 
   const copy = () => {
     copyToClipboard(code.value, {
-      successMessage: 'Service Worker код скопирован в буфер обмена',
-      errorMessage: 'Ошибка копирования кода',
+      successMessage: "Service Worker код скопирован в буфер обмена",
+      errorMessage: "Ошибка копирования кода",
     });
   };
 
@@ -36,14 +26,10 @@ export function usePreviewServiceWorker() {
 
     downloadFile(code.value, {
       filename: FILE_NAMES.SERVICE_WORKER,
-      mimeType: 'application/javascript',
-      successMessage: 'Service Worker успешно загружен',
-      errorMessage: 'Ошибка загрузки файла',
+      mimeType: "application/javascript",
+      successMessage: "Service Worker успешно загружен",
+      errorMessage: "Ошибка загрузки файла",
     });
-  };
-
-  const load = () => {
-    queryServiceWorkerCode.refetch();
   };
 
   return {
@@ -52,6 +38,5 @@ export function usePreviewServiceWorker() {
     serviceWorkerCode: code,
     copyServiceWorker: copy,
     downloadServiceWorker: download,
-    loadServiceWorkerCode: load,
   };
-}
+};

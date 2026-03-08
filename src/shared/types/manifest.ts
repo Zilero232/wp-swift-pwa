@@ -2,62 +2,62 @@
  * Display modes for PWA
  */
 export enum DisplayMode {
-  FULLSCREEN = 'fullscreen',
-  STANDALONE = 'standalone',
-  MINIMAL_UI = 'minimal-ui',
-  BROWSER = 'browser',
+  FULLSCREEN = "fullscreen",
+  STANDALONE = "standalone",
+  MINIMAL_UI = "minimal-ui",
+  BROWSER = "browser",
 }
 
 /**
  * Screen orientation options
  */
 export enum OrientationMode {
-  ANY = 'any',
-  NATURAL = 'natural',
-  LANDSCAPE = 'landscape',
-  LANDSCAPE_PRIMARY = 'landscape-primary',
-  LANDSCAPE_SECONDARY = 'landscape-secondary',
-  PORTRAIT = 'portrait',
-  PORTRAIT_PRIMARY = 'portrait-primary',
-  PORTRAIT_SECONDARY = 'portrait-secondary',
+  ANY = "any",
+  NATURAL = "natural",
+  LANDSCAPE = "landscape",
+  LANDSCAPE_PRIMARY = "landscape-primary",
+  LANDSCAPE_SECONDARY = "landscape-secondary",
+  PORTRAIT = "portrait",
+  PORTRAIT_PRIMARY = "portrait-primary",
+  PORTRAIT_SECONDARY = "portrait-secondary",
 }
 
 /**
  * Text direction
  */
 export enum TextDirection {
-  LTR = 'ltr',
-  RTL = 'rtl',
-  AUTO = 'auto',
+  LTR = "ltr",
+  RTL = "rtl",
+  AUTO = "auto",
 }
 
 /**
  * Icon purpose types
  */
 export enum IconPurpose {
-  ANY = 'any',
-  MASKABLE = 'maskable',
-  MONOCHROME = 'monochrome',
+  ANY = "any",
+  MASKABLE = "maskable",
+  MONOCHROME = "monochrome",
 }
 
 /**
  * Related application platforms
  */
 export enum RelatedApplicationPlatform {
-  PLAY = 'play',
-  ITUNES = 'itunes',
-  WINDOWS = 'windows',
-  AMAZON = 'amazon',
-  FACEBOOK = 'facebook',
-  WEBAPP = 'webapp',
+  PLAY = "play",
+  ITUNES = "itunes",
+  WINDOWS = "windows",
+  AMAZON = "amazon",
+  FACEBOOK = "facebook",
+  WEBAPP = "webapp",
 }
 
 /**
  * Form factors
  */
 export enum ScreenshotFormFactor {
-  NARROW = 'narrow',
-  WIDE = 'wide',
+  NARROW = "narrow",
+  WIDE = "wide",
 }
 
 /**

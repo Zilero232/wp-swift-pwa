@@ -100,7 +100,7 @@ class File_Handler {
 	 *
 	 * @return string|WP_Error File content or WP_Error on failure.
 	 */
-	public static function get_file_content( $file_type ): string|WP_Error {
+	public static function get_file_content( $file_type ) {
 		// Include filesystem and make sure that it's properly set up.
 		global $wp_filesystem;
 
@@ -165,7 +165,7 @@ class File_Handler {
 		if ( ! $wp_filesystem->exists( $file_path ) ) {
 			return new WP_Error(
 				'file_not_found',
-				sprintf( 'File does not exist: %s', $file_name )
+				sprintf( 'File does not exist: %s', $file_type )
 			);
 		}
 
@@ -174,7 +174,7 @@ class File_Handler {
 		if ( ! $result ) {
 			return new WP_Error(
 				'file_update_failed',
-				sprintf( 'Failed to update file: %s', $file_path )
+				sprintf( 'Failed to update file: %s', $file_type )
 			);
 		}
 

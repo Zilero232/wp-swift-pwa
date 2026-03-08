@@ -1,24 +1,15 @@
 <script setup lang="ts">
-import {
- computed 
-} from 'vue';
-import {
- MultiSelect, Tag 
-} from 'primevue';
+import { MultiSelect, Tag } from "primevue";
+import { computed } from "vue";
 
-import InfoBlock from '@/shared/ui/InfoBlock.vue';
+import { useManifestMutation } from "../model/useManifestMutation";
+import { useManifestQuery } from "../model/useManifestQuery";
 
-import {
- APP_CATEGORIES 
-} from '@/shared/config/categories.constants';
+import { APP_CATEGORIES } from "@/shared/config/categories.constants";
+import InfoBlock from "@/shared/ui/InfoBlock.vue";
 
-import {
- useManifestQuery 
-} from '../model/useManifestQuery';
-
-const {
- queryManifest, updateManifest 
-} = useManifestQuery();
+const { queryManifest } = useManifestQuery();
+const { updateManifest } = useManifestMutation();
 
 const categories = computed(() => queryManifest.data.value?.categories ?? []);
 
@@ -107,8 +98,7 @@ const removeCategory = (category: string) => {
       <i class="pi pi-info-circle tw:text-blue-600 tw:text-2xl tw:mb-2"></i>
 
       <p class="tw:text-sm tw:text-blue-900">
-        Категории не выбраны. Выберите категории, чтобы помочь пользователям найти ваше
-        приложение.
+        Категории не выбраны. Выберите категории, чтобы помочь пользователям найти ваше приложение.
       </p>
     </div>
 
@@ -118,12 +108,8 @@ const removeCategory = (category: string) => {
       icon="pi-lightbulb"
       as-list
     >
-      <li>
-        Выбирайте категории, максимально соответствующие функциональности приложения
-      </li>
-      <li>
-        Не злоупотребляйте количеством — лучше 2-3 точные категории, чем 10 неподходящих
-      </li>
+      <li>Выбирайте категории, максимально соответствующие функциональности приложения</li>
+      <li>Не злоупотребляйте количеством — лучше 2-3 точные категории, чем 10 неподходящих</li>
       <li>Основная категория должна быть на первом месте</li>
     </InfoBlock>
   </div>

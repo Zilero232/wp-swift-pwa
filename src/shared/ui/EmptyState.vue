@@ -17,6 +17,6 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  icon: 'pi pi-info-circle',
+  icon: "pi pi-info-circle",
 });
 </script>

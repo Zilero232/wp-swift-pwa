@@ -15,9 +15,11 @@ require_once SWIFT_PWA_PLUGIN_PATH . 'includes/admin/class-admin-panel.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/admin/class-enqueue.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/core/class-pwa-constants.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/core/class-file-handler.php';
-require_once SWIFT_PWA_PLUGIN_PATH . 'includes/core/class-manifest-handler.php';
-require_once SWIFT_PWA_PLUGIN_PATH . 'includes/core/class-service-worker-handler.php';
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/core/class-service-worker-generator.php';
+
+// Require handlers.
+require_once SWIFT_PWA_PLUGIN_PATH . 'includes/handlers/class-manifest-handler.php';
+require_once SWIFT_PWA_PLUGIN_PATH . 'includes/handlers/class-service-worker-handler.php';
 
 // Require REST base class.
 require_once SWIFT_PWA_PLUGIN_PATH . 'includes/rest/class-rest-controller.php';

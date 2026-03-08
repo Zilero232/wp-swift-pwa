@@ -1,19 +1,11 @@
 <script setup lang="ts">
-import {
- computed 
-} from 'vue';
-import {
- RouterView, useRoute 
-} from 'vue-router';
+import { computed } from "vue";
+import { RouterView, useRoute } from "vue-router";
 
-import Header from '@/widgets/header/Header.vue';
-import Footer from '@/widgets/footer/Footer.vue';
-
-import LoadingSpinner from '@/shared/ui/LoadingSpinner.vue';
-
-import {
- RouteName 
-} from '@/shared/config/routes.constants';
+import { RouteName } from "@/shared/config/routes.constants";
+import LoadingSpinner from "@/shared/ui/LoadingSpinner.vue";
+import Footer from "@/widgets/footer/Footer.vue";
+import Header from "@/widgets/header/Header.vue";
 
 const route = useRoute();
 

@@ -1,26 +1,20 @@
 <script setup lang="ts">
-import {
- computed, ref 
-} from 'vue';
-import {
- Button, Chip 
-} from 'primevue';
+import { Button, Chip } from "primevue";
+import { computed, ref } from "vue";
 
-import InputField from '@/shared/ui/InputField.vue';
-import InfoBlock from '@/shared/ui/InfoBlock.vue';
+import { useServiceWorkerMutation } from "../model/useServiceWorkerMutation";
+import { useServiceWorkerQuery } from "../model/useServiceWorkerQuery";
 
-import {
- useServiceWorkerQuery 
-} from '../model/useServiceWorkerQuery';
+import InfoBlock from "@/shared/ui/InfoBlock.vue";
+import InputField from "@/shared/ui/InputField.vue";
 
-const {
- queryServiceWorker, updateServiceWorker 
-} = useServiceWorkerQuery();
+const { queryServiceWorker } = useServiceWorkerQuery();
+const { updateServiceWorker } = useServiceWorkerMutation();
 
 const queryServiceWorkerData = computed(() => queryServiceWorker.data.value);
 const skipPatterns = computed(() => queryServiceWorkerData.value?.skip_patterns || []);
 
-const newPattern = ref('');
+const newPattern = ref("");
 
 const addPattern = () => {
   if (!newPattern.value.trim()) return;
@@ -34,7 +28,7 @@ const addPattern = () => {
     skip_patterns: [...currentPatterns, newPattern.value.trim()],
   });
 
-  newPattern.value = '';
+  newPattern.value = "";
 };
 
 const removePattern = (pattern: string) => {
@@ -51,7 +45,7 @@ const addDefaultPattern = (pattern: string) => {
   });
 };
 
-const defaultPatterns = ['/wp-admin/', '/wp-login.php', '/wp-json/wp/'];
+const defaultPatterns = ["/wp-admin/", "/wp-login.php", "/wp-json/wp/"];
 </script>
 
 <template>
@@ -69,12 +63,7 @@ const defaultPatterns = ['/wp-admin/', '/wp-login.php', '/wp-json/wp/'];
         class="tw:flex-1"
         @keyup.enter="addPattern"
       />
-      <Button
-        label="Добавить"
-        icon="pi pi-plus"
-        @click="addPattern"
-        class="tw:self-end tw:mb-1"
-      />
+      <Button label="Добавить" icon="pi pi-plus" @click="addPattern" class="tw:self-end tw:mb-1" />
     </div>
 
     <div v-if="skipPatterns.length > 0" class="tw:space-y-2">
@@ -91,9 +80,7 @@ const defaultPatterns = ['/wp-admin/', '/wp-login.php', '/wp-json/wp/'];
     </div>
 
     <div class="tw:space-y-2">
-      <h4 class="tw:text-sm tw:font-semibold tw:text-gray-700">
-        Рекомендуемые паттерны:
-      </h4>
+      <h4 class="tw:text-sm tw:font-semibold tw:text-gray-700">Рекомендуемые паттерны:</h4>
       <div class="tw:flex tw:flex-wrap tw:gap-2">
         <Button
           v-for="pattern in defaultPatterns"
