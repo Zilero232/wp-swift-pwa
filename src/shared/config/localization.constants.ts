@@ -5,15 +5,15 @@ import { TextDirection } from "@/shared/types/manifest";
  */
 export const TEXT_DIRECTION_OPTIONS = [
   {
-    label: "LTR (Слева направо)",
+    label: "LTR (left to right)",
     value: TextDirection.LTR,
   },
   {
-    label: "RTL (Справа налево)",
+    label: "RTL (right to left)",
     value: TextDirection.RTL,
   },
   {
-    label: "Auto (Автоматически)",
+    label: "Auto (automatic)",
     value: TextDirection.AUTO,
   },
 ];
@@ -35,11 +35,11 @@ export const LANGUAGE_OPTIONS = [
     value: "en-GB",
   },
   {
-    label: "Русский (ru)",
+    label: "Russian (ru)",
     value: "ru",
   },
   {
-    label: "Русский RU (ru-RU)",
+    label: "Russian RU (ru-RU)",
     value: "ru-RU",
   },
   {

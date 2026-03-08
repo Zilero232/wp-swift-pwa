@@ -38,11 +38,11 @@ const isDisabledServiceWorker = computed(() => {
 
 const handleResetServiceWorker = () => {
   confirm.require({
-    message: "Вы уверены, что хотите сбросить все настройки? Это действие нельзя отменить.",
-    header: "Подтверждение сброса",
+    message: "Are you sure you want to reset all settings? This action cannot be undone.",
+    header: "Confirm reset",
     icon: "pi pi-exclamation-triangle",
-    acceptLabel: "Да, сбросить",
-    rejectLabel: "Отмена",
+    acceptLabel: "Yes, reset",
+    rejectLabel: "Cancel",
     acceptClass: "p-button-danger",
     accept: () => {
       mutationUpdateServiceWorker.mutate({});
@@ -56,11 +56,11 @@ const handleUpdateServiceWorker = () => {
 
 const handleResetManifest = () => {
   confirm.require({
-    message: "Вы уверены, что хотите сбросить все настройки? Это действие нельзя отменить.",
-    header: "Подтверждение сброса",
+    message: "Are you sure you want to reset all settings? This action cannot be undone.",
+    header: "Confirm reset",
     icon: "pi pi-exclamation-triangle",
-    acceptLabel: "Да, сбросить",
-    rejectLabel: "Отмена",
+    acceptLabel: "Yes, reset",
+    rejectLabel: "Cancel",
     acceptClass: "p-button-danger",
     accept: () => {
       mutationUpdateManifest.mutate({});
@@ -88,7 +88,7 @@ const handleUpdateManifest = () => {
         <template v-if="route.name === RouteName.MANIFEST">
           <Button
             icon="pi pi-refresh"
-            label="Сбросить"
+            label="Reset"
             severity="secondary"
             text
             :disabled="isDisabled.value"
@@ -97,7 +97,7 @@ const handleUpdateManifest = () => {
 
           <Button
             icon="pi pi-save"
-            label="Сохранить"
+            label="Save"
             :loading="mutationUpdateManifest.isPending.value"
             :disabled="isDisabled.value"
             @click="handleUpdateManifest"
@@ -107,7 +107,7 @@ const handleUpdateManifest = () => {
         <template v-else-if="route.name === RouteName.SERVICE_WORKER">
           <Button
             icon="pi pi-refresh"
-            label="Сбросить"
+            label="Reset"
             severity="secondary"
             text
             :disabled="isDisabledServiceWorker"
@@ -116,7 +116,7 @@ const handleUpdateManifest = () => {
 
           <Button
             icon="pi pi-save"
-            label="Сохранить"
+            label="Save"
             :loading="mutationUpdateServiceWorker.isPending.value"
             :disabled="isDisabledServiceWorker"
             @click="handleUpdateServiceWorker"
@@ -130,7 +130,7 @@ const handleUpdateManifest = () => {
     <div v-if="false">
       <i class="pi pi-info-circle"></i>
 
-      <span>У вас есть несохраненные изменения</span>
+      <span>You have unsaved changes</span>
     </div>
   </header>
 </template>

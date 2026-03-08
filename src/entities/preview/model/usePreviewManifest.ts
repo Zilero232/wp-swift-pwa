@@ -20,8 +20,8 @@ export const usePreviewManifest = () => {
 
   const copy = () => {
     copyToClipboard(manifestJSON.value, {
-      successMessage: "Манифест скопирован в буфер обмена",
-      errorMessage: "Ошибка копирования манифеста",
+      successMessage: "Manifest copied to clipboard",
+      errorMessage: "Failed to copy manifest",
     });
   };
 
@@ -29,8 +29,8 @@ export const usePreviewManifest = () => {
     if (!queryManifest.data.value) return;
 
     downloadJSON(queryManifest.data.value, FILE_NAMES.MANIFEST, {
-      successMessage: "Манифест успешно загружен",
-      errorMessage: "Ошибка загрузки манифеста",
+      successMessage: "Manifest downloaded successfully",
+      errorMessage: "Failed to download manifest",
     });
   };
 

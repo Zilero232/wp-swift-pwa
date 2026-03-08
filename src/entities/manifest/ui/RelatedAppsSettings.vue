@@ -63,9 +63,9 @@ const updateApp = (index: number, field: keyof RelatedApplication, value: string
     >
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-4">
         <SelectField
-          label="Платформа"
+          label="Platform"
           icon="pi pi-mobile"
-          placeholder="Выберите платформу"
+          placeholder="Select the platform"
           :options="RELATED_APPLICATION_PLATFORM_OPTIONS"
           :model-value="app.platform || ''"
           @update:model-value="updateApp(index, 'platform', $event)"
@@ -73,9 +73,9 @@ const updateApp = (index: number, field: keyof RelatedApplication, value: string
         />
 
         <InputField
-          label="ID приложения"
+          label="Application ID"
           icon="pi pi-id-card"
-          placeholder="ID приложения"
+          placeholder="Enter the application ID"
           :model-value="app.id || ''"
           @update:model-value="updateApp(index, 'id', $event)"
           required
@@ -83,9 +83,9 @@ const updateApp = (index: number, field: keyof RelatedApplication, value: string
 
         <div class="md:col-span-2">
           <InputField
-            label="URL приложения в магазине"
+            label="Application URL in the store"
             icon="pi pi-link"
-            placeholder="URL приложения в магазине"
+            placeholder="Enter the application URL in the store"
             :model-value="app.url || ''"
             @update:model-value="updateApp(index, 'url', $event)"
             required
@@ -99,7 +99,7 @@ const updateApp = (index: number, field: keyof RelatedApplication, value: string
     </div>
 
     <Button
-      label="Добавить приложение"
+      label="Add application"
       icon="pi pi-plus"
       outlined
       @click="addApp"
@@ -116,7 +116,7 @@ const updateApp = (index: number, field: keyof RelatedApplication, value: string
       />
 
       <label for="prefer_related" class="text-sm text-gray-700">
-        Предпочитать связанные приложения вместо PWA
+        Prefer related applications instead of PWA
       </label>
     </div>
   </div>

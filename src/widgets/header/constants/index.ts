@@ -1,7 +1,7 @@
 export const NAV_ITEMS = [
   {
     name: "status",
-    label: "Статус",
+    label: "Status",
     icon: "pi pi-check",
   },
   {
@@ -16,7 +16,7 @@ export const NAV_ITEMS = [
   },
   {
     name: "preview",
-    label: "Предпросмотр",
+    label: "Preview",
     icon: "pi pi-eye",
   },
 ];

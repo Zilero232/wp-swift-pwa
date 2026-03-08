@@ -40,16 +40,16 @@ const handleSelectAttachment = (item: MediaAttachment) => {
 <template>
   <ModalDialog
     :visible="visible"
-    header="Выберите изображение из библиотеки"
+    header="Select image from library"
     @update:visible="emit('update:visible', $event)"
   >
     <template #content>
       <div class="tw:flex tw:flex-col tw:gap-4">
         <InputField
           v-model="searchQuery"
-          label="Поиск изображений"
+          label="Search images"
           icon="pi pi-search"
-          placeholder="Найти изображение по названию или URL"
+          placeholder="Search images by name or URL"
         />
 
         <div v-if="isLoading" class="tw:flex tw:justify-center tw:items-center tw:py-8">
@@ -59,8 +59,8 @@ const handleSelectAttachment = (item: MediaAttachment) => {
         <EmptyState
           v-else-if="libraryItems.length === 0"
           icon="pi pi-images"
-          title="Изображения не найдены"
-          description="Попробуйте изменить поисковый запрос или загрузите новое изображение"
+          title="Images not found"
+          description="Try changing the search query or upload a new image"
         />
 
         <div
@@ -88,9 +88,9 @@ const handleSelectAttachment = (item: MediaAttachment) => {
         </div>
 
         <div class="tw:border-t tw:pt-4">
-          <div class="tw:text-sm tw:text-gray-600 tw:mb-2">Или загрузите новое изображение:</div>
+          <div class="tw:text-sm tw:text-gray-600 tw:mb-2">Or upload a new image:</div>
 
-          <MediaFileUpload choose-label="Загрузить новое изображение" @uploaded="handleUpload" />
+          <MediaFileUpload choose-label="Upload new image" @uploaded="handleUpload" />
         </div>
       </div>
     </template>

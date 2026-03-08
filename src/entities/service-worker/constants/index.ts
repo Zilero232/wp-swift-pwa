@@ -26,22 +26,22 @@ export const CACHE_STRATEGIES = [
 export const STRATEGY_INFO = {
   [ENUM_CACHE_STRATEGIES.CACHE_FIRST]: {
     title: "Cache First",
-    description: "сначала кэш, потом сеть (быстро, но может быть устаревшим)",
+    description: "Cache first, then network (fast, but may be outdated)",
   },
   [ENUM_CACHE_STRATEGIES.NETWORK_FIRST]: {
     title: "Network First",
-    description: "сначала сеть, потом кэш (актуально, но медленнее)",
+    description: "Network first, then cache (actual, but slower)",
   },
   [ENUM_CACHE_STRATEGIES.NETWORK_ONLY]: {
     title: "Network Only",
-    description: "только сеть (самое актуальное, нет офлайн-режима)",
+    description: "Only network (most actual, no offline mode)",
   },
   [ENUM_CACHE_STRATEGIES.CACHE_ONLY]: {
     title: "Cache Only",
-    description: "только кэш (быстро, но требует предзагрузки)",
+    description: "Only cache (fast, but requires preloading)",
   },
   [ENUM_CACHE_STRATEGIES.STALE_WHILE_REVALIDATE]: {
     title: "Stale While Revalidate",
-    description: "кэш, но если он устаревший, то сеть (быстро, но может быть устаревшим)",
+    description: "Cache, but if it's outdated, then network (fast, but may be outdated)",
   },
 };

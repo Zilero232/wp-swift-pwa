@@ -11,11 +11,11 @@ export function useMediaUpload() {
       return await mediaAPI.uploadFile(file);
     },
     onSuccess: (data) => {
-      showSuccess("Изображение загружено");
+      showSuccess("Image uploaded successfully");
       return data;
     },
     onError: () => {
-      showError("Не удалось загрузить изображение");
+      showError("Failed to upload image");
     },
   });
 

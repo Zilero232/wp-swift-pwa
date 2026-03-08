@@ -11,16 +11,16 @@ defineProps<Props>();
 
 const WHY_PWA_IMPORTANT = [
   {
-    title: "Service Workers работают только по HTTPS",
+    title: "Service Workers work only over HTTPS",
   },
   {
-    title: "Push-уведомления требуют безопасное соединение",
+    title: "Push notifications require a secure connection",
   },
   {
-    title: "Защита данных пользователей при офлайн-работе",
+    title: "Protection of user data when offline work",
   },
   {
-    title: "Доступ к мощным браузерным API",
+    title: "Access to powerful browser APIs",
   },
 ];
 </script>
@@ -34,7 +34,7 @@ const WHY_PWA_IMPORTANT = [
 
     <Message v-if="https.enabled" severity="success" icon="pi pi-check-circle" :closable="false">
       <div class="tw:flex tw:flex-col tw:gap-1">
-        <strong>HTTPS включён</strong>
+        <strong>HTTPS enabled</strong>
 
         <span class="tw:text-sm">{{ https.message }}</span>
 
@@ -46,7 +46,7 @@ const WHY_PWA_IMPORTANT = [
 
     <Message v-else severity="warn" icon="pi pi-exclamation-triangle" :closable="false">
       <div class="tw:flex tw:flex-col tw:gap-2">
-        <strong>HTTPS не включён</strong>
+        <strong>HTTPS disabled</strong>
 
         <span class="tw:text-sm">{{ https.message }}</span>
 
@@ -55,7 +55,7 @@ const WHY_PWA_IMPORTANT = [
         </code>
 
         <div class="tw:mt-2 tw:text-sm">
-          <p class="tw:font-semibold tw:mb-1">Почему HTTPS важен для PWA:</p>
+          <p class="tw:font-semibold tw:mb-1">Why HTTPS is important for PWA:</p>
 
           <ul class="tw:list-disc tw:list-inside tw:space-y-1 tw:text-xs">
             <li v-for="item in WHY_PWA_IMPORTANT" :key="item.title">{{ item.title }}</li>

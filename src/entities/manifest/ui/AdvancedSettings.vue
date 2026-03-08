@@ -19,17 +19,17 @@ const queryManifestData = computed(() => queryManifest.data.value);
   <div class="tw:flex tw:flex-col tw:gap-6">
     <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-4">
       <PostSelector
-        label="Стартовая страница"
+        label="Start page"
         icon="pi pi-home"
-        placeholder="Выберите стартовую страницу"
+        placeholder="Select the start page"
         :model-value="queryManifestData?.start_url"
         @update:model-value="updateManifest({ start_url: $event })"
       />
 
       <InputField
-        label="Область навигации"
+        label="Navigation scope"
         icon="pi pi-map"
-        placeholder="Ограничивает область навигации приложения"
+        placeholder="Limits the navigation scope of the application"
         :model-value="queryManifestData?.scope || '/'"
         @update:model-value="updateManifest({ scope: $event })"
       />
@@ -37,7 +37,7 @@ const queryManifestData = computed(() => queryManifest.data.value);
 
     <div class="tw:grid tw:grid-cols-1 tw:lg:grid-cols-2 tw:gap-4">
       <SelectField
-        label="Язык"
+        label="Language"
         icon="pi pi-language"
         :options="LANGUAGE_OPTIONS"
         :model-value="queryManifestData?.lang"
@@ -45,7 +45,7 @@ const queryManifestData = computed(() => queryManifest.data.value);
       />
 
       <SelectField
-        label="Направление текста"
+        label="Text direction"
         icon="pi pi-text-direction"
         :options="TEXT_DIRECTION_OPTIONS"
         :model-value="queryManifestData?.dir"

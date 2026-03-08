@@ -12,8 +12,8 @@ const { isPending, data, error } = useStatusQuery();
 <template>
   <div class="tw:p-6">
     <PageHeader
-      title="Статус PWA"
-      description="Проверка готовности вашего сайта к работе в качестве Progressive Web App"
+      title="Status PWA"
+      description="Checking the readiness of your site to work as a Progressive Web App"
     />
 
     <LoadingSpinner v-if="isPending" />
@@ -22,7 +22,7 @@ const { isPending, data, error } = useStatusQuery();
       <div class="tw:flex tw:items-center tw:gap-2 tw:text-red-800">
         <i class="pi pi-exclamation-triangle"></i>
 
-        <span>Ошибка загрузки данных</span>
+        <span>Error loading data</span>
       </div>
     </div>
 

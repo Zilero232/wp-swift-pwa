@@ -19,47 +19,47 @@ const { queryManifest } = useManifestQuery();
 
 <template>
   <div class="tw:p-4 sm:tw:p-8">
-    <PageHeader title="Настройки Manifest" description="Конфигурация веб-приложения манифеста" />
+    <PageHeader title="Manifest settings" description="Configuration of web application manifest" />
 
     <LoadingSpinner v-if="toValue(queryManifest.isPending)" />
 
     <div v-else class="tw:flex tw:flex-col tw:gap-8">
       <div class="tw:grid tw:grid-cols-1 tw:xl:grid-cols-2 tw:gap-8">
-        <CardSection title="Основная информация" icon="pi pi-info-circle">
+        <CardSection title="Basic information" icon="pi pi-info-circle">
           <BasicInfoSettings />
         </CardSection>
 
-        <CardSection title="Отображение" icon="pi pi-desktop">
+        <CardSection title="Display" icon="pi pi-desktop">
           <DisplaySettings />
         </CardSection>
       </div>
 
       <div class="tw:grid tw:grid-cols-1 tw:xl:grid-cols-2 tw:gap-8">
-        <CardSection title="Дополнительные настройки" icon="pi pi-cog">
+        <CardSection title="Additional settings" icon="pi pi-cog">
           <AdvancedSettings />
         </CardSection>
 
-        <CardSection title="Категории" icon="pi pi-tags">
+        <CardSection title="Categories" icon="pi pi-tags">
           <CategoriesSettings />
         </CardSection>
       </div>
 
       <div class="tw:grid tw:grid-cols-1 tw:xl:grid-cols-2 tw:gap-8">
-        <CardSection title="Шорткаты приложения" icon="pi pi-bolt">
+        <CardSection title="Application shortcuts" icon="pi pi-bolt">
           <ShortcutsSettings />
         </CardSection>
 
-        <CardSection title="Связанные приложения" icon="pi pi-mobile">
+        <CardSection title="Related applications" icon="pi pi-mobile">
           <RelatedAppsSettings />
         </CardSection>
       </div>
 
       <div class="tw:grid tw:grid-cols-1 tw:xl:grid-cols-2 tw:gap-8">
-        <CardSection title="Иконки приложения" icon="pi pi-image">
+        <CardSection title="Application icons" icon="pi pi-image">
           <IconsSettings />
         </CardSection>
 
-        <CardSection title="Скриншоты приложения" icon="pi pi-camera">
+        <CardSection title="Application screenshots" icon="pi pi-camera">
           <ScreenshotsSettings />
         </CardSection>
       </div>

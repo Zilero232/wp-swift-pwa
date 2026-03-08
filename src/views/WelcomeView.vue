@@ -7,23 +7,23 @@ const router = useRouter();
 const features = [
   {
     icon: "pi pi-mobile",
-    title: "PWA приложение",
-    description: "Превратите сайт в приложение с установкой на устройство",
+    title: "PWA application",
+    description: "Turn your site into a PWA application with installation on device",
   },
   {
     icon: "pi pi-cog",
-    title: "Простая настройка",
-    description: "Визуальный редактор манифеста без кода",
+    title: "Simple setup",
+    description: "Visual manifest editor without code",
   },
   {
     icon: "pi pi-wifi-off",
-    title: "Офлайн режим",
-    description: "Работа без интернета через Service Worker",
+    title: "Offline mode",
+    description: "Work without internet through Service Worker",
   },
   {
     icon: "pi pi-bolt",
-    title: "Быстрая работа",
-    description: "Оптимизация и кэширование для скорости",
+    title: "Fast work",
+    description: "Optimization and caching for speed",
   },
 ];
 
@@ -49,12 +49,12 @@ const goTo = (route: string) => router.push(route);
         </h1>
 
         <p class="tw:text-xl tw:md:text-2xl tw:text-gray-600 tw:max-w-2xl">
-          Создайте Progressive Web App для WordPress.
+          Create a Progressive Web App for WordPress.
         </p>
 
         <div class="tw:flex tw:flex-wrap tw:gap-4 tw:justify-center tw:pt-4">
           <Button
-            label="Настроить манифест"
+            label="Configure manifest"
             icon="pi pi-arrow-right"
             icon-pos="right"
             size="large"
@@ -62,7 +62,7 @@ const goTo = (route: string) => router.push(route);
             @click="goTo('/manifest')"
           />
           <Button
-            label="Превью"
+            label="Preview"
             icon="pi pi-eye"
             size="large"
             outlined
@@ -98,16 +98,16 @@ const goTo = (route: string) => router.push(route);
       <div class="tw:text-center tw:space-y-4 tw:pt-8">
         <div class="tw:flex tw:flex-wrap tw:gap-8 tw:justify-center tw:text-sm tw:text-gray-600">
           <div>
-            <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">5 мин</div>
-            <div>Настройка</div>
+            <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">5 min</div>
+            <div>Setup</div>
           </div>
           <div>
-            <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">Бесплатно</div>
-            <div>Навсегда</div>
+            <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">Free</div>
+            <div>Forever</div>
           </div>
           <div>
             <div class="tw:text-3xl tw:font-black tw:text-gray-900 tw:mb-1">WordPress</div>
-            <div>Интеграция</div>
+            <div>Integration</div>
           </div>
         </div>
       </div>

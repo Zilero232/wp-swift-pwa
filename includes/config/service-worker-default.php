@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) || exit;
 
 return array(
 	'version'            => '1.0.0',
-	'cache_name'         => 'swift-pwa-cache-v1',
+	'cache_name'         => 'swift-pwa-cache',
 	'offline_page'       => '/',
 	'strategy'           => 'networkFirst',
 

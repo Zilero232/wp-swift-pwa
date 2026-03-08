@@ -36,7 +36,7 @@ const removeCategory = (category: string) => {
         class="tw:block tw:text-xs tw:font-semibold tw:text-gray-600 tw:mb-2 tw:uppercase tw:tracking-wide"
       >
         <i class="pi pi-tags tw:text-xs tw:mr-1"></i>
-        Выберите категории приложения
+        Select the categories of the application
       </label>
 
       <MultiSelect
@@ -44,18 +44,18 @@ const removeCategory = (category: string) => {
         :options="categoryOptions"
         option-label="label"
         option-value="value"
-        placeholder="Выберите одну или несколько категорий"
+        placeholder="Select one or more categories"
         class="tw:w-full"
         :max-selected-labels="3"
-        selected-items-label="{0} категорий выбрано"
+        selected-items-label="{0} categories selected"
         :filter="true"
-        filter-placeholder="Поиск категорий..."
+        filter-placeholder="Search categories..."
         display="chip"
         @update:model-value="updateManifest({ categories: $event })"
       />
 
       <small class="tw:text-gray-500 tw:mt-2 tw:block tw:text-xs">
-        Максимум 10 категорий. Помогают пользователям найти ваше приложение в магазинах.
+        Maximum 10 categories. Help users find your application in the stores.
       </small>
     </div>
 
@@ -67,7 +67,7 @@ const removeCategory = (category: string) => {
         <i class="pi pi-check-circle tw:text-green-600"></i>
 
         <h4 class="tw:text-sm tw:font-semibold tw:text-gray-700">
-          Выбранные категории ({{ categories.length }}/10)
+          Selected categories ({{ categories.length }}/10)
         </h4>
       </div>
 
@@ -98,19 +98,19 @@ const removeCategory = (category: string) => {
       <i class="pi pi-info-circle tw:text-blue-600 tw:text-2xl tw:mb-2"></i>
 
       <p class="tw:text-sm tw:text-blue-900">
-        Категории не выбраны. Выберите категории, чтобы помочь пользователям найти ваше приложение.
+        Categories not selected. Select categories to help users find your application.
       </p>
     </div>
 
     <InfoBlock
-      title="Рекомендации по выбору категорий:"
+      title="Recommendations for selecting categories:"
       severity="help"
       icon="pi-lightbulb"
       as-list
     >
-      <li>Выбирайте категории, максимально соответствующие функциональности приложения</li>
-      <li>Не злоупотребляйте количеством — лучше 2-3 точные категории, чем 10 неподходящих</li>
-      <li>Основная категория должна быть на первом месте</li>
+      <li>Select categories that most closely match the functionality of the application</li>
+      <li>Do not abuse the number — better 2-3 exact categories than 10 unsuitable ones</li>
+      <li>The main category should be at the first place</li>
     </InfoBlock>
   </div>
 </template>

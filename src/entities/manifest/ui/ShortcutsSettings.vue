@@ -64,9 +64,9 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
       <div class="tw:flex tw:flex-col tw:gap-3">
         <div class="tw:flex tw:items-center tw:gap-2">
           <InputField
-            label="Название шортката"
+            label="Shortcut name"
             icon="pi pi-text-width"
-            placeholder="Название шортката *"
+            placeholder="Enter the name of the shortcut *"
             :model-value="shortcut.name"
             @update:model-value="updateShortcut(index, 'name', $event)"
             class="tw:flex-1"
@@ -74,9 +74,9 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
           />
 
           <InputField
-            label="Короткое название"
+            label="Short name"
             icon="pi pi-text-width"
-            placeholder="Короткое название"
+            placeholder="Enter the short name of the shortcut"
             :model-value="shortcut.short_name || ''"
             @update:model-value="updateShortcut(index, 'short_name', $event)"
             class="tw:flex-1"
@@ -84,9 +84,9 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
         </div>
 
         <InputField
-          label="Описание шортката"
+          label="Shortcut description"
           icon="pi pi-align-left"
-          placeholder="Описание шортката"
+          placeholder="Enter the description of the shortcut"
           :model-value="shortcut.description || ''"
           @update:model-value="updateShortcut(index, 'description', $event)"
           rows="2"
@@ -94,9 +94,9 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
         />
 
         <PostSelector
-          label="URL шортката"
+          label="Shortcut URL"
           icon="pi pi-link"
-          placeholder="Выберите страницу или пост *"
+          placeholder="Select a page or post *"
           :model-value="shortcut.url || ''"
           @update:model-value="updateShortcut(index, 'url', $event)"
           required
@@ -109,7 +109,7 @@ const updateShortcut = (index: number, field: keyof ManifestShortcut, value: str
     </div>
 
     <Button
-      label="Добавить шорткат"
+      label="Add shortcut"
       icon="pi pi-plus"
       outlined
       @click="addShortcut"

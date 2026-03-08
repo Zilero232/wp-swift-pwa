@@ -74,7 +74,7 @@ class Service_Worker_Generator {
 	 */
 	private static function prepare_variables( $config ) {
 		$version       = $config['version'] ?? '1.0.0';
-		$cache_name    = $config['cache_name'] ?? 'swift-pwa-cache-v1';
+		$cache_name    = $config['cache_name'] ?? 'swift-pwa-cache';
 		$offline_page  = $config['offline_page'] ?? '/offline.html';
 		$strategy      = $config['strategy'] ?? 'networkFirst';
 		$precache      = $config['precache'] ?? array();

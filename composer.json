@@ -2,19 +2,31 @@
 	"name": "zilero/wp-swift-pwa",
 	"description": "Swift PWA is a plugin that allows you to create a Progressive Web App for your WordPress site.",
 	"version": "1.0.0",
+	"type": "wordpress-plugin",
 	"license": "GPL-3.0-or-later",
+	"keywords": [
+		"wordpress",
+		"pwa",
+		"progressive-web-app",
+		"manifest",
+		"service-worker",
+		"offline"
+	],
 	"authors": [
 		{
 			"name": "zilero",
-			"email": "sasha.artemev.1002@mail.ru"
+			"email": "sasha.artemev.1002@mail.ru",
+			"homepage": "https://github.com/Zilero232"
 		}
-	],	
-	"scripts": {
-		"lint": "phpcs --standard=phpcs.xml --extensions=php --ignore=vendor/,node_modules/,build/ -n .",
-		"lint:fix": "phpcbf --standard=phpcs.xml --extensions=php --ignore=vendor/,node_modules/,build/ .",
-		"lint:changed": "phpcs-changed --git --git-base=main --standard=phpcs.xml"
+	],
+	"homepage": "https://github.com/Zilero232/wp-swift-pwa",
+	"support": {
+		"issues": "https://github.com/Zilero232/wp-swift-pwa/issues",
+		"source": "https://github.com/Zilero232/wp-swift-pwa",
+		"docs": "https://github.com/Zilero232/wp-swift-pwa/wiki"
 	},
 	"require": {
+		"php": "^8.0",
 		"kucrut/vite-for-wp": "^0.12.0"
 	},
 	"require-dev": {
@@ -22,9 +34,37 @@
 		"phpcompatibility/phpcompatibility-wp": "^2.1",
 		"sirbrillig/phpcs-changed": "^2.12"
 	},
+	"suggest": {
+		"ext-json": "For JSON encoding/decoding (usually enabled by default)",
+		"ext-mbstring": "For better string handling with multilingual content"
+	},
+	"autoload": {
+		"classmap": [
+			"includes/"
+		]
+	},
+	"scripts": {
+		"lint": "phpcs --standard=phpcs.xml --extensions=php --ignore=vendor/,node_modules/,build/ -n .",
+		"lint:fix": "phpcbf --standard=phpcs.xml --extensions=php --ignore=vendor/,node_modules/,build/ .",
+		"lint:changed": "phpcs-changed --git --git-base=main --standard=phpcs.xml",
+		"test": "echo 'No tests configured yet'"
+	},
+	"scripts-descriptions": {
+		"lint": "Check PHP files for code style violations (errors only)",
+		"lint:fix": "Auto-fix code style violations in PHP files",
+		"lint:changed": "Check only changed PHP files against main branch",
+		"test": "Run unit tests (placeholder)"
+	},
 	"config": {
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true
-		}
-	}
+		},
+		"platform": {
+			"php": "8.0"
+		},
+		"sort-packages": true,
+		"optimize-autoloader": true
+	},
+	"prefer-stable": true,
+	"minimum-stability": "stable"
 }

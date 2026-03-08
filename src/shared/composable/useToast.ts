@@ -16,7 +16,7 @@ export const useToast = () => {
     });
   };
 
-  const showSuccess = (detail: string, summary = "Успешно") => {
+  const showSuccess = (detail: string, summary = "Success") => {
     showToast({
       severity: "success",
       summary,
@@ -24,7 +24,7 @@ export const useToast = () => {
     });
   };
 
-  const showError = (detail: string, summary = "Ошибка") => {
+  const showError = (detail: string, summary = "Error") => {
     showToast({
       severity: "error",
       summary,
@@ -32,7 +32,7 @@ export const useToast = () => {
     });
   };
 
-  const showWarn = (detail: string, summary = "Внимание") => {
+  const showWarn = (detail: string, summary = "Warning") => {
     showToast({
       severity: "warn",
       summary,
@@ -40,7 +40,7 @@ export const useToast = () => {
     });
   };
 
-  const showInfo = (detail: string, summary = "Информация") => {
+  const showInfo = (detail: string, summary = "Information") => {
     showToast({
       severity: "info",
       summary,

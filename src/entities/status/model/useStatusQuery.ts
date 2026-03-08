@@ -11,7 +11,7 @@ export const useStatusQuery = () => {
       const response = await statusAPI.getStatus();
 
       if (!response.success) {
-        throw new Error(response.message || "Failed to fetch status");
+        throw new Error(response.message || "Failed to fetch PWA status");
       }
 
       return response.data;

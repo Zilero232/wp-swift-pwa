@@ -51,23 +51,23 @@ const defaultPatterns = ["/wp-admin/", "/wp-login.php", "/wp-json/wp/"];
 <template>
   <div class="tw:flex tw:flex-col tw:gap-6">
     <p class="tw:text-sm tw:text-gray-600">
-      URL пути, которые Service Worker должен игнорировать (не кэшировать).
+      URL paths that Service Worker should ignore (not cache).
     </p>
 
     <div class="tw:flex tw:gap-2">
       <InputField
         v-model="newPattern"
-        label="Добавить паттерн"
+        label="Add pattern"
         icon="pi pi-ban"
         placeholder="/wp-admin/"
         class="tw:flex-1"
         @keyup.enter="addPattern"
       />
-      <Button label="Добавить" icon="pi pi-plus" @click="addPattern" class="tw:self-end tw:mb-1" />
+      <Button label="Add" icon="pi pi-plus" @click="addPattern" class="tw:self-end tw:mb-1" />
     </div>
 
     <div v-if="skipPatterns.length > 0" class="tw:space-y-2">
-      <h4 class="tw:text-sm tw:font-semibold tw:text-gray-700">Настроенные паттерны:</h4>
+      <h4 class="tw:text-sm tw:font-semibold tw:text-gray-700">Configured patterns:</h4>
       <div class="tw:flex tw:flex-wrap tw:gap-2">
         <Chip
           v-for="pattern in skipPatterns"
@@ -80,7 +80,7 @@ const defaultPatterns = ["/wp-admin/", "/wp-login.php", "/wp-json/wp/"];
     </div>
 
     <div class="tw:space-y-2">
-      <h4 class="tw:text-sm tw:font-semibold tw:text-gray-700">Рекомендуемые паттерны:</h4>
+      <h4 class="tw:text-sm tw:font-semibold tw:text-gray-700">Recommended patterns:</h4>
       <div class="tw:flex tw:flex-wrap tw:gap-2">
         <Button
           v-for="pattern in defaultPatterns"
@@ -94,10 +94,10 @@ const defaultPatterns = ["/wp-admin/", "/wp-login.php", "/wp-json/wp/"];
       </div>
     </div>
 
-    <InfoBlock title="О паттернах:">
+    <InfoBlock title="About patterns:">
       <p class="tw:text-sm">
-        Паттерны проверяются с помощью <code>pathname.startsWith()</code>. Например,
-        <code>/wp-admin/</code> исключит все запросы к админке WordPress.
+        Patterns are checked using <code>pathname.startsWith()</code>. For example,
+        <code>/wp-admin/</code> will exclude all requests to the WordPress admin.
       </p>
     </InfoBlock>
   </div>

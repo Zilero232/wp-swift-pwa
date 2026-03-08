@@ -4,32 +4,32 @@
 export const PWA_FEATURES = [
   {
     icon: "pi pi-mobile",
-    title: "Установка на устройство",
-    description: "Пользователи могут установить PWA на главный экран",
+    title: "Installation on device",
+    description: "Users can install PWA on the main screen",
   },
   {
     icon: "pi pi-wifi",
-    title: "Офлайн режим",
-    description: "Приложение работает без интернета через Service Worker",
+    title: "Offline mode",
+    description: "Application works without internet through Service Worker",
   },
   {
     icon: "pi pi-bell",
-    title: "Push-уведомления",
-    description: "Отправка уведомлений пользователям",
+    title: "Push-notifications",
+    description: "Sending notifications to users",
   },
   {
     icon: "pi pi-window-maximize",
-    title: "Полноэкранный режим",
-    description: "Запуск в отдельном окне без браузерного UI",
+    title: "Fullscreen mode",
+    description: "Launch in a separate window without browser UI",
   },
   {
     icon: "pi pi-sync",
-    title: "Фоновая синхронизация",
-    description: "Синхронизация данных в фоновом режиме",
+    title: "Background synchronization",
+    description: "Synchronization of data in the background mode",
   },
   {
     icon: "pi pi-shield",
-    title: "Безопасность HTTPS",
-    description: "Обязательное использование защищённого соединения",
+    title: "HTTPS security",
+    description: "Mandatory use of secure connection",
   },
 ];

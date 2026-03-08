@@ -112,7 +112,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
             {{ index + 1 }}
           </div>
 
-          <span class="tw:text-sm tw:font-medium tw:text-gray-700">Скриншот #{{ index + 1 }}</span>
+          <span class="tw:text-sm tw:font-medium tw:text-gray-700">Screenshot #{{ index + 1 }}</span>
         </div>
 
         <div class="tw:flex tw:gap-2">
@@ -121,7 +121,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
             outlined
             rounded
             severity="secondary"
-            v-tooltip.top="'Выбрать из библиотеки'"
+            v-tooltip.top="'Select from library'"
             @click="
               () => {
                 showLibrary = true;
@@ -136,7 +136,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
             rounded
             severity="info"
             :disabled="!screenshot.src"
-            v-tooltip.top="'Предпросмотр'"
+            v-tooltip.top="'Preview'"
             @click="
               () => {
                 showPreview = true;
@@ -150,7 +150,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
             outlined
             rounded
             severity="danger"
-            v-tooltip.top="'Удалить'"
+            v-tooltip.top="'Delete'"
             @click="removeScreenshot(index)"
           />
         </div>
@@ -158,7 +158,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
 
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-4">
         <InputField
-          label="URL изображения"
+          label="Image URL"
           icon="pi pi-link"
           placeholder="https://example.com/screenshot.png"
           :model-value="screenshot.src || ''"
@@ -166,17 +166,17 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
         />
 
         <SelectField
-          label="Форм фактор"
+          label="Form factor"
           icon="pi pi-star"
           :model-value="screenshot.form_factor"
           :options="SCREENSHOT_FORM_FACTOR_OPTIONS"
-          placeholder="Выберите форм фактор скриншота"
+          placeholder="Select the form factor of the screenshot"
           class="tw:w-full"
           @update:model-value="updateScreenshot(index, 'form_factor', $event)"
         />
 
         <InputField
-          label="Размер"
+          label="Size"
           icon="pi pi-clone"
           placeholder="1920x1080"
           :model-value="screenshot.sizes || ''"
@@ -184,7 +184,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
         />
 
         <InputField
-          label="Тип"
+          label="Type"
           icon="pi pi-file"
           placeholder="image/png"
           :model-value="screenshot.type || ''"
@@ -193,9 +193,9 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
 
         <div class="tw:md:col-span-2">
           <InputField
-            label="Описание"
+            label="Description"
             icon="pi pi-comment"
-            placeholder="Описание скриншота для доступности"
+            placeholder="Description of the screenshot for accessibility"
             :model-value="screenshot.label || ''"
             @update:model-value="updateScreenshot(index, 'label', $event)"
           />
@@ -204,7 +204,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
     </div>
 
     <Button
-      label="Добавить скриншот"
+      label="Add screenshot"
       icon="pi pi-plus"
       outlined
       class="tw:w-full"
@@ -215,7 +215,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type, alt }: MediaAttach
 
     <div v-if="screenshots.length >= 10" class="text-sm text-orange-600 tw:text-center">
       <i class="pi pi-info-circle mr-1"></i>
-      Достигнут максимум скриншотов (10)
+      Maximum number of screenshots reached (10)
     </div>
   </div>
 

@@ -1,12 +1,12 @@
 // Service Worker для Swift PWA
-// Версия: {{VERSION}}
+// Version: {{VERSION}}
 
 const VERSION = '{{VERSION}}';
-const CACHE_NAME = '{{CACHE_NAME}}';
+const CACHE_NAME = '{{CACHE_NAME}}-v{{VERSION}}';
 const OFFLINE_PAGE = '{{OFFLINE_PAGE}}';
 const STRATEGY = '{{STRATEGY}}';
 
-// Файлы для предварительного кэширования
+// Precache files
 const PRECACHE_FILES = {{PRECACHE_FILES}};
 
 // Skip patterns
@@ -88,6 +88,7 @@ async function cleanupOldCaches() {
   await Promise.all(
     oldCaches.map(name => {
       console.log('[Service Worker] Deleting cache:', name);
+
       return caches.delete(name);
     })
   );
@@ -130,7 +131,7 @@ function shouldSkipRequest(pathname) {
 
   return SKIP_PATTERNS.some(pattern => {
     if (typeof pattern === 'string') {
-      return pathname.includes(pattern);
+      return pathname.startsWith(pattern);
     }
     if (pattern instanceof RegExp) {
       return pattern.test(pathname);
@@ -185,6 +186,7 @@ async function cacheFirstStrategy(request) {
     return response;
   } catch (error) {
     console.error('[Service Worker] Cache First failed:', error);
+
     return handleOffline(request);
   }
 }
@@ -226,10 +228,12 @@ async function staleWhileRevalidateStrategy(request) {
       if (response.ok) {
         cacheResponse(request, response.clone());
       }
+
       return response;
     })
     .catch(error => {
       console.warn('[Service Worker] Background update failed:', error);
+
       return null;
     });
 
@@ -245,6 +249,7 @@ async function networkOnlyStrategy(request) {
     return await fetch(request);
   } catch (error) {
     console.error('[Service Worker] Network Only failed:', error);
+
     return handleOffline(request);
   }
 }
@@ -277,6 +282,7 @@ async function cacheOnlyStrategy(request) {
 async function cacheResponse(request, response) {
   try {
     const cache = await caches.open(CACHE_NAME);
+
     await cache.put(request, response);
   } catch (error) {
     console.warn('[Service Worker] Failed to cache response:', error);

@@ -12,7 +12,7 @@ const currentRoute = computed(() => route.name);
 <template>
   <nav>
     <ul class="tw:px-6">
-      <li class="tw:flex tw:align-center tw:justify-center tw:sm:justify-start">
+      <li class="tw:flex tw:flex-wrap tw:align-center tw:justify-center tw:sm:justify-start">
         <RouterLink
           v-for="item in NAV_ITEMS"
           :key="item.name"

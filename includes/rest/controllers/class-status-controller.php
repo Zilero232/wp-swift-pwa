@@ -87,8 +87,8 @@ class StatusController extends RestController {
 			'enabled'  => $is_ssl,
 			'site_url' => $site_url,
 			'message'  => $is_ssl
-				? 'Ваш сайт использует безопасное HTTPS соединение'
-				: 'Progressive Web Apps требуют HTTPS. Обратитесь к хостинг-провайдеру для установки SSL сертификата.',
+				? 'Your site uses a secure HTTPS connection'
+				: 'Progressive Web Apps require HTTPS. Contact your hosting provider to install an SSL certificate.',
 		];
 
 		$files = [

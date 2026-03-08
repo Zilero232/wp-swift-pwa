@@ -50,6 +50,6 @@ export function useMediaLibrary({ visible }: UseMediaLibraryOptions) {
     libraryItems,
     isLoading,
     addUploadedToLibrary,
-    showSuccessMessage: () => showSuccess("Изображение выбрано"),
+    showSuccessMessage: () => showSuccess("Image selected"),
   };
 }

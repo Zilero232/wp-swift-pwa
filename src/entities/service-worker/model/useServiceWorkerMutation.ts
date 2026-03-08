@@ -21,10 +21,10 @@ export function useServiceWorkerMutation() {
       return data;
     },
     onSuccess: () => {
-      showSuccess("Service Worker обновлён успешно");
+      showSuccess("Service Worker updated successfully");
     },
     onError: (error: Error) => {
-      showError(error.message || "Ошибка обновления Service Worker");
+      showError(error.message || "Failed to update Service Worker");
     },
   });
 

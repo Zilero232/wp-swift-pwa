@@ -11,15 +11,15 @@ import {
  */
 export const ICON_PURPOSE_OPTIONS = [
   {
-    label: "Any (обычная)",
+    label: "Any (normal)",
     value: IconPurpose.ANY,
   },
   {
-    label: "Maskable (адаптивная)",
+    label: "Maskable (adaptive)",
     value: IconPurpose.MASKABLE,
   },
   {
-    label: "Monochrome (монохромная)",
+    label: "Monochrome (monochrome)",
     value: IconPurpose.MONOCHROME,
   },
 ];
@@ -55,11 +55,11 @@ export const RELATED_APPLICATION_PLATFORM_OPTIONS = [
  */
 export const SCREENSHOT_FORM_FACTOR_OPTIONS = [
   {
-    label: "Narrow (Узкий)",
+    label: "Narrow (narrow)",
     value: ScreenshotFormFactor.NARROW,
   },
   {
-    label: "Wide (Широкий)",
+    label: "Wide (wide)",
     value: ScreenshotFormFactor.WIDE,
   },
 ];
@@ -69,19 +69,19 @@ export const SCREENSHOT_FORM_FACTOR_OPTIONS = [
  */
 export const DISPLAY_OPTIONS = [
   {
-    label: "Fullscreen (Полный экран)",
+    label: "Fullscreen (fullscreen)",
     value: DisplayMode.FULLSCREEN,
   },
   {
-    label: "Standalone (Отдельное приложение)",
+    label: "Standalone (standalone)",
     value: DisplayMode.STANDALONE,
   },
   {
-    label: "Minimal UI (Минимальный UI)",
+    label: "Minimal UI (minimal UI)",
     value: DisplayMode.MINIMAL_UI,
   },
   {
-    label: "Browser (Браузер)",
+    label: "Browser (browser)",
     value: DisplayMode.BROWSER,
   },
 ];
@@ -91,19 +91,19 @@ export const DISPLAY_OPTIONS = [
  */
 export const ORIENTATION_OPTIONS = [
   {
-    label: "Any (Любая)",
+    label: "Any (any)",
     value: OrientationMode.ANY,
   },
   {
-    label: "Natural (Естественная)",
+    label: "Natural (natural)",
     value: OrientationMode.NATURAL,
   },
   {
-    label: "Landscape (Альбомная)",
+    label: "Landscape (landscape)",
     value: OrientationMode.LANDSCAPE,
   },
   {
-    label: "Portrait (Портретная)",
+    label: "Portrait (portrait)",
     value: OrientationMode.PORTRAIT,
   },
   {

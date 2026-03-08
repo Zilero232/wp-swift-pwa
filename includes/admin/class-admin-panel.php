@@ -102,7 +102,7 @@ class Admin_Panel {
 	 */
 	public function settings_page_output() {
 		?>
-		<div id="swift-pwa-settings-app" style="display: flex; flex-direction: column; relative"></div>
+		<div id="swift-pwa-settings-app" class='wrap' style="display: flex; flex-direction: column; relative"></div>
 		<?php
 	}
 }

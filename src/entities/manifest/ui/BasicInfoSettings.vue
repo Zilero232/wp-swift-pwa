@@ -15,27 +15,27 @@ const queryManifestData = computed(() => queryManifest.data.value);
 <template>
   <div class="tw:flex tw:flex-col tw:gap-6">
     <InputField
-      label="Название приложения"
+      label="Application name"
       icon="pi pi-mobile"
-      placeholder="Введите название приложения"
+      placeholder="Enter the application name"
       required
       :model-value="queryManifestData?.name"
       @update:model-value="updateManifest({ name: $event })"
     />
 
     <InputField
-      label="Короткое название"
+      label="Short name"
       icon="pi pi-bookmark"
-      placeholder="Короткое название приложения"
+      placeholder="Enter the short name of the application"
       required
       :model-value="queryManifestData?.short_name"
       @update:model-value="updateManifest({ short_name: $event })"
     />
 
     <InputField
-      label="Описание"
+      label="Description"
       icon="pi pi-align-left"
-      placeholder="Введите описание приложения"
+      placeholder="Enter the description of the application"
       :model-value="queryManifestData?.description"
       @update:model-value="updateManifest({ description: $event })"
     />

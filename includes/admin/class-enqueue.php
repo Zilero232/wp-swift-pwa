@@ -48,6 +48,16 @@ class Enqueue {
 	 * @return void
 	 */
 	public function admin_enqueue_scripts() {
+		if ( ! isset( $_GET['page'] ) ) {
+				return;
+		}
+
+		$page = sanitize_text_field( wp_unslash( $_GET['page'] ) );
+
+		if ( strpos( $page, SWIFT_PWA_SLUG . '-settings' ) !== 0 ) {
+				return;
+		}
+
 		Vite\enqueue_asset(
 			SWIFT_PWA_PLUGIN_PATH . 'build',
 			'src/main.ts',

@@ -20,7 +20,7 @@ const queryServiceWorkerData = computed(() => queryServiceWorker.data.value);
   <div class="tw:flex tw:flex-col tw:gap-6">
     <div class="tw:grid tw:grid-cols-1 md:tw:grid-cols-2 tw:gap-6">
       <InputField
-        label="Версия"
+        label="Version"
         icon="pi pi-tag"
         placeholder="1.0.0"
         :model-value="queryServiceWorkerData?.version"
@@ -28,31 +28,31 @@ const queryServiceWorkerData = computed(() => queryServiceWorker.data.value);
       />
 
       <InputField
-        label="Имя кэша"
+        label="Cache name"
         icon="pi pi-database"
-        placeholder="swift-pwa-cache-v1"
+        placeholder="swift-pwa-cache"
         :model-value="queryServiceWorkerData?.cache_name"
         @update:model-value="updateServiceWorker({ cache_name: $event })"
       />
     </div>
 
     <PostSelector
-      label="Офлайн страница"
+      label="Offline page"
       icon="pi pi-wifi"
-      placeholder="Выберите страницу или пост"
+      placeholder="Select a page or post"
       :model-value="queryServiceWorkerData?.offline_page"
       @update:model-value="updateServiceWorker({ offline_page: $event })"
     />
 
     <SelectField
-      label="Стратегия кэширования"
+      label="Cache strategy"
       icon="pi pi-sitemap"
       :options="CACHE_STRATEGIES"
       :model-value="queryServiceWorkerData?.strategy"
       @update:model-value="updateServiceWorker({ strategy: $event })"
     />
 
-    <InfoBlock title="О выбранной стратегии:" as-list>
+    <InfoBlock title="About the selected strategy:" as-list>
       <li v-for="(strategy, key) in STRATEGY_INFO" :key="key">
         <strong>{{ key }}:</strong> {{ strategy.description }}
       </li>

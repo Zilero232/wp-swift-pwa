@@ -58,7 +58,7 @@ const debouncedHandleFilter = useDebounceFn((event: SelectFilterEvent) => {
       <template #footer>
         <div v-if="hasMore" class="tw:p-2 tw:border-t">
           <Button
-            label="Загрузить ещё"
+            label="Load more"
             icon="pi pi-arrow-down"
             size="small"
             text

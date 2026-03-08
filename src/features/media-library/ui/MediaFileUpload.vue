@@ -18,7 +18,7 @@ interface Emits {
 
 withDefaults(defineProps<Props>(), {
   accept: "image/*",
-  chooseLabel: "Загрузить",
+  chooseLabel: "Upload",
   disabled: false,
 });
 

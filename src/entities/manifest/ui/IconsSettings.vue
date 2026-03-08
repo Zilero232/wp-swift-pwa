@@ -108,7 +108,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
             {{ index + 1 }}
           </div>
 
-          <span class="tw:text-sm tw:font-medium tw:text-gray-700">Иконка #{{ index + 1 }}</span>
+          <span class="tw:text-sm tw:font-medium tw:text-gray-700">Icon #{{ index + 1 }}</span>
         </div>
 
         <div class="tw:flex tw:gap-2">
@@ -117,7 +117,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
             outlined
             rounded
             severity="secondary"
-            v-tooltip.top="'Выбрать из библиотеки'"
+            v-tooltip.top="'Select from library'"
             @click="
               () => {
                 showLibrary = true;
@@ -132,7 +132,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
             rounded
             severity="info"
             :disabled="!icon.src"
-            v-tooltip.top="'Предпросмотр'"
+            v-tooltip.top="'Preview'"
             @click="
               () => {
                 showPreview = true;
@@ -146,7 +146,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
             outlined
             rounded
             severity="danger"
-            v-tooltip.top="'Удалить'"
+            v-tooltip.top="'Delete'"
             @click="removeIcon(index)"
           />
         </div>
@@ -155,7 +155,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
       <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-4">
         <InputField
           class="md:col-span-2"
-          label="URL иконки"
+          label="Icon URL"
           icon="pi pi-link"
           placeholder="https://example.com/icon.png"
           :model-value="icon.src || ''"
@@ -163,7 +163,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
         />
 
         <InputField
-          label="Размер"
+          label="Size"
           icon="pi pi-clone"
           placeholder="192x192"
           :model-value="icon.sizes || ''"
@@ -171,7 +171,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
         />
 
         <InputField
-          label="Тип"
+          label="Type"
           icon="pi pi-file"
           placeholder="image/png"
           :model-value="icon.type || ''"
@@ -179,11 +179,11 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
         />
 
         <SelectField
-          label="Назначение"
+          label="Purpose"
           icon="pi pi-star"
           :model-value="icon.purpose || IconPurpose.ANY"
           :options="ICON_PURPOSE_OPTIONS"
-          placeholder="Выберите назначение иконки"
+          placeholder="Select the purpose of the icon"
           class="tw:w-full"
           @update:model-value="updateIcon(index, 'purpose', $event)"
         />
@@ -191,7 +191,7 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
     </div>
 
     <Button
-      label="Добавить иконку"
+      label="Add icon"
       icon="pi pi-plus"
       outlined
       class="tw:w-full"
@@ -203,20 +203,20 @@ const handleLibrarySelect = ({ url, width, height, mime_type }: MediaAttachment)
     <div v-if="icons.length >= 20" class="text-sm text-orange-600 tw:text-center">
       <i class="pi pi-info-circle mr-1"></i>
 
-      Достигнут максимум иконок (20)
+      Maximum number of icons reached (20)
     </div>
 
     <div class="tw:grid tw:grid-cols-1 tw:md:grid-cols-2 tw:gap-4">
-      <InfoBlock title="Рекомендуемые размеры иконок:" severity="info" as-list>
-        <li>192x192 - минимальный размер для Android</li>
-        <li>512x512 - для splash screen и высокого разрешения</li>
-        <li>Maskable иконки должны иметь безопасную зону (80% от размера)</li>
+      <InfoBlock title="Recommended icon sizes:" severity="info" as-list>
+        <li>192x192 - minimum size for Android</li>
+        <li>512x512 - for splash screen and high resolution</li>
+        <li>Maskable icons must have a safe zone (80% of the size)</li>
       </InfoBlock>
 
-      <InfoBlock title="Рекомендуемые назначения иконок:" severity="info" as-list>
-        <li>Any: стандартная иконка.</li>
-        <li>Maskable: адаптируется под разные формы.</li>
-        <li>Monochrome: одноцветная версия.</li>
+      <InfoBlock title="Recommended icon purposes:" severity="info" as-list>
+        <li>Any: standard icon.</li>
+        <li>Maskable: adapts to different shapes.</li>
+        <li>Monochrome: monochrome version.</li>
       </InfoBlock>
     </div>
   </div>

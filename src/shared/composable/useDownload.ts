@@ -22,11 +22,11 @@ export function useDownload() {
    * Copy text to clipboard
    */
   const copyToClipboard = async (text: string, options?: CopyOptions) => {
-    const { successMessage = "Скопировано в буфер обмена", errorMessage = "Ошибка копирования" } =
+    const { successMessage = "Copied to clipboard", errorMessage = "Failed to copy" } =
       options || {};
 
     if (!isSupported.value) {
-      showError("Буфер обмена не поддерживается в вашем браузере");
+      showError("Clipboard is not supported in your browser");
 
       return false;
     }
@@ -53,8 +53,8 @@ export function useDownload() {
     const {
       filename,
       mimeType = "text/plain",
-      successMessage = "Файл загружен",
-      errorMessage = "Ошибка загрузки файла",
+      successMessage = "File downloaded successfully",
+      errorMessage = "Failed to download file",
     } = options;
 
     try {

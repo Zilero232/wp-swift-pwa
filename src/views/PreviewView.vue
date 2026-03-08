@@ -42,8 +42,8 @@ const { activeTabValue, setActiveTab } = usePreviewTabs({
 <template>
   <div class="tw:p-4 sm:tw:p-8">
     <PageHeader
-      title="Предпросмотр PWA"
-      description="Просмотр файлов и функций вашего PWA приложения"
+      title="Preview PWA"
+      description="Preview of files and functions of your PWA application"
     />
 
     <Card>
@@ -51,7 +51,7 @@ const { activeTabValue, setActiveTab } = usePreviewTabs({
         <div class="tw:flex tw:items-center tw:gap-3 tw:p-6 tw:pb-0">
           <i class="pi pi-file-code tw:text-xl tw:text-blue-600"></i>
 
-          <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800 tw:flex-1">Просмотр файлов</h3>
+          <h3 class="tw:text-xl tw:font-semibold tw:text-gray-800 tw:flex-1">Preview files</h3>
         </div>
       </template>
 
@@ -62,7 +62,7 @@ const { activeTabValue, setActiveTab } = usePreviewTabs({
               <div class="tw:flex tw:items-center tw:gap-2">
                 <i class="pi pi-file-edit"></i>
 
-                <span>Manifest файл</span>
+                <span>Manifest file</span>
               </div>
             </Tab>
 
@@ -70,7 +70,7 @@ const { activeTabValue, setActiveTab } = usePreviewTabs({
               <div class="tw:flex tw:items-center tw:gap-2">
                 <i class="pi pi-code"></i>
 
-                <span>Service Worker файл</span>
+                <span>Service Worker file</span>
               </div>
             </Tab>
           </TabList>
@@ -80,8 +80,8 @@ const { activeTabValue, setActiveTab } = usePreviewTabs({
           <TabPanels v-else>
             <TabPanel :value="FILE_NAMES.MANIFEST">
               <PreviewActionsBar
-                title="Manifest файл"
-                description="Конфигурация веб-приложения"
+                title="Manifest file"
+                description="Configuration of web application"
                 :has-data="hasManifestData"
                 :is-loading="isLoadingManifest"
                 @copy="copyManifest"
@@ -93,8 +93,8 @@ const { activeTabValue, setActiveTab } = usePreviewTabs({
 
             <TabPanel :value="FILE_NAMES.SERVICE_WORKER">
               <PreviewActionsBar
-                title="Service Worker файл"
-                description="Код для кэширования и офлайн-режима"
+                title="Service Worker file"
+                description="Code for caching and offline mode"
                 :has-data="hasServiceWorkerData"
                 :is-loading="isLoadingServiceWorker"
                 @copy="copyServiceWorker"
