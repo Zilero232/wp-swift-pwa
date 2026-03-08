@@ -1,7 +1,6 @@
 {
 	"name": "zilero/wp-swift-pwa",
 	"description": "Swift PWA is a plugin that allows you to create a Progressive Web App for your WordPress site.",
-	"version": "1.0.0",
 	"type": "wordpress-plugin",
 	"license": "GPL-3.0-or-later",
 	"keywords": [
